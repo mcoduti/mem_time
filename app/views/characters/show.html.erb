@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h3>Character #<%= @character.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Language</dt>
+      <dd><%= @character.language %></dd>
+
+      <dt>Translation</dt>
+      <dd><%= @character.translation %></dd>
+
+      <dt>Tone</dt>
+      <dd><%= @character.tone %></dd>
+
+      <dt>English spelling</dt>
+      <dd><%= @character.english_spelling %></dd>
+
+      <dt>Character</dt>
+      <dd><%= @character.character %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/characters" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/characters/<%= @character.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_character/<%= @character.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

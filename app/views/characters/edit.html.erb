@@ -1,0 +1,73 @@
+<!-- Validation failure messages -->
+<% if @character.errors.any? %>
+  <% @character.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Character #<%= @character.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_character/<%= @character.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for language -->
+      <div class="form-group">
+        <label for="language" class="control-label">
+          Language
+        </label>
+
+        <input type="text" id="language" name="language" placeholder="Language" class="form-control" value="<%= @character.language %>">
+      </div>
+
+      <!-- Label and input for translation -->
+      <div class="form-group">
+        <label for="translation" class="control-label">
+          Translation
+        </label>
+
+        <input type="text" id="translation" name="translation" placeholder="Translation" class="form-control" value="<%= @character.translation %>">
+      </div>
+
+      <!-- Label and input for tone -->
+      <div class="form-group">
+        <label for="tone" class="control-label">
+          Tone
+        </label>
+
+        <input type="text" id="tone" name="tone" placeholder="Tone" class="form-control" value="<%= @character.tone %>">
+      </div>
+
+      <!-- Label and input for english_spelling -->
+      <div class="form-group">
+        <label for="english_spelling" class="control-label">
+          English spelling
+        </label>
+
+        <input type="text" id="english_spelling" name="english_spelling" placeholder="English spelling" class="form-control" value="<%= @character.english_spelling %>">
+      </div>
+
+      <!-- Label and input for character -->
+      <div class="form-group">
+        <label for="character" class="control-label">
+          Character
+        </label>
+
+        <input type="text" id="character" name="character" placeholder="Character" class="form-control" value="<%= @character.character %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Character
+      </button>
+      or
+      <a href="/characters/<%= @character.id %>">Cancel</a>
+    </form>
+  </div>
+</div>
