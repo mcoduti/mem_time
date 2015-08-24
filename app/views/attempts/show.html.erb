@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h3>Attempt #<%= @attempt.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Correct</dt>
+      <dd><%= @attempt.correct %></dd>
+
+      <dt>User</dt>
+      <dd><%= @attempt.user_id %></dd>
+
+      <dt>Character</dt>
+      <dd><%= @attempt.character_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/attempts" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/attempts/<%= @attempt.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_attempt/<%= @attempt.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

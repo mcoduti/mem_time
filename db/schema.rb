@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824040744) do
+ActiveRecord::Schema.define(version: 20150824055420) do
+
+  create_table "attempts", force: :cascade do |t|
+    t.boolean  "correct"
+    t.integer  "user_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "characters", force: :cascade do |t|
     t.string   "language"

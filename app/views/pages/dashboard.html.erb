@@ -164,9 +164,10 @@ var answerState;// = false;
 var questionFilter = true;
 var questionState;// = true;
 var splitMasterA = [];
-var easyArray = [["我","wǒ",0,0,"I"],["你","nǐ",0,0,"you"],["是","shì",0,0,"am/are/is"],["的","de",0,0,"I + de = mine"],["小","xiǎo",0,0,"little"]];
-var medArray = [["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
-var hardArray = [["不","bù",0,0,"no/ not"],["嫌","xián",0,0,"dislike"],["多","duō",0,0,"many"]];
+var easyArray = []//[,["你","nǐ",0,0,"you"],["是","shì",0,0,"am/are/is"],["的","de",0,0,"I + de = mine"],["小","xiǎo",0,0,"little"]];
+var medArray = []//[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
+var hardArray = [["<%= @characterArray[0] %>","<%= @translationArray[0] %>",0,0,"<%= @englishSpellingArray[0] %>"],["<%= @characterArray[1] %>","<%= @translationArray[1] %>",0,0,"<%= @englishSpellingArray[1] %>"],["<%= @characterArray[2] %>","<%= @translationArray[2] %>",0,0,"<%= @englishSpellingArray[3] %>"],["<%= @characterArray[3] %>","<%= @translationArray[3] %>",0,0,"<%= @englishSpellingArray[3] %>"]];
+
 
 var displayIndex = [0,1,4];
 displayIndex = RandArr(displayIndex);
@@ -1030,4 +1031,10 @@ NewGame();
 
 <p>
   paragraph to hide
+  <%= @sampleRuby %> <br>
+  <%= @q1 %><br>
+  <%= @characterArray %> <br>
+  <%= @englishSpellingArray %> <br>
+  <%= @translationArray %><br>
+  <%= @characterArray[0] %>, <%= @translationArray[0] %>, 0, 0, <%= @englishSpellingArray[0] %>
 </p>

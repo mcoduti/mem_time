@@ -5,6 +5,8 @@ class Character < ActiveRecord::Base
   validates :english_spelling, :presence => true #:uniqueness => true
   validates :character, :presence => true #:uniqueness => true
 
+has_many :attempts , :class_name => "Attempt", :foreign_key => "character_id"
 
+has_many :users, :through => :attempts
 
 end
