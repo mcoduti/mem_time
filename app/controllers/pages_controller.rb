@@ -1,4 +1,13 @@
 class PagesController < ApplicationController
+
+  def save
+    @attempt = Attempt.new
+    @attempt.correct = true
+    @attempt.user_id = current_user.id
+    @attempt.character_id = params["id"]
+    @attempt.save
+  end
+
   def dashboard
 
     @sampleRuby = 5
@@ -19,6 +28,7 @@ class PagesController < ApplicationController
     @characterArray = []
     @englishSpellingArray = []
     @translationArray = []
+    @character_idArray = []
 
     @attempts = Attempt.all
 
@@ -32,6 +42,10 @@ class PagesController < ApplicationController
 
     @attempts.each do |attempt|
       @translationArray.push(attempt.character.translation)
+    end
+
+    @attempts.each do |attempt|
+      @character_idArray.push(attempt.character.id)
     end
 
   end

@@ -166,7 +166,7 @@ var questionState;// = true;
 var splitMasterA = [];
 var easyArray = []//[,["你","nǐ",0,0,"you"],["是","shì",0,0,"am/are/is"],["的","de",0,0,"I + de = mine"],["小","xiǎo",0,0,"little"]];
 var medArray = []//[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
-var hardArray = [["<%= @characterArray[0] %>","<%= @translationArray[0] %>",0,0,"<%= @englishSpellingArray[0] %>"],["<%= @characterArray[1] %>","<%= @translationArray[1] %>",0,0,"<%= @englishSpellingArray[1] %>"],["<%= @characterArray[2] %>","<%= @translationArray[2] %>",0,0,"<%= @englishSpellingArray[3] %>"],["<%= @characterArray[3] %>","<%= @translationArray[3] %>",0,0,"<%= @englishSpellingArray[3] %>"]];
+var hardArray = [["<%= @characterArray[0] %>","<%= @translationArray[0] %>",0,0,"<%= @englishSpellingArray[0] %>","<%= @character_idArray[0] %>"],["<%= @characterArray[1] %>","<%= @translationArray[1] %>",0,0,"<%= @englishSpellingArray[1] %>","<%= @character_idArray[1] %>"],["<%= @characterArray[2] %>","<%= @translationArray[2] %>",0,0,"<%= @englishSpellingArray[2] %>","<%= @character_idArray[2] %>"],["<%= @characterArray[3] %>","<%= @translationArray[3] %>",0,0,"<%= @englishSpellingArray[3] %>","<%= @character_idArray[3] %>"]];
 
 
 var displayIndex = [0,1,4];
@@ -462,31 +462,31 @@ function Discard(array1, array2) {
 function RebalanceArrays() {
   for(i = hardArray.length; i > 0; i --) {      //first check for hardArray to easyArray
     if(hardArray[i-1][3]/hardArray[i-1][2] == 1) {
-      easyArray.push(hardArray[i-1].slice(0,5));
+      easyArray.push(hardArray[i-1].slice(0,6));
       hardArray.splice(i-1,1);
     }
   }
   for(i = hardArray.length; i > 0; i --) {      //2nd check for hardArray to medArray
     if(hardArray[i-1][3]/hardArray[i-1][2] > .5 && hardArray[i-1][2] > 8) {
-      medArray.push(hardArray[i-1].slice(0,5));
+      medArray.push(hardArray[i-1].slice(0,6));
       hardArray.splice(i-1,1);
     }
   }
   for(i = medArray.length; i > 0; i --) {     //1st check for medArray to easyArray
     if(medArray[i-1][3]/medArray[i-1][2] > .75 && medArray[i-1][2] > 8) {
-      easyArray.push(medArray[i-1].slice(0,5));
+      easyArray.push(medArray[i-1].slice(0,6));
       medArray.splice(i-1,1);
     }
   }
   for(i = medArray.length; i > 0; i --) {     //2nd check for medArray to hardArray
     if(medArray[i-1][3]/medArray[i-1][2] < .5 && medArray[i-1][2] > 0) {
-      hardArray.push(medArray[i-1].slice(0,5));
+      hardArray.push(medArray[i-1].slice(0,6));
       medArray.splice(i-1,1);
     }
   }
   for(i = easyArray.length; i > 0; i --) {      //1st check for easyArray to medArray
     if(easyArray[i-1][3]/easyArray[i-1][2] < .75 && easyArray[i-1][2] > 0) {
-      medArray.push(easyArray[i-1].slice(0,5));
+      medArray.push(easyArray[i-1].slice(0,6));
       easyArray.splice(i-1,1);
     }
   }
@@ -573,6 +573,14 @@ function ResolvePt1(){
 
 }
 function ResolvePt2(){
+
+$.ajax({
+  method: "POST",
+  url: "/save_game_data",
+  //data-remote:  "TRUE",
+  data: { id: newQuestion[0][5], location: "hello" }
+})
+
 
 /*$.ajax({
   method: "POST",
@@ -804,6 +812,7 @@ if(gameOver == false) {
   }
 
   ctx.fillText("Mem-co HL", 80, 20);
+  ctx.fillText("newQuestion[5]" + newQuestion[0][5], 80, 40)
 
   ctx.fillText(drawnCard+".", 50, 70);
   ctx.fillText(dealerCard, 150, 70);
@@ -1036,5 +1045,5 @@ NewGame();
   <%= @characterArray %> <br>
   <%= @englishSpellingArray %> <br>
   <%= @translationArray %><br>
-  <%= @characterArray[0] %>, <%= @translationArray[0] %>, 0, 0, <%= @englishSpellingArray[0] %>
+  <%= @characterArray[0] %>, <%= @translationArray[0] %>, 0, 0, <%= @englishSpellingArray[0] %>, <%= @character_idArray[0] %>
 </p>
