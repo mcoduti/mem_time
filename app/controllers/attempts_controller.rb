@@ -1,6 +1,8 @@
 class AttemptsController < ApplicationController
   def index
-    @attempts = Attempt.all
+    @attempts = Attempt.where(:user_id => current_user.id).all
+    @unique_id = Attempt.where(:user_id => current_user.id).select(:character_id).distinct
+
   end
 
   def show

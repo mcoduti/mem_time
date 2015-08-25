@@ -578,7 +578,7 @@ $.ajax({
   method: "POST",
   url: "/save_game_data",
   //data-remote:  "TRUE",
-  data: { id: newQuestion[0][5], location: "hello" }
+  data: { id: newQuestion[0][5], attempt: dataCorrect }
 })
 
 
@@ -1039,6 +1039,8 @@ NewGame();
 <button>Click me</button>
 
 <p>
+  Characters known for this user:  <%= @characters_known %><br>
+  Unique character id:  <%= @unique_id.count %><br>
   paragraph to hide
   <%= @sampleRuby %> <br>
   <%= @q1 %><br>
