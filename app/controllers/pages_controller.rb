@@ -14,9 +14,26 @@ class PagesController < ApplicationController
     @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
 
     @sampleRuby = current_user.id
-    if@characters_known < 3
-      @sampleRuby = "too few"
+
+    while @characters_known < 5 do
+      attempt = Attempt.new
+      attempt.correct = false
+      attempt.user_id = current_user.id
+      attempt.character_id = Character.take(@characters_known + 1).last.id
+      attempt.save
+      @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
     end
+
+
+    # if@characters_known < 5
+    #   @sampleRuby = "too few"
+    #   attempt = Attempt.new
+    #   attempt.correct = false
+    #   attempt.user_id = current_user.id
+    #   attempt.character_id = Character.take(@characters_known + 1).last.id
+    #   attempt.save
+    #end
+
     # while @characters_known < 5 do
     #   attempt = Attempt.new
     #   attempt.correct = false
@@ -45,7 +62,21 @@ class PagesController < ApplicationController
     @translationArray = []
     @character_idArray = []
 
-    @attempts = Attempt.all
+    @attempts = Attempt.where(:user_id => current_user.id).select(:character_id).distinct
+
+    @counter = 0
+
+    @attempts.each do |row|
+      if Attempt.where(:character_id => row.character_id, :user_id => current_user.id).count > 10
+        @counter = @counter + 1
+      end
+    end
+
+    # @attempts.each do |attempt|
+    #   if attempt.correct.count >10
+    #     @counter = @counter + 1
+    #   end
+    # end
 
     @attempts.each do |attempt|
       @characterArray.push(attempt.character.character)
