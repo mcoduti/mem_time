@@ -41,21 +41,54 @@ class PagesController < ApplicationController
       end
     end
 
-    @test = "gr"
-    if @hard.length < 3
+    if @hard.length < 4
       attempt = Attempt.new
       attempt.correct = false
       attempt.user_id = current_user.id
       attempt.character_id = Character.take(@characters_known + 1).last.id
       attempt.save
       @hard.push(attempt.character_id)
+      attempt = Attempt.new
+      attempt.correct = false
+      attempt.user_id = current_user.id
+      attempt.character_id = Character.take(@characters_known + 1).last.id
+      attempt.save
     end
 
+#@hard = [2,3,6,7,8,9]
+@max_hard = 4;
+@total_questions = 5;
+@question_char_id = [];
+@rand = rand(@max_hard);
 
-    @sampleRuby = current_user.id
+@sampleArray = [0,1,2]
 
+if @hard.length <= @max_hard
+  for i in 0..(@hard.length-1)
+    @question_char_id.push(@hard[i])
+  end
+else
+  for i in 0..@max_hard-1
+    @rand = rand(@hard.length)
+    @question_char_id.push(@hard[@rand])
+    @hard.slice!(@rand)
+  end
+end
 
+if @easy.length > 0
+  @rand = rand(@easy.length)
+  @question_char_id.push(@easy[@rand])
+end
 
+@sampleRuby = current_user.id
+
+@game_input = []
+
+for i in 0..@question_char_id.count-1
+  @game_input.push(Character.find_by(:id => @question_char_id[i]).character)
+  @game_input.push(Character.find_by(:id => @question_char_id[i]).english_spelling)
+  @game_input.push(Character.find_by(:id => @question_char_id[i]).translation)
+end
 
     # if@characters_known < 5
     #   @sampleRuby = "too few"
