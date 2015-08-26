@@ -1039,8 +1039,16 @@ NewGame();
 <button>Click me</button>
 
 <p>
+  @test: <%= @test %><br>
+  easy:  <%= @easy %><br>
+  hard:  <%= @hard %><br>
   Characters known:  <%= @characters_known %><br>
-  Unique character id:  <%= @unique_id.count %><br>
+  Unique character id count:  <%= @user_character.count %><br>
+  Unique character id: <%= @user_character %><br>
+  <% @user_character.each do |row| %>
+    <%= row.character_id %>
+  <% end %> <br>
+  unique_id_array:  <%= @unique_id_array %><br>
   paragraph to hide<br>
   counter:  <%= @counter %><br>
   <%= @sampleRuby %> <br>

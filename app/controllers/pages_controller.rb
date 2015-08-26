@@ -9,11 +9,17 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @unique_id = Attempt.where(:user_id => current_user.id).select(:character_id).distinct
+    @user_character = Attempt.where(:user_id => current_user.id).select(:character_id).distinct
     @character = Character.all
     @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
 
-    @sampleRuby = current_user.id
+    @unique_id_array = []
+
+    @unique_id_0 = Attempt.where(:character_id => 0)
+
+    @user_character.each do |row|
+      @unique_id_array.push(row.character_id)
+    end
 
     while @characters_known < 5 do
       attempt = Attempt.new
@@ -23,6 +29,32 @@ class PagesController < ApplicationController
       attempt.save
       @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
     end
+
+    @easy = []
+    @hard = []
+
+    @user_character.each do |row|
+      if Attempt.where(:character_id => row.character_id, :user_id => current_user).count > 10 && (Attempt.where(:character_id => row.character_id, :user_id => current_user, :correct => true).count.to_f/Attempt.where(:character_id => row.character_id, :user_id => current_user).count.to_f) > 0.7
+        @easy.push(row.character_id)
+      else
+        @hard.push(row.character_id)
+      end
+    end
+
+    @test = "gr"
+    if @hard.length < 3
+      attempt = Attempt.new
+      attempt.correct = false
+      attempt.user_id = current_user.id
+      attempt.character_id = Character.take(@characters_known + 1).last.id
+      attempt.save
+      @hard.push(attempt.character_id)
+    end
+
+
+    @sampleRuby = current_user.id
+
+
 
 
     # if@characters_known < 5
