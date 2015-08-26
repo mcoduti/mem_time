@@ -166,7 +166,12 @@ var questionState;// = true;
 var splitMasterA = [];
 var easyArray = []//[,["你","nǐ",0,0,"you"],["是","shì",0,0,"am/are/is"],["的","de",0,0,"I + de = mine"],["小","xiǎo",0,0,"little"]];
 var medArray = []//[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
-var hardArray = [["<%= @game_input[0] %>","<%= @translationArray[0] %>",0,0,"<%= @englishSpellingArray[0] %>","<%= @character_idArray[0] %>"],["<%= @characterArray[1] %>","<%= @translationArray[1] %>",0,0,"<%= @englishSpellingArray[1] %>","<%= @character_idArray[1] %>"],["<%= @characterArray[2] %>","<%= @translationArray[2] %>",0,0,"<%= @englishSpellingArray[2] %>","<%= @character_idArray[2] %>"],["<%= @characterArray[3] %>","<%= @translationArray[3] %>",0,0,"<%= @englishSpellingArray[3] %>","<%= @character_idArray[3] %>"]];
+var hardArray = [["<%#= @game_input[0] %>","<%#= @game_input[1] %>",0,0,"<%#= @game_input[2] %>","<%#= @game_input[3] %>"],
+                ["<%#= @game_input[4] %>","<%#= @game_input[5] %>",0,0,"<%#= @game_input[6] %>","<%#= @game_input[7] %>"],
+                ["<%#= @game_input[8] %>","<%#= @game_input[9] %>",0,0,"<%#= @game_input[10] %>","<%#= @game_input[11] %>"],
+                ["<%#= @game_input[12] %>","<%#= @game_input[13] %>",0,0,"<%#= @game_input[14] %>","<%#= @game_input[15] %>"],
+                ["<%#= @game_input[16] %>","<%#= @game_input[17] %>",0,0,"<%#= @game_input[18] %>","<%#= @game_input[19] %>"],
+                ];
 
 
 var displayIndex = [0,1,4];
@@ -1039,24 +1044,24 @@ NewGame();
 <button>Click me</button>
 
 <p>
-  @game_input:  <%= @game_input %>
-  @rand:  <%= @rand %><br>
-  @question_char_id: <%= @question_char_id %><br>
-  easy:  <%= @easy %><br>
-  hard:  <%= @hard %><br>
-  Characters known:  <%= @characters_known %><br>
-  Unique character id count:  <%= @user_character.count %><br>
-  Unique character id: <%= @user_character %><br>
-  <% @user_character.each do |row| %>
-    <%= row.character_id %>
-  <% end %> <br>
-  unique_id_array:  <%= @unique_id_array %><br>
+  @game_input:  <%#= @game_input %>
+  @rand:  <%#= @rand %><br>
+  @question_char_id: <%#= @question_char_id %><br>
+  easy:  <%#= @easy %><br>
+  hard:  <%#= @hard %><br>
+  Characters known:  <%#= @characters_known %><br>
+  Unique character id count:  <%#= @user_character.count %><br>
+  Unique character id: <%#= @user_character %><br>
+  <%# @user_character.each do |row| %>
+    <%#= row.character_id %>
+  <%# end %> <br>
+  unique_id_array:  <%#= @unique_id_array %><br>
   paragraph to hide<br>
-  counter:  <%= @counter %><br>
-  <%= @sampleRuby %> <br>
-  <%= @q1 %><br>
-  <%= @characterArray %> <br>
-  <%= @englishSpellingArray %> <br>
-  <%= @translationArray %><br>
-  <%= @characterArray[0] %>, <%= @translationArray[0] %>, 0, 0, <%= @englishSpellingArray[0] %>, <%= @character_idArray[0] %>
+  counter:  <%#= @counter %><br>
+  <%#= @sampleRuby %> <br>
+  <%#= @q1 %><br>
+  <%#= @characterArray %> <br>
+  <%#= @englishSpellingArray %> <br>
+  <%#= @translationArray %><br>
+  <%#= @characterArray[0] %>, <%#= @translationArray[0] %>, 0, 0, <%#= @englishSpellingArray[0] %>, <%#= @character_idArray[0] %>
 </p>
