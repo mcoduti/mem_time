@@ -5,7 +5,14 @@ class PagesController < ApplicationController
     @attempt.correct = params["attempt"]
     @attempt.user_id = current_user.id
     @attempt.character_id = params["id"]
-    @attempt.save
+
+    respond_to do |format|
+      if @attempt.save
+        format.js {render 'create'}
+      else
+        format.js {render 'error'}
+      end
+    end
   end
 
   def dashboard

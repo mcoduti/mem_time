@@ -24,10 +24,12 @@ class AttemptsController < ApplicationController
     @attempt.user_id = params[:user_id]
     @attempt.character_id = params[:character_id]
 
-    if @attempt.save
-      redirect_to "/attempts", :notice => "Attempt created successfully."
-    else
-      render 'new'
+    respond_to do |format|
+      if @attempt.save
+        format.html {redirect_to "/attempts", :notice => "Attempt created successfully."}
+      else
+        format.html {render 'new'}
+      end
     end
   end
 
