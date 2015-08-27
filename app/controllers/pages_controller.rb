@@ -79,7 +79,7 @@ class PagesController < ApplicationController
 
     @easy = []
     @hard = []
-
+    @user_character = Attempt.where(:user_id => current_user.id).select(:character_id).distinct
     @user_character.each do |row|
       if Attempt.where(:character_id => row.character_id, :user_id => current_user).count > 10 && (Attempt.where(:character_id => row.character_id, :user_id => current_user, :correct => true).count.to_f/Attempt.where(:character_id => row.character_id, :user_id => current_user).count.to_f) > 0.7
         @easy.push(row.character_id)
@@ -88,23 +88,21 @@ class PagesController < ApplicationController
       end
     end
 
-    @hard_length = @hard.length
-
-    # if @hard.length < 4
-    #   attempt = Attempt.new
-    #   attempt.correct = false
-    #   attempt.user_id = current_user.id
-    #   attempt.character_id = Character.take(@characters_known + 1).last.id
-    #   attempt.save
-    #   @hard.push(attempt.character_id)
-    #   @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
-    #   attempt = Attempt.new
-    #   attempt.correct = false
-    #   attempt.user_id = current_user.id
-    #   attempt.character_id = Character.take(@characters_known + 1).last.id
-    #   attempt.save
-    #   @hard.push(attempt.character_id)
-    # end
+    if @hard.length < 4
+      attempt = Attempt.new
+      attempt.correct = false
+      attempt.user_id = current_user.id
+      attempt.character_id = Character.take(@characters_known + 1).last.id
+      attempt.save
+      @hard.push(attempt.character_id)
+      @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
+      attempt = Attempt.new
+      attempt.correct = false
+      attempt.user_id = current_user.id
+      attempt.character_id = Character.take(@characters_known + 1).last.id
+      attempt.save
+      @hard.push(attempt.character_id)
+    end
 
 #@hard = [2,3,6,7,8,9]
 @max_hard = 5;
