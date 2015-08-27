@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   post "/save_game_data", :controller => "pages", :action => "save"
 
+  get "/game_page", :controller => "pages", :action => "show"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
