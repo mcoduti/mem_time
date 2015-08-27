@@ -779,7 +779,7 @@ if(gameOver == false) {
     }
     ctx.fillText(discard[i],600+ 50*j,70+20*i - 260*j)
   }*/
-
+/*
   ctx.fillText("concMasterARand:  " + concMasterARand, 300, 200);
   ctx.fillText("SplitMasterARand: " + SplitMasterARand, 300, 210);
   ctx.fillText("masterAIndex: " + masterAIndex, 300, 220);
@@ -815,39 +815,40 @@ if(gameOver == false) {
   ctx.fillText("hardArray", 700, 13);
   for(i = 0; i < hardArray.length; i ++) {
     ctx.fillText(hardArray[i][0] + " " + hardArray[i][1] + " " + hardArray[i][2] + " " + hardArray[i][3] + " " + hardArray[i][4], 700, 26 + 13 *i)
-  }
+  }*/
 
-  ctx.fillText("Mem-co HL", 80, 20);
+  ctx.fillText("Mem-co HL", 110, 20);
 
-  ctx.fillText(drawnCard+".", 50, 70);
-  ctx.fillText(dealerCard, 150, 70);
+  ctx.fillText(drawnCard+".", 62, 70);
+  ctx.fillText(dealerCard, 162, 70);
 
-  ctx.fillText("Bet", 50, 150);
-  ctx.fillText("low", 50, 165);
-  ctx.fillText("Bet", 150, 150);
-  ctx.fillText("high", 150, 165);
+  ctx.fillText("Bet", 63, 150);
+  ctx.fillText("low", 63, 165);
+  ctx.fillText("Bet", 163, 150);
+  ctx.fillText("high", 163, 165);
 
-  ctx.fillText(textResponse, 60 ,120);
+  ctx.fillText(textResponse, 80 ,120);
   //ctx.fillText(textResponse2, 60, 160);
   if (adjusted != "") {
-    ctx.fillText(Math.abs(adjusted) + " pts!", 120, 120);
+    ctx.fillText(Math.abs(adjusted) + " pts!", 140, 120);
   }
 
-  ctx.fillText("Question: "+ newQuestion[0][displayIndex[0]], 75, 200);
-  ctx.fillText(response, 90, 215);
+  ctx.fillText("Question: "+ newQuestion[0][displayIndex[0]], 110, 200);
+  ctx.fillText(response, 110, 215);
 
-  ctx.fillText(newAnswerBank[0][displayIndex[1]], 100, 245);
-  ctx.fillText(newAnswerBank[1][displayIndex[1]], 100, 285);
-  ctx.fillText(newAnswerBank[2][displayIndex[1]], 100, 325);
+  ctx.textAlign = "center"
+  ctx.fillText(newAnswerBank[0][displayIndex[1]], 110, 245);
+  ctx.fillText(newAnswerBank[1][displayIndex[1]], 110, 285);
+  ctx.fillText(newAnswerBank[2][displayIndex[1]], 110 , 325);
 
   //ctx.fillText(a1State, 250, 220);
   //ctx.fillText(a2State, 250, 245);
   //ctx.fillText(a3State, 250, 270);
 
-  ctx.fillText("score: " + chips, 80, 395);
-  ctx.fillText("Power: " + power, 80, 410);
+  ctx.fillText("score: " + chips, 110, 395);
+  ctx.fillText("Power: " + power, 110, 410);
 
-  ctx.fillText("continue", 85, 365);
+  ctx.fillText("continue", 110, 365);
 
   //ctx.fillRect(270, 285, 20,20);
 
