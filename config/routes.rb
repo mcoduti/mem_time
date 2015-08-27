@@ -1,36 +1,36 @@
 Rails.application.routes.draw do
   # Routes for the Attempt resource:
   # CREATE
-  get "/attempts/new", :controller => "attempts", :action => "new"
-  post "/create_attempt", :controller => "attempts", :action => "create"
+  # get "/attempts/new", :controller => "attempts", :action => "new"
+  # post "/create_attempt", :controller => "attempts", :action => "create"
 
   # READ
   get "/attempts", :controller => "attempts", :action => "index"
-  get "/attempts/:id", :controller => "attempts", :action => "show"
+  # get "/attempts/:id", :controller => "attempts", :action => "show"
 
   # UPDATE
-  get "/attempts/:id/edit", :controller => "attempts", :action => "edit"
-  post "/update_attempt/:id", :controller => "attempts", :action => "update"
+  # get "/attempts/:id/edit", :controller => "attempts", :action => "edit"
+  # post "/update_attempt/:id", :controller => "attempts", :action => "update"
 
   # DELETE
-  get "/delete_attempt/:id", :controller => "attempts", :action => "destroy"
+  # get "/delete_attempt/:id", :controller => "attempts", :action => "destroy"
   #------------------------------
 
   # Routes for the Character resource:
   # CREATE
-  get "/characters/new", :controller => "characters", :action => "new"
-  post "/create_character", :controller => "characters", :action => "create"
+  # get "/characters/new", :controller => "characters", :action => "new"
+  # post "/create_character", :controller => "characters", :action => "create"
 
-  # READ
-  get "/characters", :controller => "characters", :action => "index"
-  get "/characters/:id", :controller => "characters", :action => "show"
+  # # READ
+  # get "/characters", :controller => "characters", :action => "index"
+  # get "/characters/:id", :controller => "characters", :action => "show"
 
-  # UPDATE
-  get "/characters/:id/edit", :controller => "characters", :action => "edit"
-  post "/update_character/:id", :controller => "characters", :action => "update"
+  # # UPDATE
+  # get "/characters/:id/edit", :controller => "characters", :action => "edit"
+  # post "/update_character/:id", :controller => "characters", :action => "update"
 
-  # DELETE
-  get "/delete_character/:id", :controller => "characters", :action => "destroy"
+  # # DELETE
+  # get "/delete_character/:id", :controller => "characters", :action => "destroy"
   #------------------------------
 
   devise_for :users
