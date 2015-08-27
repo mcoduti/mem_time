@@ -1,10 +1,13 @@
 <head>
+<a href="/">Back to home</a>
     <canvas id="game"></canvas>
 
     <style>
       *{ margin: 0px; padding: 0px; }
       canvas{ display: block; margin: 0px auto; border: 1px solid #000;}
     </style>
+
+
 
 <script>
 
@@ -1028,38 +1031,3 @@ NewGame();
 
 </script>
 </head>
-
-<!-- Validation failure messages -->
-<script>
-    $(document).ready(function(){
-         $("button").click(function(){
-            $("p").hide();
-         });
-     });
-</script>
-
-
-<button>Click me</button>
-
-<p>
-  @game_input:  <%= @game_input %>
-  @rand:  <%= @rand %><br>
-  @question_char_id: <%= @question_char_id %><br>
-  easy:  <%= @easy %><br>
-  hard:  <%= @hard %><br>
-  Characters known:  <%= @characters_known %><br>
-  Unique character id count:  <%= @user_character.count %><br>
-  Unique character id: <%= @user_character %><br>
-  <% @user_character.each do |row| %>
-    <%= row.character_id %>
-  <% end %> <br>
-  unique_id_array:  <%= @unique_id_array %><br>
-  paragraph to hide<br>
-  counter:  <%= @counter %><br>
-  <%= @sampleRuby %> <br>
-  <%= @q1 %><br>
-  <%= @characterArray %> <br>
-  <%= @englishSpellingArray %> <br>
-  <%= @translationArray %><br>
-  <%= @characterArray[0] %>, <%= @translationArray[0] %>, 0, 0, <%= @englishSpellingArray[0] %>, <%= @character_idArray[0] %>
-</p>
