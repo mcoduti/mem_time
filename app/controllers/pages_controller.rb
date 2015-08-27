@@ -209,6 +209,31 @@ end
     end
   end
 
+  def savepoints
+
+    @chips = params["chipswon"].to_i
+
+    if current_user.xp == nil
+      z = current_user
+      z.xp = 0
+      z.save
+    end
+
+      z = current_user
+      z.xp = z.xp + @chips
+      z.save
+
+
+    respond_to do |format|
+      if @chips
+        format.js {render 'create'}
+      else
+        format.js {render 'error'}
+      end
+    end
+  end
+
+
   def dashboard
   end
 end

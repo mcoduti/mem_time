@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   root "pages#dashboard"
 
   post "/save_game_data", :controller => "pages", :action => "save"
+  post "/save_points", :controller => "pages", :action => "savepoints"
 
   get "/game_page", :controller => "pages", :action => "show"
 

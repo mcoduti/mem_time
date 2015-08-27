@@ -1,5 +1,7 @@
 <head>
-<a href="https://gentle-refuge-1050.herokuapp.com/">Back to home</a><canvas id="game"></canvas>
+<a href="/">Back to home</a> &nbsp &nbsp &nbsp &nbsp<a href="/game_page">Restart game</a>
+
+<canvas id="game"></canvas>
 
     <style>
       *{ margin: 0px; padding: 0px; }
@@ -859,8 +861,11 @@ if(gameOver == false) {
 
 } else {
   ctx.fillStyle = "#200";
-  ctx.font = Height/38 +"px "+ "Calibri";
-  ctx.fillText(chips + "added to your profile", 20, 200);
+  ctx.font = "700 13px Arial";
+  ctx.textAlign = "center"
+  ctx.fillText("Congratulations!!!", 110, 160);
+  ctx.fillText(chips+ " points", 110, 180)
+  ctx.fillText("added to your profile!", 110, 200);
 }
 
 }
@@ -1000,6 +1005,11 @@ function Loop(){
 
   if (deck.length == 0) {
     deck= RandArr(discard);
+    $.ajax({
+     method: "POST",
+      url: "/save_points",
+      data: { chipswon: chips}
+      })
     gameOver = true;
   }
   init = requestAnimFrame(Loop);
