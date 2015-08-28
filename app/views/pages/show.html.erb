@@ -1,5 +1,15 @@
 <head>
-<a href="/">Back to home</a> &nbsp &nbsp &nbsp &nbsp<a href="/game_page">Restart game</a>
+<style>
+h1 {text-align:center;}
+p {text-align:center;}
+a {text-align:center;}
+</style>
+
+<br>
+<p>
+<a href="/">Back to home</a><br><a href="/game_page">Restart game</a><br><a href="/attempts">Knowledge unlocked</a>
+</p>
+
 
 <canvas id="game"></canvas>
 
@@ -730,7 +740,7 @@ if(gameOver == false) {
   ctx.stroke();
 
   ctx.fillStyle = "#200";
-  ctx.font = "700 13px Arial";
+  ctx.font = "14px Arial";
 
   ctx.fillStyle = "#999";  //alt color is "#939393"
 
@@ -819,9 +829,9 @@ if(gameOver == false) {
     ctx.fillText(hardArray[i][0] + " " + hardArray[i][1] + " " + hardArray[i][2] + " " + hardArray[i][3] + " " + hardArray[i][4], 700, 26 + 13 *i)
   }*/
 
-  ctx.fillText("Mem-co HL", 110, 20);
+  ctx.fillText("Mem: 小苹果", 110, 20);
 
-  ctx.fillText(drawnCard+".", 62, 70);
+  ctx.fillText(drawnCard, 62, 70);
   ctx.fillText(dealerCard, 162, 70);
 
   ctx.fillText("Bet", 63, 150);
