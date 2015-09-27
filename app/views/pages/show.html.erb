@@ -558,7 +558,7 @@ var easyArray =  [["<%= @game_input[0] %>","<%= @game_input[1] %>",0,0,"<%= @gam
 
 var medArray = []//[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
 var hardArray = [];
-var gameMessage = "gmessage";
+var gameMessage = "";
 
 var displayIndex = [0,1,4];
 displayIndex = RandArr(displayIndex);
@@ -1146,7 +1146,7 @@ if(gameOver == false) {
   ctx.stroke();
 
   ctx.fillStyle = "#200";
-  ctx.font = "14px Arial";
+  ctx.font = "16px Arial";
 
     if(greenBoxOn) {
   ctx.fillStyle = "#00FF00";
@@ -1240,7 +1240,7 @@ if(gameOver == false) {
     ctx.fillText(hardArray[i][0] + " " + hardArray[i][1] + " " + hardArray[i][2] + " " + hardArray[i][3] + " " + hardArray[i][4], 700, 26 + 13 *i)
   }*/
 
-  ctx.fillText("Mem: 小苹果", 110, 20);
+  ctx.fillText("High-Low: 小苹果", 110, 20);
   ctx.fillText(gameMessage, 110, 430);
   //ctx.fillText(drawnCard, 62, 70);
 
@@ -1256,19 +1256,19 @@ if(gameOver == false) {
   ctx.fillText("Bet", 163, 150);
   ctx.fillText("high", 163, 165);
 
-  ctx.fillText(textResponse, 80 ,123);
+  ctx.fillText(textResponse, 80 ,124);
   //ctx.fillText(textResponse2, 60, 160);
   if (adjusted != "") {
-    ctx.fillText(Math.abs(adjusted) + " pts!", 140, 123);
+    ctx.fillText(Math.abs(adjusted) + " pts!", 140, 124);
   }
 
   ctx.fillText("Question: "+ newQuestion[0][displayIndex[0]], 110, 200);
   ctx.fillText(response, 110, 215);
 
   ctx.textAlign = "center"
-  ctx.fillText(newAnswerBank[0][displayIndex[1]], 110, 245);
-  ctx.fillText(newAnswerBank[1][displayIndex[1]], 110, 285);
-  ctx.fillText(newAnswerBank[2][displayIndex[1]], 110 , 325);
+  ctx.fillText(newAnswerBank[0][displayIndex[1]], 110, 248);
+  ctx.fillText(newAnswerBank[1][displayIndex[1]], 110, 287);
+  ctx.fillText(newAnswerBank[2][displayIndex[1]], 110 , 327);
 
   //ctx.fillText(a1State, 250, 220);
   //ctx.fillText(a2State, 250, 245);
@@ -1277,7 +1277,7 @@ if(gameOver == false) {
   ctx.fillText("score: " + chips, 110, 395);
   ctx.fillText("Power: " + power, 110, 410);
 
-  ctx.fillText("continue", 110, 365);
+  ctx.fillText("continue", 110, 367);
 
   //ctx.fillRect(270, 285, 20,20);
 

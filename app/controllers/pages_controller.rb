@@ -233,6 +233,9 @@ end
     end
   end
 
+def update_page
+end
+
 
   def dashboard
   end
