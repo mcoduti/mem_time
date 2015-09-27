@@ -22,34 +22,329 @@ a {text-align:center;}
 
 <script>
 
+/*
+var imageObjects2 = [];
 
-var hirigana = [["あ","a",0,0,"id"],["い","i",0,0,"id"],["う","u",0,0,"id"],["え","e",0,0,"id"],["お","o",0,0,"id"],
-    ["か","ka",0,0,"id"],["き","ki",0,0,"id"],["く","ku",0,0,"id"],["け","ke",0,0,"id"],["こ","ko",0,0,"id"],
-    ["が","ga",0,0,"id"],["ぎ","gi",0,0,"id"],["ぐ","gu",0,0,"id"],["げ","ge",0,0,"id"],["ご","go",0,0,"id"],
-    ["さ","sa",0,0,"id"],["し","shi",0,0,"id"],["す","su",0,0,"id"],["せ","se",0,0,"id"],["そ","so",0,0,"id"],
-    ["ざ","za",0,0,"id"],["じ","ji",0,0,"id"],["ず","zu",0,0,"id"],["ぜ","ze",0,0,"id"],["ぞ","zo",0,0,"id"],
-    ["た","ta",0,0,"id"],["ち","chi",0,0,"id"],["つ","tsu",0,0,"id"],["て","te",0,0,"id"],["と","to",0,0,"id"],
-    ["だ","da",0,0,"id"],["ぢ","ji",0,0,"id"],["づ","zu",0,0,"id"],["で","de",0,0,"id"],["ど", "do",0,0,"id"],
-    ["な","na",0,0,"id"],["に","ni",0,0,"id"],["ぬ","nu",0,0,"id"],["ね","ne",0,0,"id"],["の","no",0,0,"id"],
-    ["は","ha",0,0,"id"],["ひ","hi",0,0,"id"],["ふ","fu",0,0,"id"],["へ","he",0,0,"id"],["ほ","ho",0,0,"id"],
-    ["ば","ba",0,0,"id"],["び","bi",0,0,"id"],["ぶ","bu",0,0,"id"],["べ","be",0,0,"id"],["ぼ","bo",0,0,"id"],
-    ["ぱ","pa",0,0,"id"],["ぴ","pi",0,0,"id"],["ぷ","pu",0,0,"id"],["ぺ","pe",0,0,"id"],["ぽ","po",0,0,"id"],
-    ["ま","ma",0,0,"id"],["み","mi",0,0,"id"],["む","mu",0,0,"id"],["め","me",0,0,"id"],["も","mo",0,0,"id"],
-    ["や","ya",0,0,"id"],["ゆ","yu",0,0,"id"],["よ","yo",0,0,"id"],
-    ["ら","ra",0,0,"id"],["り","ri",0,0,"id"],["る","ru",0,0,"id"],["れ","re",0,0,"id"],["ろ","ro",0,0,"id"],
-    ["わ","wa",0,0,"id"],["を","wo",0,0,"id"],["ん","n/m",0,0,"id"],
-    ["きゃ","kya",0,0,"id"],["きゅ","kyu",0,0,"id"],["きょ","kyo",0,0,"id"],
-    ["ぎゃ","gya",0,0,"id"],["ぎゅ","gyu",0,0,"id"],["ぎょ","gyo",0,0,"id"],
-    ["しゃ","sha",0,0,"id"],["しゅ","shu",0,0,"id"],["しょ","sho",0,0,"id"],
-    ["じゃ","ja",0,0,"id"],["じゅ","ju",0,0,"id"],["じょ","jo",0,0,"id"],
-    ["ちゃ","cha",0,0,"id"],["ちゅ","chu",0,0,"id"],["ちょ","cho",0,0,"id"],
-    ["にゃ","nya",0,0,"id"],["にゅ","nyu",0,0,"id"],["にょ","nyo",0,0,"id"],
-    ["ひゃ","hya",0,0,"id"],["ひゅ","hyu",0,0,"id"],["ひょ ","hyo",0,0,"id"],
-    ["びゃ","bya",0,0,"id"],["びゅ","byu",0,0,"id"],["びょ","byo",0,0,"id"],
-    ["ぴゃ","pya",0,0,"id"],["ぴゅ","pyu",0,0,"id"],["ぴょ","pyo",0,0,"id"],
-    ["みゃ","mya",0,0,"id"],["みゅ","myu",0,0,"id"],["みょ","myo",0,0,"id"],
-    ["りゃ","rya",0,0,"id"],["りゅ","ryu",0,0,"id"],["りょ","ryo",0,0,"id"]];
 
+for (i = 0; i < 52; i++){
+  imageObjects2.push(new Image());
+}
+
+function notify_complete()
+{
+    alert('The image has been loaded into the browser cache.');
+}
+
+
+function load_image() {
+  for (i = 0; i < 52; i ++) {
+    imageObjects2[i].onload = notify_complete();
+  }
+}
+
+load_image();
+
+
+
+var my_image = new Image();
+
+// we will call this function when the image has finished loading
+function notify_complete()
+{
+    alert('The image has been loaded into the browser cache.');
+}
+
+function load_image()
+{
+    // call the notify_complete function when the image has loaded
+    my_image.onload = notify_complete;
+
+    // load the image
+    my_image.src = 'untitled.bmp';
+  GoGoGame();
+}
+
+load_image();
+
+
+var imageObjects = [];
+var startKey = false;
+
+function loadImages(images) {
+
+    var loaded = 0;
+    //startKey = true;
+    for (var i = 0; i < images.length; i++) {
+        var img = new Image();
+        img.onload = function() {
+  loaded = loaded + 1;
+  alert(loaded);
+  if(loaded == 52) {
+    alert(loaded);
+    startKey = true;
+    alert(startKey);
+    GoGoGame();
+  };
+  }
+        //img.addEventListener("load", onLoad);
+        img.src = images[i];
+        imageObjects.push(img);
+
+
+    }
+
+}
+
+
+loadImages([  "2d.svg", '2c.svg', '2s.svg', '2h.svg',
+    '3d.svg', '3c.svg', '3s.svg', '3h.svg',
+    '4d.svg', '4c.svg', '4s.svg', '4h.svg',
+    '5d.svg', '5c.svg', '5s.svg', '5h.svg',
+    '6d.svg', '6c.svg', '6s.svg', '6h.svg',
+    '7d.svg', '7c.svg', '7s.svg', '7h.svg',
+    '8d.svg', '8c.svg', '8s.svg', '8h.svg',
+    '9d.svg', '9c.svg', '9s.svg', '9h.svg',
+    '10d.svg', '10c.svg', '10s.svg', '10h.svg',
+    'jackD1.svg', 'jackC1.svg', 'jackS1.svg', 'jackH1.svg',
+    'queenD1.svg', 'queenC1.svg', 'queenS1.svg', 'queenH1.svg',
+    'kingD1.svg', 'kingC1.svg', 'kingS1.svg', 'kingH1.svg',
+     'aceD.svg',  'aceC.svg', 'aceS.svg', 'aceH.svg'
+  ]);
+
+*/
+
+var imgLoadCounter = 0;
+var imgLoadCounter2 = 0;
+
+function loadTracker() {
+  imgLoadCounter2 = imgLoadCounter2 + 1;
+  if(imgLoadCounter2 == 52) {
+    //alert("reached 52!");
+    NewGame();
+  }
+}
+
+function notify_complete() {
+  //alert('the img has been loaded');
+  imgLoadCounter = imgLoadCounter + 1;
+  //alert(imgLoadCounter);
+  if(imgLoadCounter == 52) {
+    //NewGame();
+  }
+}
+
+function load_image(variable, source){
+  variable.onload = notify_complete;
+  variable.src = source;
+}
+
+var d2 = new Image();
+d2.onload = loadTracker;
+d2.src =  "../2d.svg";
+
+var c2 = new Image();
+c2.onload = loadTracker;
+c2.src =  '../2c.svg';
+
+var s2 = new Image();
+s2.onload = loadTracker;
+s2.src =  '../2s.svg';
+
+var h2 = new Image();
+h2.onload = loadTracker;
+h2.src =  '../2h.svg';
+
+var d3 = new Image();
+d3.onload = loadTracker;
+d3.src =   '../3d.svg';
+
+var c3 = new Image();
+c3.onload = loadTracker;
+c3.src =  '../3c.svg';
+
+var s3 = new Image();
+s3.onload = loadTracker;
+s3.src =  '../3s.svg';
+
+var h3 = new Image();
+h3.onload = loadTracker;
+h3.src =  '../3h.svg';
+
+var d4 = new Image();
+d4.onload = loadTracker;
+d4.src =  '../4d.svg';
+
+var c4 = new Image();
+c4.onload = loadTracker;
+c4.src =  '../4c.svg';
+
+var s4 = new Image();
+s4.onload = loadTracker;
+s4.src =  '../4s.svg';
+
+var h4 = new Image();
+h4.onload = loadTracker;
+h4.src =  '../4h.svg';
+
+var d5 = new Image();
+d5.onload = loadTracker;
+d5.src =  '../5d.svg';
+
+var c5 = new Image();
+c5.onload = loadTracker;
+c5.src =  '../5c.svg';
+
+var s5 = new Image();
+s5.onload = loadTracker;
+s5.src =  '../5s.svg';
+
+var h5 = new Image();
+h5.onload = loadTracker;
+h5.src =  '../5h.svg';
+
+var d6 = new Image();
+d6.onload = loadTracker;
+d6.src =  '../6d.svg';
+
+var c6 = new Image();
+c6.onload = loadTracker;
+c6.src =  '../6c.svg';
+
+var s6 = new Image();
+s6.onload = loadTracker;
+s6.src =  '../6s.svg';
+
+var h6 = new Image();
+h6.onload = loadTracker;
+h6.src =  '../6h.svg';
+
+var d7 = new Image();
+d7.onload = loadTracker;
+d7.src =  '../7d.svg';
+
+var c7 = new Image();
+c7.onload = loadTracker;
+c7.src =  '../7c.svg';
+
+var s7 = new Image();
+s7.onload = loadTracker;
+s7.src =  '../7s.svg';
+
+var h7 = new Image();
+h7.onload = loadTracker;
+h7.src =  '../7h.svg';
+
+var d8 = new Image();
+d8.onload = loadTracker;
+d8.src =  '../8d.svg';
+
+var c8 = new Image();
+c8.onload = loadTracker;
+c8.src =  '../8c.svg';
+
+var s8 = new Image();
+s8.onload = loadTracker;
+s8.src =  '../8s.svg';
+
+var h8 = new Image();
+h8.onload = loadTracker;
+h8.src =  '../8h.svg';
+
+var d9 = new Image();
+d9.onload = loadTracker;
+d9.src =  '../9d.svg';
+
+var c9 = new Image();
+c9.onload = loadTracker;
+c9.src =  '../9c.svg';
+
+var s9 = new Image();
+s9.onload = loadTracker;
+s9.src =  '../9s.svg';
+
+var h9 = new Image();
+h9.onload = loadTracker;
+h9.src =  '../9h.svg';
+
+var d10 = new Image();
+d10.onload = loadTracker;
+d10.src =  '../10d.svg';
+
+var c10 = new Image();
+c10.onload = loadTracker;
+c10.src =  '../10c.svg';
+
+var s10 = new Image();
+s10.onload = loadTracker;
+s10.src =  '../10s.svg';
+
+var h10 = new Image();
+h10.onload = loadTracker;
+h10.src =  '../10h.svg';
+
+var jackD1 = new Image();
+jackD1.onload = loadTracker;
+jackD1.src =  '../jackD1.svg';
+
+var jackC1 = new Image();
+jackC1.onload = loadTracker;
+jackC1.src =  '../jackC1.svg';
+
+var jackS1 = new Image();
+jackS1.onload = loadTracker;
+jackS1.src =  '../jackS1.svg';
+
+var jackH1 = new Image();
+jackH1.onload = loadTracker;
+jackH1.src =  '../jackH1.svg';
+
+var queenD1 = new Image();
+queenD1.onload = loadTracker;
+queenD1.src =  '../queenD1.svg';
+
+var queenC1 = new Image();
+queenC1.onload = loadTracker;
+queenC1.src =  '../queenC1.svg';
+
+var queenS1 = new Image();
+queenS1.onload = loadTracker;
+queenS1.src =  '../queenS1.svg';
+
+var queenH1 = new Image();
+queenH1.onload = loadTracker;
+queenH1.src =  '../queenH1.svg';
+
+var kingD1 = new Image();
+kingD1.onload = loadTracker;
+kingD1.src =  '../kingD1.svg';
+
+var kingC1 = new Image();
+kingC1.onload = loadTracker;
+kingC1.src =  '../kingC1.svg';
+
+var kingS1 = new Image();
+kingS1.onload = loadTracker;
+kingS1.src =  '../kingS1.svg';
+
+var kingH1 = new Image();
+kingH1.onload = loadTracker;
+kingH1.src =  '../kingH1.svg';
+
+var aceD = new Image();
+aceD.onload = loadTracker;
+aceD.src =  '../aceD.svg';
+
+var aceC = new Image();
+aceC.onload = loadTracker;
+aceC.src =  '../aceC.svg';
+
+var aceS = new Image();
+aceS.onload = loadTracker;
+aceS.src =  '../aceS.svg';
+
+var aceH = new Image();
+aceH.onload = loadTracker;
+aceH.src =  '../aceH.svg';
 
 
 var result = "default";
@@ -120,7 +415,7 @@ if (a1 == question) {
 }
 
 var demo;
-var Width = 230;  //800
+var Width = 225;  //800
 
 
  var Height = 450;
@@ -142,17 +437,91 @@ var cardArray = [];
 var mYcd;  //mouseYcoord
 var mXcd;  //mouseXcoord
 var counter = 0;
+greenBoxX = 20;
+greenBoxY = 20;
+greenBoxOn = false;
 RectX = 50;
 RectY = 50;
 var keyIn;
 var dragok = false;
-var deck =  [[1,"h"],[2,"h"],[3,"h"],[4,"h"],[5,"h"],[6,"h"],[7,"h"],[8,"h"],[9,"h"],[10,"h"],[11,"h"],[12,"h"],[13,"h"],
-    [1,"c"],[2,"c"],[3,"c"],[4,"c"],[5,"c"],[6,"c"],[7,"c"],[8,"c"],[9,"c"],[10,"c"],[11,"c"],[12,"c"],[13,"c"],
-    [1,"d"],[2,"d"],[3,"d"],[4,"d"],[5,"d"],[6,"d"],[7,"d"],[8,"d"],[9,"d"],[10,"d"],[11,"d"],[12,"d"],[13,"d"],
-    [1,"s"],[2,"s"],[3,"s"],[4,"s"],[5,"s"],[6,"s"],[7,"s"],[8,"s"],[9,"s"],[10,"s"],[11,"s"],[12,"s"],[13,"s"]/*,[1,"h"],[2,"h"],[3,"h"],[4,"h"],    [5,"h"],[6,"h"],[7,"h"],[8,"h"],[9,"h"],[10,"h"],[11,"h"],[12,"h"],[13,"h"],
-    [1,"c"],[2,"c"],[3,"c"],[4,"c"],[5,"c"],[6,"c"],[7,"c"],[8,"c"],[9,"c"],[10,"c"],[11,"c"],[12,"c"],[13,"c"],
-    [1,"d"],[2,"d"],[3,"d"],[4,"d"],[5,"d"],[6,"d"],[7,"d"],[8,"d"],[9,"d"],[10,"d"],[11,"d"],[12,"d"],[13,"d"],
-    [1,"s"],[2,"s"],[3,"s"],[4,"s"],[5,"s"],[6,"s"],[7,"s"],[8,"s"],[9,"s"],[10,"s"],[11,"s"],[12,"s"],[13,"s"]*/]
+
+
+var deck =  [[1,"h", aceH],[2,"h", h2],[3,"h", h3],[4,"h", h4],[5,"h", h5],[6,"h, h6"],[7,"h", h7],[8,"h", h8],[9,"h", h9],[10,"h", h10],[11,"h", jackH1],[12,"h", queenH1],[13,"h", kingH1],
+
+    [1,"c", aceC],[2,"c", c2],[3,"c", c3],[4,"c", c4],[5,"c", c5],[6,"c", c6],[7,"c", c7],[8,"c", c8],[9,"c", c9],[10,"c", c10],[11,"c", jackC1],[12,"c", queenC1],[13,"c", kingC1],
+
+    [1,"d", aceD],[2,"d", d2],[3,"d", d3],[4,"d", d4],[5,"d", d5],[6,"d", d6],[7,"d", d7],[8,"d", d8],[9,"d", d9],[10,"d", d10],[11,"d", jackD1],[12,"d", queenD1],[13,"d",kingD1],
+
+    [1,"s", aceS],[2,"s", s2],[3,"s", s3],[4,"s", s4],[5,"s", s5],[6,"s", s6],[7,"s", s7],[8,"s", s8],[9,"s", s9],[10,"s", s10],[11,"s", jackS1],[12,"s", queenS1],[13,"s", kingS1]];
+
+/*
+  [
+  [1,"h", imageObjects[51]],
+  [2,"h", imageObjects[3]],
+  [3,"h", imageObjects[7]],
+  [4,"h", imageObjects[11]],
+  [5,"h", imageObjects[15]],
+  [6,"h", imageObjects[19]],
+  [7,"h", imageObjects[23]],
+  [8,"h", imageObjects[27]],
+  [9,"h", imageObjects[31]],
+  [10,"h", imageObjects[35]],
+  [11,"h", imageObjects[39]],
+  [12,"h", imageObjects[43]],
+  [13,"h", imageObjects[47]],
+
+  [1,"c", imageObjects[49]],
+  [2,"c", imageObjects[1]],
+  [3,"c", imageObjects[5]],
+  [4,"c", imageObjects[9]],
+  [5,"c", imageObjects[13]],
+  [6,"c", imageObjects[17]],
+  [7,"c", imageObjects[21]],
+  [8,"c", imageObjects[25]],
+  [9,"c", imageObjects[29]],
+  [10,"c", imageObjects[33]],
+  [11,"c", imageObjects[37]],
+  [12,"c", imageObjects[41]],
+  [13,"c", imageObjects[45]],
+
+  [1,"d", imageObjects[48]],
+  [2,"d", imageObjects[0]],
+  [3,"d", imageObjects[4]],
+  [4,"d", imageObjects[8]],
+  [5,"d", imageObjects[12]],
+  [6,"d", imageObjects[16]],
+  [7,"d", imageObjects[20]],
+  [8,"d", imageObjects[24]],
+  [9,"d", imageObjects[28]],
+  [10,"d", imageObjects[32]],
+  [11,"d", imageObjects[36]],
+  [12,"d", imageObjects[40]],
+  [13,"d",imageObjects[44]],
+
+  [1,"s", imageObjects[50]],
+  [2,"s", imageObjects[2]],
+  [3,"s", imageObjects[6]],
+  [4,"s", imageObjects[10]],
+  [5,"s", imageObjects[14]],
+  [6,"s", imageObjects[18]],
+  [7,"s", imageObjects[22]],
+  [8,"s", imageObjects[26]],
+  [9,"s", imageObjects[30]],
+  [10,"s", imageObjects[34]],
+  [11,"s", imageObjects[38]],
+  [12,"s", imageObjects[42]],
+  [13,"s", imageObjects[46]]
+];
+*/
+
+/*  [[1,"h", aceH],[2,"h", h2],[3,"h", h3],[4,"h", h4],[5,"h", h5],[6,"h, h6"],[7,"h", h7],[8,"h", h8],[9,"h", h9],[10,"h", h10],[11,"h", jackH1],[12,"h", queenH1],[13,"h", kingH1],
+
+    [1,"c", aceC],[2,"c", c2],[3,"c", c3],[4,"c", c4],[5,"c", c5],[6,"c", c6],[7,"c", c7],[8,"c", c8],[9,"c", c9],[10,"c", c10],[11,"c", jackC1],[12,"c", queenC1],[13,"c", kingC1],
+
+    [1,"d", aceD],[2,"d", d2],[3,"d", d3],[4,"d", d4],[5,"d", d5],[6,"d", d6],[7,"d", d7],[8,"d", d8],[9,"d", d9],[10,"d", d10],[11,"d", jackD1],[12,"d", queenD1],[13,"d",kingD1],
+
+    [1,"s", aceS],[2,"s", s2],[3,"s", s3],[4,"s", s4],[5,"s", s5],[6,"s", s6],[7,"s", s7],[8,"s", s8],[9,"s", s9],[10,"s", s10],[11,"s", jackS1],[12,"s", queenS1],[13,"s", kingS1]];*/
+
 var questionPool = [["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"]]
 
 var discard = [];
@@ -178,14 +547,18 @@ var answerState;// = false;
 var questionFilter = true;
 var questionState;// = true;
 var splitMasterA = [];
-var easyArray = [["<%= @game_input[0] %>","<%= @game_input[1] %>",0,0,"<%= @game_input[2] %>","<%= @game_input[3] %>"],
+var easyArray =  [["<%= @game_input[0] %>","<%= @game_input[1] %>",0,0,"<%= @game_input[2] %>","<%= @game_input[3] %>"],
                 ["<%= @game_input[4] %>","<%= @game_input[5] %>",0,0,"<%= @game_input[6] %>","<%= @game_input[7] %>"],
                 ["<%= @game_input[8] %>","<%= @game_input[9] %>",0,0,"<%= @game_input[10] %>","<%= @game_input[11] %>"],
                 ["<%= @game_input[12] %>","<%= @game_input[13] %>",0,0,"<%= @game_input[14] %>","<%= @game_input[15] %>"],
                 ["<%= @game_input[16] %>","<%= @game_input[17] %>",0,0,"<%= @game_input[18] %>","<%= @game_input[19] %>"],
                 ];
+
+/*[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];*/
+
 var medArray = []//[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
 var hardArray = [];
+var gameMessage = "gmessage";
 
 var displayIndex = [0,1,4];
 displayIndex = RandArr(displayIndex);
@@ -513,7 +886,7 @@ function RebalanceArrays() {
   //}
 }
 function ResolvePt1(){
-  if(mYcd > 345 && mYcd < 380 && mXcd > 60 && mXcd < 155){
+  if(mYcd > 345 && mYcd < 380 && mXcd > 60 && mXcd < 155 && (a1State == "on" || a2State == "on" || a3State == "on") && (lowBoxColor == "#939393" || highBoxColor == "#939393")){
     dealerCard = DrawCard(deck);
 
     chips = chips + Math.round(keyIn * (power * compVal(drawnCard[0][0], dealerCard[0][0]))/100);
@@ -567,6 +940,15 @@ function ResolvePt1(){
       response = "wrong";
       questionState = false;
       power = 100;
+      greenBoxOn = true;
+      if(newAnswerBank[1][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 262;
+      }
+      if(newAnswerBank[2][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 302;
+      }
     }
     if(newQuestion[0][1] != newAnswerBank[1][1] && a2State == "on") {
       CountAsked2(newQuestion[0][0], easyArray);
@@ -576,6 +958,15 @@ function ResolvePt1(){
       response = "wrong";
       questionState = false;
       power = 100;
+      greenBoxOn = true;
+      if(newAnswerBank[0][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 222;
+      }
+      if(newAnswerBank[2][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 302;
+      }
     }
     if(newQuestion[0][1] != newAnswerBank[2][1] && a3State == "on") {
       CountAsked2(newQuestion[0][0], easyArray);
@@ -585,12 +976,27 @@ function ResolvePt1(){
       response = "wrong";
       questionState = false;
       power = 100;
+      greenBoxOn = true;
+      if(newAnswerBank[0][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 222;
+      }
+      if(newAnswerBank[1][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 262;
+      }
     }
+  gameMessage = "";
     gameState = 2;
+  } else if (mYcd > 345 && mYcd < 380 && mXcd > 60 && mXcd < 155){
+    gameMessage = "First bet and answer!"
   }
 
 }
 function ResolvePt2(){
+
+greenBoxOn = false;
+
 
 $.ajax({
   method: "POST",
@@ -742,6 +1148,11 @@ if(gameOver == false) {
   ctx.fillStyle = "#200";
   ctx.font = "14px Arial";
 
+    if(greenBoxOn) {
+  ctx.fillStyle = "#00FF00";
+  ctx.fillRect(greenBoxX, greenBoxY, 101, 41);
+  }
+
   ctx.fillStyle = "#999";  //alt color is "#939393"
 
   ctx.fillStyle = a1Color;
@@ -830,19 +1241,25 @@ if(gameOver == false) {
   }*/
 
   ctx.fillText("Mem: 小苹果", 110, 20);
+  ctx.fillText(gameMessage, 110, 430);
+  //ctx.fillText(drawnCard, 62, 70);
 
-  ctx.fillText(drawnCard, 62, 70);
-  ctx.fillText(dealerCard, 162, 70);
+  ctx.drawImage(drawnCard[0][2], 30, 30, 55, 80);
+  //ctx.fillText(dealerCard, 162, 70);
+  if(dealerCard.length>0) {
+    //ctx.fillText(dealerCard, 150, 70);
+    ctx.drawImage(dealerCard[0][2], 130, 30, 55, 80);
+  }
 
   ctx.fillText("Bet", 63, 150);
   ctx.fillText("low", 63, 165);
   ctx.fillText("Bet", 163, 150);
   ctx.fillText("high", 163, 165);
 
-  ctx.fillText(textResponse, 80 ,120);
+  ctx.fillText(textResponse, 80 ,123);
   //ctx.fillText(textResponse2, 60, 160);
   if (adjusted != "") {
-    ctx.fillText(Math.abs(adjusted) + " pts!", 140, 120);
+    ctx.fillText(Math.abs(adjusted) + " pts!", 140, 123);
   }
 
   ctx.fillText("Question: "+ newQuestion[0][displayIndex[0]], 110, 200);
@@ -1042,12 +1459,16 @@ function NewGame(){
 
 }
 
-
-
 if (newQuestion[0][1] == newAnswerBank[0][1]) {
   result = "yes!"
 }
-NewGame();
+
+
+/*<body onload = "NewGame()">*/
 
 </script>
 </head>
+
+
+
+</body>
