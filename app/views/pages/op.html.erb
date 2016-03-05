@@ -176,7 +176,7 @@ function DisplayHelper()
   DisplayHelper.prototype.initialize = function()
   {
     this.canvas.width = 225;
-    this.canvas.height = 450;
+    this.canvas.height = 200;
     this.tomato = "tomatoooos";
     this.graphics = this.canvas.getContext("2d");
     this.graphics.fillStyle = "LightGray";
@@ -592,7 +592,7 @@ function Map(tilesWide, tilesDown, tileWidth, tileHeight)
   this.tileWidth = tileWidth;
   this.tileHeight = tileHeight;
 
-  this.tilesVertOffset = 200;
+  this.tilesVertOffset = 10;
   this.tilesHorizOffset = 10;
   this.tilesSpacing = 30;  // spacing from left most point
 
