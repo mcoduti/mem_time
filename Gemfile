@@ -6,7 +6,8 @@ end
 
 
 gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git"
-gem 'devise'
+#gem 'devise'
+gem 'devise', '~> 4.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 group :development do
