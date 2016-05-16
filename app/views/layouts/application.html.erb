@@ -49,10 +49,10 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/users/edit">Edit profile</br>MP:
-         <% if current_user %>
+          <li><a href="/users/edit">Edit profile
+        <!-- <% if current_user %>
           <%= current_user.xp %></a></li>
-          <% end %>
+          <% end %>  -->
           <li><a href="/users/sign_out" data-method="delete" rel="nofollow">Sign Out</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -73,8 +73,7 @@
         <%= alert %>
       </div>
     <% end %>
-    </br>
-    <center><img src="../mem.jpg" width = 100 height = 100 align = "middle"></center>
+    <!-- <center><img src="../mem.jpg" width = 100 height = 100 align = "middle"></center> -->
 
     <%= yield %>
   </div>
