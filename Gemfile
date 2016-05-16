@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.1.5p273"
 group :production do
   gem 'pg'
   gem 'rails_12factor'
