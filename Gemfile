@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.1.5p273"
+ruby "2.1.5"
 group :production do
   gem 'pg'
   gem 'rails_12factor'
@@ -7,8 +7,7 @@ end
 
 
 gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git"
-#gem 'devise'
-gem 'devise', '~> 4.1'
+gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 group :development do
