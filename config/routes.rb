@@ -36,7 +36,8 @@ Rails.application.routes.draw do
   devise_for :users
   #get 'pages/dashboard'
 
-  root "pages#dashboard"
+  #root "pages#dashboard"
+  root "pages#update_page"
 
   post "/save_game_data", :controller => "pages", :action => "save"
   post "/save_points", :controller => "pages", :action => "savepoints"
