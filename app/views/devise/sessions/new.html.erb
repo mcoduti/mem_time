@@ -1,5 +1,3 @@
-<h5>Log in</h5>
-
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %>
@@ -566,6 +564,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     document.addEventListener('touchstart', function(e){
       //e.preventDefault();
       document.getElementById("user_email").blur();
+      document.getElementById("user_password").blur();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
       Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
