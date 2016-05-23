@@ -25,3 +25,1260 @@
 
 <%= render "devise/shared/links" %>
 
+    <canvas id="game"></canvas>
+    <script>
+
+//Dev notes
+
+//2/16:  game receives question, processes answer.  If correct, arms bomb, if not, leaves bomb gray.  Need to add a timer
+//    countdown to keep from retrying bomb right away if answered in error to avoid spam clicking.  Need to add graphics,
+//    possibly animations for cells.  Need to identify what variables will be stored in game database.
+
+//2/15 9:30:  question screen displays after activating a bomb.  Gamestate changed from "playing" to "questionOn"
+//    next change mouseclick states from "playing" to "questionOn", detect which area is selected for answer, then
+//    clear all related languageHelper variables prior to procking next question.
+
+
+function main()
+{
+  //instantiate tiles
+  //instantiate map
+  //width = 5;
+  width2 = 2;
+  rand =  ColorGen();  //Math.floor(Math.random() * 3);
+
+  window.requestAnimFrame = (function(){
+
+  return window.requestAnimationFrame
+
+  || window.webkitRequestAnimationFrame
+
+  || window.mozRequestAnimationFrame
+
+  || window.oRequestAnimationFrame
+
+  || window.msRequestAnimationFrame
+
+  || function( callback ){ return window.setTimeout(callback, FPS);
+  };
+  }
+
+  )();
+
+
+  Globals.Instance.initialize
+  (
+    1000
+  );
+}
+
+function Loop()
+{
+  init = requestAnimFrame(Loop);
+
+    if(Globals.Instance.inputHelper.buttonPressed == true)
+    {
+      Globals.Instance.inputHelper.ReturnCell();
+    }
+    Globals.Instance.gameTimer.updateTimeElapsed();
+    if(Globals.Instance.timeRemaining > 0 && Globals.Instance.gameState == "playing")
+    {
+      Globals.Instance.timeRemaining = Globals.Instance.roundTime - Math.floor(Globals.Instance.gameTimer.timeElapsed/1000);
+    }
+    if(Globals.Instance.timeRemaining <= 0)
+    {
+      Globals.Instance.gameState = "endGame";
+      Globals.Instance.displayHelper.endGameMessage = "You Lose!";
+    }
+    if(Globals.Instance.enemy.hp <= 0)
+    {
+      Globals.Instance.gameState = "endGame";
+      Globals.Instance.displayHelper.endGameMessage = "You Win!";
+    }
+    Globals.Instance.displayHelper.clear();
+    //Globals.Instance.displayHelper.drawInLoop();  //KEEP FOR REFERENCE
+    Globals.Instance.displayHelper.writeText();
+    Globals.Instance.displayHelper.drawCells();
+    Globals.Instance.displayHelper.endGame();
+    Globals.Instance.displayHelper.DisplayQuestion();
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.bomb, 10,330,21,21);
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 10,330,400,100);
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 0,0,44, 40, 0, 400, 40, 40 ); //img, sx, sy, sw, sh, dx, dy, dw, dh
+    //Globals.Instance.imageHelper.coin.update();
+    //Globals.Instance.imageHelper.coin.render();
+}
+
+function TileColor(color)
+{
+  this.color = color;
+}
+
+function DisplayHelper()
+{
+  this.width = 30;
+  this.width2 = 30;
+  this.canvas = document.getElementById("game");
+  this.endGameMessage = "You Lose!";
+}
+{
+  DisplayHelper.prototype.clear = function()
+  {
+    this.graphics.fillStyle = "White";
+    this.graphics.fillRect
+    (
+      0, 0, 600, 600
+    )
+  }
+
+  DisplayHelper.prototype.drawOnInterval = function()
+  {
+    Globals.Instance.displayHelper.clear();
+    this.graphics.fillStyle = "LightGray";
+    this.width = this.width + 1;
+    this.graphics.fillRect
+    (
+      30,85, this.width ,30
+    )
+
+  }
+
+  DisplayHelper.prototype.drawInLoop = function()
+  {
+    this.graphics.fillStyle = "LightGray";
+    this.graphics.fillRect
+    (
+      30, 30, this.width2, 30
+    )
+    this.width2 = this.width2 + 1;
+  }
+
+  DisplayHelper.prototype.endGame = function()
+  {
+    if (Globals.Instance.gameState == "endGame")
+    {
+      this.graphics.globalAlpha = .95;
+      this.graphics.fillStyle = "White";
+      this.graphics.fillRect
+      (
+        55, 80, 200, 100
+      )
+      this.graphics.globalAlpha = 1;
+      this.graphics.fillStyle = "Red";
+      this.graphics.font  = 'Bold 30px Calibri';
+      this.graphics.fillText(this.endGameMessage, 100, 130);
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '14 px Calibri';
+    }
+
+  }
+
+  DisplayHelper.prototype.DisplayQuestion = function()
+  {
+    if (Globals.Instance.gameState == "questionOn")
+    {
+      this.graphics.globalAlpha = .95;
+      this.graphics.fillStyle = "White";
+      this.graphics.fillRect
+      (
+        55, 55, 200, 200
+      )
+      this.graphics.fillStyle = "#D8D8D8";
+      this.graphics.fillRect
+      (
+        80, 115, 150, 35
+      )
+      this.graphics.fillRect
+      (
+        80, 155, 150, 35
+      )
+      this.graphics.fillRect
+      (
+        80, 195, 150, 35
+      )
+      this.graphics.globalAlpha = 1;
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '22px Calibri';
+      this.graphics.textAlign = "center";
+      this.graphics.fillText(Globals.Instance.languageHelper.question[0][0], 155, 93);
+      this.graphics.fillText(Globals.Instance.languageHelper.answer0[0][0], 155, 141);
+      this.graphics.fillText(Globals.Instance.languageHelper.answer1[0][0], 155, 181);
+      this.graphics.fillText(Globals.Instance.languageHelper.answer2[0][0], 155, 221);
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '14 px Calibri';
+      this.graphics.textAlign = "left";
+    }
+  }
+
+  DisplayHelper.prototype.writeText = function()
+  {
+    this.graphics.fillStyle = "Black";
+    this.graphics.font = '14px Calibri';
+    //this.graphics.fillText("Globals.Instance.gameTimer.startTime: " + Globals.Instance.gameTimer.timeElapsed, 10, 320);
+    //this.graphics.fillText("Globals.Instance.enemy.hp: " + Globals.Instance.enemy.hp, 10, 335);
+
+    //this.graphics.fillText("languageHelper demo: " + Globals.Instance.languageHelper.languageHelperDemoVar, 10, 350);
+    //this.graphics.fillText("foreignCharacters: " + Globals.Instance.languageHelper.foreignCharacters, 10, 365);
+    //this.graphics.fillText("foreignPhonetic: " + Globals.Instance.languageHelper.foreignPhonetic, 10, 380);
+    //this.graphics.fillText("foreignTranslations: " + Globals.Instance.languageHelper.foreignTranslations, 10, 395);
+    //this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 410);
+    //this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 425);
+    //this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 440);
+    //this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 455);
+    //this.graphics.fillText("languageArray: " + Globals.Instance.languageHelper.languageArray, 10, 470);
+    //this.graphics.fillText("gameState: " + Globals.Instance.gameState, 315, 15);
+
+    //this.graphics.fillText("mXcd: " + Globals.Instance.inputHelper.mXcd, 10, 340);
+    //this.graphics.fillText("mYcd: " + Globals.Instance.inputHelper.mYcd, 10, 355);
+    //this.graphics.fillText("arrayTracker: " + Globals.Instance.inputHelper.arrayTracker, 10, 370);
+    //this.graphics.fillText("targetArray: " + Globals.Instance.inputHelper.targetArray, 10, 385);
+    //this.graphics.fillText("timeRemaining: " + Globals.Instance.timeRemaining, 10, 400);
+
+    //this.graphics.fillText("touchTester: " + Globals.Instance.touchTester, 10, 430);
+    //this.graphics.fillText("mouseTester: " + Globals.Instance.mouseTester, 10, 445);
+    this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetLeft, 10, 430);
+    this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
+    this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 10, 400);
+    this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 10, 415);
+    this.graphics.fillText("buttonPressed: " + Globals.Instance.inputHelper.buttonPressed, 10, 490);
+    //this.graphics.fillText("checkAnswerTouchCounter: " + Globals.Instance.checkAnswerTouchCounter, 10, 505);
+
+    //this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 520);
+    //this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 535);
+    //this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 550);
+    //this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 565);
+
+
+    this.graphics.font = 'Bold 20px Calibri';
+    this.graphics.fillText("Time: " + (Globals.Instance.timeRemaining), 10, 325);
+    this.graphics.fillText("Enemy HP: " + Globals.Instance.enemy.hp, 180, 325);
+    this.graphics.font = '14px Calibri';
+    //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.height, 10, 380);
+    //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.frameIndex, 10, 370)
+  }
+
+  DisplayHelper.prototype.drawCells = function()
+  {
+
+    for (i = 0; i < Globals.Instance.map.tilesWide; i ++)
+    {
+      for(j = 0; j < Globals.Instance.map.tilesDown; j++)
+      {
+        this.graphics.fillStyle = Globals.Instance.map.backgroundCells[i+Globals.Instance.map.tilesWide*j].color;
+        this.graphics.fillRect
+        (
+          Globals.Instance.map.tilesHorizOffset -4 + i * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tilesVertOffset - 4 + j * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tileWidth + 8 ,
+          Globals.Instance.map.tileHeight + 8
+        )
+        this.counter++;
+      }
+    }
+
+    this.counter = 0;
+    for (i = 0; i < Globals.Instance.map.tilesWide; i ++)
+    {
+      for(j = 0; j < Globals.Instance.map.tilesDown; j++)
+      {
+        this.graphics.fillStyle = Globals.Instance.map.cells[i+Globals.Instance.map.tilesWide*j].color;
+        this.graphics.fillRect
+        (
+          Globals.Instance.map.tilesHorizOffset + i * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tilesVertOffset + j * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tileWidth,
+          Globals.Instance.map.tileHeight
+        )
+        this.counter++;
+      }
+    }
+  }
+
+  DisplayHelper.prototype.initialize = function()
+  {
+    this.canvas.width = 310;
+    this.canvas.height = 350;
+    this.tomato = "tomatoooos";
+    this.graphics = this.canvas.getContext("2d");
+    this.graphics.fillStyle = "LightGray";
+  }
+
+}
+
+function Globals()
+{}
+{
+  Globals.Instance = new Globals();
+
+  Globals.prototype.initialize = function
+  (
+    millisecondsPerTimerTick
+  )
+  {
+    this.inputHelper = new InputHelper();
+    this.inputHelper.initialize();
+    this.testCounter = 0;
+    this.enemy = new Enemy(240);
+    this.imageHelper = new ImageHelper();
+    this.gameState = "playing";  // playing, questionOn, endGame
+    this.touchTester = 0;
+    this.mouseTester = "overwrite me!";
+
+    this.languageHelper = new LanguageHelper();
+
+    this.displayHelper = new DisplayHelper();
+    this.displayHelper.initialize();
+    this.gameTimer = new Timer();
+    this.mapHeight =6;
+    this.mapWidth = 6;
+
+    this.map = new Map(this.mapWidth,this.mapHeight,39,39);
+    this.timeRemaining = 120;
+    this.roundTime = 120;
+
+    this.checkAnswerTouchCounter = 0;
+
+    //this.myVar = setInterval
+    //(
+    //  this.handleEventTimerTick.bind(this),
+    //  millisecondsPerTimerTick
+    //);
+
+    Loop();
+
+  }
+
+/*  Globals.prototype.handleEventTimerTick = function()     //KEEP FOR REFERENCE
+  {
+    //Globals.Instance.displayHelper.drawOnInterval();
+    //Loop();
+    //Globals.Instance.map.cells[this.testCounter].color = "Black";
+    //this.testCounter = this.testCounter + 1;
+    //clearInterval(this.myVar);
+  }
+*/
+
+}
+
+function ImageHelper()
+{
+  this.bomb = new Image();
+  this.bomb.src = 'bomb.png';
+  this.coinImage = new Image();
+  this.coinImage.src = "coin-sprite-animation-v2.png";
+  this.canvas = document.getElementById("game");
+
+  ImageHelper.prototype.sprite = function(options)
+  {
+    var that = {},
+      frameIndex = 0,
+      tickCount = 0,
+      ticksPerFrame = options.ticksPerFrame || 0,
+      numberOfFrames = options.numberOfFrames || 1;
+
+
+    that.context = options.context;
+    that.width = options.width;
+    that.height = options.height;
+    that.image = options.image;
+
+    //that.loop = options.loop;
+
+    that.update = function() {
+      tickCount +=1;
+
+      if (tickCount > ticksPerFrame)
+      {
+        tickCount = 0;
+        if (frameIndex < numberOfFrames -1) {
+
+          frameIndex += 1;
+        } else {
+          frameIndex = 0;
+        }
+      }
+    };
+
+
+    that.render = function () {
+      that.context.drawImage(
+        that.image,
+        frameIndex * that.width / numberOfFrames,
+        0,
+        that.width / numberOfFrames,
+        that.height,
+        0,
+        0,
+        that.width / numberOfFrames,
+        that.height);
+    };
+
+    return that;
+  }
+
+  this.coin = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width:  1000,
+    height:  100,
+    image:  this.coinImage,
+    numberOfFrames: 10,
+    ticksPerFrame: 4
+  });
+
+}
+
+function LanguageHelper()
+{
+this.languageHelperDemoVar = "apple";
+this.foreignCharacters = [
+  ['我', 0],
+  ['你' , 1],
+  ['很' , 2],
+  ['好' , 3],
+  ['不' , 4],
+  ['愛', 5]
+];
+this.foreignPhonetic = [
+  ['wǒ', 0],
+  ['nǐ' , 1],
+  ['hěn' , 2],
+  ['hǎo' , 3],
+  ['bù' , 4],
+  ['ài', 5]
+];
+this.foreignTranslations = [
+  ['I', 0],
+  ['you' , 1],
+  ['very' , 2],
+  ['good' , 3],
+  ['not', 4],
+  ['love', 5]
+];
+this.question = [];
+this.answer0 = [];
+this.answer1 = [];
+this.answer2 = [];
+this.languageArray = [];
+}
+{
+  LanguageHelper.prototype.returnQuestion= function()
+  {
+  var arrayOptions = [0, 1, 2, 3, 4, 5
+      ];
+  var questionArray = [];
+  var indexValueHolder = [];
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions.length);
+  questionArray.push(arrayOptions[indexValueHolder]);
+  arrayOptions.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions.length);
+  questionArray.push(arrayOptions[indexValueHolder]);
+  arrayOptions.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions.length);
+  questionArray.push(arrayOptions[indexValueHolder]);
+  arrayOptions.splice(indexValueHolder, 1);
+
+  var arrayOptions2 = [0, 1, 2];
+  //var arrayOptions2 = [0, 1];
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions2.length);
+  questionArray.push(arrayOptions2[indexValueHolder]);
+  arrayOptions2.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions2.length);
+  questionArray.push(arrayOptions2[indexValueHolder]);
+  arrayOptions2.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * 3);
+  questionArray.push(questionArray[indexValueHolder]);
+  arrayOptions2.splice(indexValueHolder, 1);
+
+  if(questionArray[3] == "0")
+  {
+    this.question.push(this.foreignCharacters[questionArray[5]])
+  } else if (questionArray[3] == "1") {
+    this.question.push(this.foreignPhonetic[questionArray[5]])
+  } else if (questionArray[3] == "2") {
+    this.question.push(this.foreignTranslations[questionArray[5]])
+  }
+
+  if(questionArray[4] == "0")
+  {
+    this.answer0.push(this.foreignCharacters[questionArray[0]]);
+    this.answer1.push(this.foreignCharacters[questionArray[1]]);
+    this.answer2.push(this.foreignCharacters[questionArray[2]])
+  } else if (questionArray[4] == "1" ) {
+    this.answer0.push(this.foreignPhonetic[questionArray[0]]);
+    this.answer1.push(this.foreignPhonetic[questionArray[1]]);
+    this.answer2.push(this.foreignPhonetic[questionArray[2]])
+  } else if (questionArray[4] == "2" ) {
+    this.answer0.push(this.foreignTranslations[questionArray[0]]);
+    this.answer1.push(this.foreignTranslations[questionArray[1]]);
+    this.answer2.push(this.foreignTranslations[questionArray[2]])
+  }
+
+  this.languageHelperDemoVar = Globals.Instance.inputHelper.targetArray;
+
+  return questionArray
+  }
+}
+
+
+function InputHelper()
+{
+this.buttonPressed = false;
+this.testValue = false;
+this.blackProcessTest = false;
+this.checkingCounter = 9;
+this.checkingCounter2 = 0;
+this.countOfNonBlackCells = 0;
+this.arithmeticChecker = "celery";
+this.tileRemoverOn = false;
+this.offset = "hello";
+this.targetArray = [];  //2 item array:  # of items, cell # of last cell in array
+this.jCounter = 0;
+this.arrayTracker = []; //array of all cells of same color traced between mdown and mup
+}
+{
+  InputHelper.prototype.initialize = function()
+  {
+    this.mXcd = 0;
+    this.mYcd = 0;
+
+    this.touchX = 0;
+    this.touchY = 0;
+
+    window.addEventListener("mousedown", this.OnClick.bind(this), true);
+    window.addEventListener("mouseup", this.OnRelease.bind(this), true);
+    document.getElementById("game").addEventListener("mousemove", this.MouseMove.bind(this), true);
+
+    document.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+      //Globals.Instance.touchTester = "kaplow";
+      this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
+      this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
+      //Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
+      //e.changedTouches[0].pageY + " y";
+      }.bind(this), false
+    );
+
+    document.addEventListener('touchstart', function(e){
+      //e.preventDefault();
+      document.getElementById("new_user").blur();
+      this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
+      this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
+      Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
+      e.changedTouches[0].pageY + " y";
+
+    if(Globals.Instance.gameState == "playing")
+    {
+      this.buttonPressed = true;
+      this.countOfNonBlackCells = 0;
+      clearInterval(Globals.Instance.inputHelper.myVar2);
+      this.tileRemoverOn = false;
+    }
+    if (Globals.Instance.gameState == "questionOn")  //  2/16  9:21
+    {
+      this.checkAnswerTouch();
+    }
+
+      //alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
+       }.bind(this), false
+    );
+
+    document.addEventListener('touchend', function(e){
+      e.preventDefault();
+      this.touchX = e.changedTouches[0].pageX;
+      this.touchY = e.changedTouches[0].pageY;
+      //Globals.Instance.inputHelper.buttonPressed = true;
+      Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
+      e.changedTouches[0].pageY + " y";
+
+      if(Globals.Instance.gameState == "playing")
+      {
+        this.buttonPressed = false;
+        this.ResetBorder(this.arrayTracker);
+        this.SetCellBlack(this.arrayTracker);
+        this.targetArray = this.CountArray(this.arrayTracker);
+        this.activateQuestionOn(this.targetArray);
+        this.DestroyEffect(this.targetArray);
+        this.CheckColor(this.targetArray);
+
+        this.ClearArray(this.arrayTracker);
+        this.ProcessEmpties();
+
+        if(this.tileRemoverOn == false)
+        {
+          this.myVar2 = setInterval
+          (
+            this.timerFunction.bind(this),
+            100
+          )
+        }
+      }
+
+      //alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
+       }.bind(this), false
+    );
+
+  }
+
+
+
+
+  InputHelper.prototype.OnClick = function()
+  {
+    if(Globals.Instance.gameState == "playing")
+    {
+      this.buttonPressed = true;
+      this.countOfNonBlackCells = 0;
+      clearInterval(Globals.Instance.inputHelper.myVar2);
+      this.tileRemoverOn = false;
+    }
+    if (Globals.Instance.gameState == "questionOn")  //  2/16  9:21
+    {
+      this.checkAnswer();
+    }
+
+  }
+
+  InputHelper.prototype.OnRelease = function()
+  {
+    if(Globals.Instance.gameState == "playing")
+    {
+      this.buttonPressed = false;
+      this.ResetBorder(this.arrayTracker);
+      this.SetCellBlack(this.arrayTracker);
+      this.targetArray = this.CountArray(this.arrayTracker);
+      this.activateQuestionOn(this.targetArray);
+      this.DestroyEffect(this.targetArray);
+      this.CheckColor(this.targetArray);
+
+      this.ClearArray(this.arrayTracker);
+      this.ProcessEmpties();
+
+      if(this.tileRemoverOn == false)
+      {
+        this.myVar2 = setInterval
+        (
+          this.timerFunction.bind(this),
+          100
+        )
+      }
+    }
+  }
+
+  InputHelper.prototype.activateQuestionOn = function(array)  // 2/16 9:41
+  {
+    if(Globals.Instance.gameState == "playing")
+    {
+      if (array[0] == 1 && Globals.Instance.map.cells[array[1]].color == "Gray")
+      {
+        Globals.Instance.languageHelper.returnQuestion();
+        Globals.Instance.gameState = "questionOn";
+      }
+    }
+  }
+
+  InputHelper.prototype.checkAnswer = function()  // 2/16 9:41
+  {
+
+    if //first answer box correct
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 115 &&
+      this.mYcd <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //first answer box wrong
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 115 &&
+      this.mYcd <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box correct
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 155 &&
+      this.mYcd <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box wrong
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 155 &&
+      this.mYcd <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box correct
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 195 &&
+      this.mYcd <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box wrong
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 195 &&
+      this.mYcd <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    }
+
+    ///////////////////////////
+  }
+
+InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
+  {
+
+
+    if //first answer box correct
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 115 &&
+      this.touchY <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //first answer box wrong
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 115 &&
+      this.touchY <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box correct
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 155 &&
+      this.touchY <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box wrong
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 155 &&
+      this.touchY <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box correct
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 195 &&
+      this.touchY <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box wrong
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 195 &&
+      this.touchY <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    }
+
+    Globals.Instance.checkAnswerTouchCounter += 1;
+    ///////////////////////////
+  }
+
+  InputHelper.prototype.CheckColor = function(array)
+  {
+    if (array[0] == 1 && Globals.Instance.map.cells[array[1]].color == "Red")
+    {
+      //Globals.Instance.languageHelper.returnQuestion();     // 2/15 9:29
+
+      //Globals.Instance.gameState = "questionOn";      // 2/15 9:29
+
+
+
+      if    // RIGHT WALL
+      (
+        (array[1]+1) % Globals.Instance.mapWidth == 0 &&
+        array[1] > Globals.Instance.mapWidth -1 &&
+        array[1] < Globals.Instance.mapWidth * Globals.Instance.mapHeight -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //LEFT WALL
+      (
+        (array[1]+1) % Globals.Instance.mapWidth == 1 &&
+        array[1] > Globals.Instance.mapWidth -1 &&
+        array[1] < Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1)
+      )
+      {
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //TOP WALL
+      (
+        //(array[1]+1) % Globals.Instance.mapWidth == 1 &&
+        array[1] > 0 &&
+        array[1] < Globals.Instance.mapWidth - 1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        //Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        //Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //BOTTOM WALL
+      (
+        //(array[1]+1) % Globals.Instance.mapWidth == 1 &&
+        array[1] > Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1) &&
+        array[1] < Globals.Instance.mapWidth * (Globals.Instance.mapHeight) -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //MIDDLE
+      (
+        (array[1]+1) % Globals.Instance.mapWidth != 1 &&
+        (array[1]+1) % Globals.Instance.mapWidth != 0 &&
+        array[1] > Globals.Instance.mapWidth &&
+        array[1] < Globals.Instance.mapWidth * ((Globals.Instance.mapHeight) -1)
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 9;
+      } else if     //TOP LEFT CORNER
+      (
+        array[1] == 0
+      )
+      {
+
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      } else if     //TOP RIGHT CORNER
+      (
+        array[1] == Globals.Instance.map.tilesWide -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      } else if     //BOTTOM LEFT CORNER
+      (
+        array[1] == Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1)
+      )
+      {
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      } else if     //BOTTOM RIGHT CORNER
+      (
+        array[1] == Globals.Instance.mapWidth * (Globals.Instance.mapHeight) -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      }
+      this.arithmeticChecker = (array[1]+1) % Globals.Instance.map.tilesWide; // right wall, returns 0
+      this.arithmeticChecker = (array[1]+1) % Globals.Instance.map.tilesWide; // left wall, returns 1
+    }
+  }
+
+  InputHelper.prototype.DestroyEffect = function(array)
+  {
+    if (array[0] >= 5)
+    {
+      Globals.Instance.map.cells[array[1]].color = "Gray";
+    }
+  }
+
+  InputHelper.prototype.CountArray = function(array)  //returns length of array and value of last index
+  {
+    if (Globals.Instance.gameState == "playing")
+    {
+      return [array.length, array[array.length-1]]
+    }
+  }
+
+  InputHelper.prototype.ClearArray = function(array)
+  {
+    for (i = array.length; i > 0; i--)
+    {
+      array.splice(0,1);
+    }
+  }
+
+  InputHelper.prototype.ResetBorder = function(array)
+  {
+    for (i = 0; i < this.arrayTracker.length; i++)
+    {
+      Globals.Instance.map.backgroundCells[array[i]].color = "Black";
+    }
+  }
+
+  InputHelper.prototype.SetCellBlack = function(array)
+  {
+    if(this.arrayTracker.length > 2)
+    {
+      for (i = 0; i < this.arrayTracker.length; i++)
+      {
+        Globals.Instance.map.cells[array[i]].color = "Black";
+        Globals.Instance.enemy.hp--;
+      }
+    }
+  }
+
+  InputHelper.prototype.ReturnCell = function()
+  {
+//beginning pt 1
+    for (k = 0; k < Globals.Instance.mapWidth; k++)
+    {
+      for (l = 0; l < Globals.Instance.mapHeight; l ++)
+      {
+        if
+        (
+          this.mXcd > Globals.Instance.map.tilesHorizOffset + k * Globals.Instance.map.tilesSpacing &&
+          this.mXcd < Globals.Instance.map.tilesHorizOffset + Globals.Instance.map.tileWidth + k * Globals.Instance.map.tilesSpacing &&
+          this.mYcd > Globals.Instance.map.tilesVertOffset + l * Globals.Instance.map.tilesSpacing &&
+          this.mYcd < Globals.Instance.map.tilesVertOffset + Globals.Instance.map.tileHeight + l * Globals.Instance.map.tilesSpacing
+        )
+        {
+        this.testValue = Globals.Instance.mapWidth*l + k;  //possible error
+        //Globals.Instance.map.cells[this.testValue].color = "Black";
+        //Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        if
+        (
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          this.arrayTracker.length == 0
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        } else if
+        (
+          this.arrayTracker.length != 0 &&
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color ==
+          Globals.Instance.map.cells[this.testValue].color &&
+          (
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide +1
+          )
+          //Globals.Instance.map.cells[0].color == Globals.Instance.map.cells[1].color
+
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+          //this.arrayTracker = Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color;
+        }
+        }
+      }
+    }
+//beginning pt 2
+    for (k = 0; k < Globals.Instance.mapWidth; k++)
+    {
+      for (l = 0; l < Globals.Instance.mapHeight; l ++)
+      {
+        if
+        (
+          this.touchX > Globals.Instance.map.tilesHorizOffset + k * Globals.Instance.map.tilesSpacing &&
+          this.touchX < Globals.Instance.map.tilesHorizOffset + Globals.Instance.map.tileWidth + k * Globals.Instance.map.tilesSpacing &&
+          this.touchY > Globals.Instance.map.tilesVertOffset + l * Globals.Instance.map.tilesSpacing &&
+          this.touchY < Globals.Instance.map.tilesVertOffset + Globals.Instance.map.tileHeight + l * Globals.Instance.map.tilesSpacing
+        )
+        {
+        this.testValue = Globals.Instance.mapWidth*l + k;
+        //Globals.Instance.map.cells[this.testValue].color = "Black";
+        //Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        if
+        (
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          this.arrayTracker.length == 0
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        } else if
+        (
+          this.arrayTracker.length != 0 &&
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color ==
+          Globals.Instance.map.cells[this.testValue].color &&
+          (
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide +1
+          )
+          //Globals.Instance.map.cells[0].color == Globals.Instance.map.cells[1].color
+
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+          //this.arrayTracker = Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color;
+        }
+        }
+      }
+    }
+  }
+
+  InputHelper.prototype.MouseMove = function(e){
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    var rect = target.getBoundingClientRect();
+    this.mXcd = e.clientX - rect.left;
+    this.mYcd = e.clientY - rect.top;
+  }
+
+  InputHelper.prototype.timerFunction = function()
+  {
+    this.tileRemoverOn = true;
+    this.ProcessEmpties();
+  }
+
+  InputHelper.prototype.ProcessEmpties = function()
+  {
+    this.blackProcessTest = true;
+    MoveCells();
+
+    function MoveCells()
+    {
+      //Globals.Instance.map.cells[32].color = "Black";
+      for (i = 0; i < Globals.Instance.mapWidth * Globals.Instance.mapHeight; i ++)
+      {
+        if(Globals.Instance.map.cells[i].color == "Black")
+        {
+          for(j = 0; j <  1; j ++)
+          {
+            if(i-(j+1)*Globals.Instance.mapWidth < 0) {
+            Globals.Instance.map.cells[i-j*Globals.Instance.mapWidth].color = ColorGen();
+            }
+            else {
+            Globals.Instance.inputHelper.jCounter++;
+            Globals.Instance.map.cells[i-j*Globals.Instance.mapWidth].color = Globals.Instance.map.cells[i-(j+1)*Globals.Instance.mapWidth].color;
+            Globals.Instance.map.cells[i-(j+1)*Globals.Instance.mapWidth].color = "Black";
+            }
+          }
+        }
+
+
+      }
+      //clearInterval(Globals.Instance.inputHelper.myVar2);   //KEEP FOR REF 12 21 2015
+    }
+  }
+
+}
+
+function Timer()
+{
+  this.startTime = Date.now();
+  this.timeElapsed = 0;
+
+  Timer.prototype.updateTimeElapsed = function()
+  {
+    this.timeElapsed = Date.now() - this.startTime;
+  }
+}
+
+function Map(tilesWide, tilesDown, tileWidth, tileHeight)
+{
+  this.tilesWide = tilesWide;
+  this.tilesDown = tilesDown;
+  this.tileWidth = tileWidth;
+  this.tileHeight = tileHeight;
+
+  this.tilesVertOffset = 10;
+  this.tilesHorizOffset = 10;
+  this.tilesSpacing = 50;  // spacing from left most point
+
+  this.cells = [];
+  this.backgroundCells = [];
+
+  var numberOfCells = tilesWide * tilesDown;
+
+  for (var i = 0; i < numberOfCells; i ++)
+  {
+    this.cells.push(new Tile(ColorGen()));
+  }
+  for (var i = 0; i < numberOfCells; i ++)
+  {
+    this.backgroundCells.push(new Tile("Black"));
+  }
+}
+
+function Tile(color)
+{
+  this.color = color;
+}
+
+function ColorGen()
+{
+  colors = ["Aqua", "Pink", "Yellow", "Orange"];
+  index = Math.floor((Math.random() * colors.length));
+  return(colors[index]);
+}
+
+function Enemy(hp)
+{
+  this.hp = hp;
+}
+
+main();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+    <a href="bejeweledHiragana.html">refresh</a>
