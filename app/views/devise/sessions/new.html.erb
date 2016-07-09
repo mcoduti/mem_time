@@ -552,7 +552,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     document.getElementById("game").addEventListener("mousemove", this.MouseMove.bind(this), true);
 
     document.addEventListener('touchmove', function(e) {
-      e.preventDefault();
+      //e.preventDefault();
       //Globals.Instance.touchTester = "kaplow";
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
@@ -562,7 +562,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     );
 
     document.addEventListener('touchstart', function(e){
-      e.preventDefault();
+      //e.preventDefault();
       document.getElementById("user_email").blur();
       document.getElementById("user_password").blur();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
@@ -587,7 +587,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     );
 
     document.addEventListener('touchend', function(e){
-      e.preventDefault();
+      //e.preventDefault();
       this.touchX = e.changedTouches[0].pageX;
       this.touchY = e.changedTouches[0].pageY;
       //Globals.Instance.inputHelper.buttonPressed = true;
