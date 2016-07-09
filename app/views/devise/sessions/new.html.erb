@@ -567,7 +567,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
       document.getElementById("user_password").blur();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
-      if(this.touchY < 0) {
+      if(this.touchY > 0) {
         e.preventDefault();
       }
 
