@@ -225,8 +225,8 @@ function DisplayHelper()
     //this.graphics.fillText("languageArray: " + Globals.Instance.languageHelper.languageArray, 10, 470);
     //this.graphics.fillText("gameState: " + Globals.Instance.gameState, 315, 15);
 
-    //this.graphics.fillText("mXcd: " + Globals.Instance.inputHelper.mXcd, 10, 340);
-    //this.graphics.fillText("mYcd: " + Globals.Instance.inputHelper.mYcd, 10, 355);
+    this.graphics.fillText("mXcd: " + Globals.Instance.inputHelper.mXcd, 10, 340);
+    this.graphics.fillText("mYcd: " + Globals.Instance.inputHelper.mYcd, 10, 355);
     //this.graphics.fillText("arrayTracker: " + Globals.Instance.inputHelper.arrayTracker, 10, 370);
     //this.graphics.fillText("targetArray: " + Globals.Instance.inputHelper.targetArray, 10, 385);
     //this.graphics.fillText("timeRemaining: " + Globals.Instance.timeRemaining, 10, 400);
@@ -234,9 +234,9 @@ function DisplayHelper()
     //this.graphics.fillText("touchTester: " + Globals.Instance.touchTester, 10, 430);
     //this.graphics.fillText("mouseTester: " + Globals.Instance.mouseTester, 10, 445);
     this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetLeft, 10, 430);
-    this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
-    this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 10, 400);
-    this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 10, 415);
+    this.graphics.fillText("canvas.clientTop: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
+    this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 100, 340);
+    this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 100, 355);
     this.graphics.fillText("buttonPressed: " + Globals.Instance.inputHelper.buttonPressed, 10, 490);
     //this.graphics.fillText("checkAnswerTouchCounter: " + Globals.Instance.checkAnswerTouchCounter, 10, 505);
 
@@ -294,7 +294,7 @@ function DisplayHelper()
   DisplayHelper.prototype.initialize = function()
   {
     this.canvas.width = 310;
-    this.canvas.height = 350;
+    this.canvas.height = 500;
     this.tomato = "tomatoooos";
     this.graphics = this.canvas.getContext("2d");
     this.graphics.fillStyle = "LightGray";
@@ -562,7 +562,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     );
 
     document.addEventListener('touchstart', function(e){
-      //e.preventDefault();
+      e.preventDefault();
       document.getElementById("user_email").blur();
       document.getElementById("user_password").blur();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
