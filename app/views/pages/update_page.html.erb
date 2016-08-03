@@ -431,24 +431,24 @@ function LanguageHelper()
 {
 this.languageHelperDemoVar = "apple";
 this.foreignCharacters = [
-  ['我', 0],
-  ['你' , 1],
+  ['<%= @game_input[0] %>', 0],
+  ['<%= @game_input[5] %>' , 1],
   ['很' , 2],
   ['好' , 3],
   ['不' , 4],
   ['愛', 5]
 ];
 this.foreignPhonetic = [
-  ['wǒ', 0],
-  ['nǐ' , 1],
+  ['<%= @game_input[1] %>', 0],
+  ['<%= @game_input[6] %>' , 1],
   ['hěn' , 2],
   ['hǎo' , 3],
   ['bù' , 4],
   ['ài', 5]
 ];
 this.foreignTranslations = [
-  ['I', 0],
-  ['you' , 1],
+  ['<%= @game_input[2] %>', 0],
+  ['<%= @game_input[7] %>' , 1],
   ['very' , 2],
   ['good' , 3],
   ['not', 4],
