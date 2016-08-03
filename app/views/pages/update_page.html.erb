@@ -566,8 +566,8 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
 
     document.addEventListener('touchstart', function(e){
       //e.preventDefault();
-      document.getElementById("user_email").blur();
-      document.getElementById("user_password").blur();
+      //document.getElementById("user_email").blur();
+      //document.getElementById("user_password").blur();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
       if(this.touchY > 0) {
