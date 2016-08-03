@@ -11,7 +11,7 @@
 //    next change mouseclick states from "playing" to "questionOn", detect which area is selected for answer, then
 //    clear all related languageHelper variables prior to procking next question.
 
-/*
+
 function main()
 {
   //instantiate tiles
@@ -208,11 +208,11 @@ function DisplayHelper()
 
     //this.graphics.fillText("touchTester: " + Globals.Instance.touchTester, 10, 430);
     //this.graphics.fillText("mouseTester: " + Globals.Instance.mouseTester, 10, 445);
-    this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetLeft, 10, 430);
-    this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
-    this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 10, 400);
-    this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 10, 415);
-    this.graphics.fillText("buttonPressed: " + Globals.Instance.inputHelper.buttonPressed, 10, 490);
+    //this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetLeft, 10, 430);
+    //this.graphics.fillText("canvas.clientTop: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
+    //this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 100, 340);
+    //this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 100, 355);
+    //this.graphics.fillText("buttonPressed: " + Globals.Instance.inputHelper.buttonPressed, 10, 490);
     //this.graphics.fillText("checkAnswerTouchCounter: " + Globals.Instance.checkAnswerTouchCounter, 10, 505);
 
     //this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 520);
@@ -223,8 +223,36 @@ function DisplayHelper()
 
     this.graphics.font = 'Bold 20px Calibri';
     this.graphics.fillText("Time: " + (Globals.Instance.timeRemaining), 10, 325);
-    this.graphics.fillText("Enemy HP: " + Globals.Instance.enemy.hp, 180, 325);
+    this.graphics.fillStyle = "Red";
+    this.graphics.fillText("Enemy HP: " + Globals.Instance.enemy.hp, 165, 325);
+    this.graphics.fillStyle = "Black";
     this.graphics.font = '14px Calibri';
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[0][0], 10, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[0][0], 40, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[0][0], 70, 340);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[1][0], 10, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[1][0], 40, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[1][0], 70, 355);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[2][0], 110, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[2][0], 140, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[2][0], 170, 340);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[3][0], 110, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[3][0], 140, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[3][0], 170, 355);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[4][0], 210, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[4][0], 240, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[4][0], 270, 340);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[5][0], 210, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[5][0], 240, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[5][0], 270, 355);
+
+
+
     //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.height, 10, 380);
     //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.frameIndex, 10, 370)
   }
@@ -269,7 +297,7 @@ function DisplayHelper()
   DisplayHelper.prototype.initialize = function()
   {
     this.canvas.width = 310;
-    this.canvas.height = 350;
+    this.canvas.height = 500;
     this.tomato = "tomatoooos";
     this.graphics = this.canvas.getContext("2d");
     this.graphics.fillStyle = "LightGray";
@@ -329,7 +357,7 @@ function Globals()
     //clearInterval(this.myVar);
   }
 */
-/*
+
 }
 
 function ImageHelper()
@@ -527,7 +555,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     document.getElementById("game").addEventListener("mousemove", this.MouseMove.bind(this), true);
 
     document.addEventListener('touchmove', function(e) {
-      e.preventDefault();
+      //e.preventDefault();
       //Globals.Instance.touchTester = "kaplow";
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
@@ -538,8 +566,14 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
 
     document.addEventListener('touchstart', function(e){
       //e.preventDefault();
+      document.getElementById("user_email").blur();
+      document.getElementById("user_password").blur();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
+      if(this.touchY > 0) {
+        e.preventDefault();
+      }
+
       Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
       e.changedTouches[0].pageY + " y";
 
@@ -560,7 +594,7 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
     );
 
     document.addEventListener('touchend', function(e){
-      e.preventDefault();
+      //e.preventDefault();
       this.touchX = e.changedTouches[0].pageX;
       this.touchY = e.changedTouches[0].pageY;
       //Globals.Instance.inputHelper.buttonPressed = true;
@@ -1235,7 +1269,7 @@ main();
 
 
 
-*/
+
 
 
 
