@@ -189,7 +189,6 @@ function DisplayHelper()
     //this.graphics.fillText("Globals.Instance.gameTimer.startTime: " + Globals.Instance.gameTimer.timeElapsed, 10, 320);
     //this.graphics.fillText("Globals.Instance.enemy.hp: " + Globals.Instance.enemy.hp, 10, 335);
 
-    //this.graphics.fillText("languageHelper demo: " + Globals.Instance.languageHelper.languageHelperDemoVar, 10, 350);
     //this.graphics.fillText("foreignCharacters: " + Globals.Instance.languageHelper.foreignCharacters, 10, 365);
     //this.graphics.fillText("foreignPhonetic: " + Globals.Instance.languageHelper.foreignPhonetic, 10, 380);
     //this.graphics.fillText("foreignTranslations: " + Globals.Instance.languageHelper.foreignTranslations, 10, 395);
@@ -262,8 +261,9 @@ function DisplayHelper()
     this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[5], 400, 415);
 
     this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes.length, 10, 430);
-
-
+    this.graphics.fillText("languageHelper demo: " + Globals.Instance.languageHelper.languageHelperDemoVar, 10, 445);
+    this.graphics.fillText("questionArray: " + Globals.Instance.languageHelper.questionArray, 10, 460);
+    this.graphics.fillText("knowledgeAjaxKey:  " + Globals.Instance.languageHelper.knowledgeAjaxKey, 10, 475);
 
     //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.height, 10, 380);
     //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.frameIndex, 10, 370)
@@ -442,6 +442,7 @@ function ImageHelper()
 function LanguageHelper()
 {
 this.languageHelperDemoVar = "apple";
+this.knowledgeAjaxKey = 0;
 this.foreignCharacters = [
   ['<%= @game_input[0] %>', 0],
   ['<%= @game_input[4] %>' , 1],
@@ -517,11 +518,14 @@ this.languageArray = [];
 
   if(questionArray[3] == "0")
   {
-    this.question.push(this.foreignCharacters[questionArray[5]])
+    this.question.push(this.foreignCharacters[questionArray[5]]);
+    this.knowledgeAjaxKey = questionArray[5];
   } else if (questionArray[3] == "1") {
-    this.question.push(this.foreignPhonetic[questionArray[5]])
+    this.question.push(this.foreignPhonetic[questionArray[5]]);
+    this.knowledgeAjaxKey = questionArray[5];
   } else if (questionArray[3] == "2") {
-    this.question.push(this.foreignTranslations[questionArray[5]])
+    this.question.push(this.foreignTranslations[questionArray[5]]);
+    this.knowledgeAjaxKey = questionArray[5];
   }
 
   if(questionArray[4] == "0")
@@ -540,7 +544,12 @@ this.languageArray = [];
   }
 
   this.languageHelperDemoVar = Globals.Instance.inputHelper.targetArray;
+  this.languageHelperDemoVar = questionArray;
 
+  //question array first three items:  options for answers from array of all options
+  //4th item, type of question (chinese, translation, or phonetic spelling)
+  //5th item, type of answer (chinese, translation, or phonetic spelling)
+  //6th item, key given to each language item imported from db to identify same-same among chinese, phonetic, and translation arrays
   return questionArray
   }
 }
