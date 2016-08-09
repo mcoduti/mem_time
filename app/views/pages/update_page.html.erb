@@ -200,8 +200,8 @@ function DisplayHelper()
     //this.graphics.fillText("languageArray: " + Globals.Instance.languageHelper.languageArray, 10, 470);
     //this.graphics.fillText("gameState: " + Globals.Instance.gameState, 315, 15);
 
-    this.graphics.fillText("mXcd: " + Globals.Instance.inputHelper.mXcd, 10, 370);
-    this.graphics.fillText("mYcd: " + Globals.Instance.inputHelper.mYcd, 10, 385);
+    //this.graphics.fillText("mXcd: " + Globals.Instance.inputHelper.mXcd, 10, 370);
+    //this.graphics.fillText("mYcd: " + Globals.Instance.inputHelper.mYcd, 10, 385);
     //this.graphics.fillText("arrayTracker: " + Globals.Instance.inputHelper.arrayTracker, 10, 370);
     //this.graphics.fillText("targetArray: " + Globals.Instance.inputHelper.targetArray, 10, 385);
     //this.graphics.fillText("timeRemaining: " + Globals.Instance.timeRemaining, 10, 400);
@@ -210,16 +210,16 @@ function DisplayHelper()
     //this.graphics.fillText("mouseTester: " + Globals.Instance.mouseTester, 10, 445);
     //this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetLeft, 10, 430);
     //this.graphics.fillText("canvas.clientTop: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
-    this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 100, 370);
-    this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 100, 385);
+    //this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 100, 370);
+    //this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 100, 385);
 
 
 
-    this.graphics.fillText('<%= @character.first.english_spelling %>', 0, 400);
+    //this.graphics.fillText('<%= @character.first.english_spelling %>', 0, 445);
     //this.graphics.fillText("buttonPressed: " + Globals.Instance.inputHelper.buttonPressed, 10, 490);
     //this.graphics.fillText("checkAnswerTouchCounter: " + Globals.Instance.checkAnswerTouchCounter, 10, 505);
 
-    //this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 520);
+    this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 520);
     //this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 535);
     //this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 550);
     //this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 565);
@@ -231,29 +231,37 @@ function DisplayHelper()
     this.graphics.fillText("Enemy HP: " + Globals.Instance.enemy.hp, 165, 325);
     this.graphics.fillStyle = "Black";
     this.graphics.font = '14px Calibri';
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[0][0], 10, 340);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[0][0], 40, 340);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[0][0], 70, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[0][0], 40, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[0][0], 120, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[0][0], 220, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[0], 400, 340);
 
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[1][0], 10, 355);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[1][0], 40, 355);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[1][0], 70, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[1][0], 40, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[1][0], 120, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[1][0], 220, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[1], 400, 355);
 
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[2][0], 110, 340);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[2][0], 140, 340);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[2][0], 170, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[2][0], 40, 370);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[2][0], 120, 370);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[2][0], 220, 370);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[2], 400, 370);
 
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[3][0], 110, 355);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[3][0], 140, 355);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[3][0], 170, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[3][0], 40, 385);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[3][0], 120, 385);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[3][0], 220, 385);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[3], 400, 385);
 
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[4][0], 210, 340);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[4][0], 240, 340);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[4][0], 270, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[4][0], 40, 400);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[4][0], 120, 400);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[4][0], 220, 400);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[4], 400, 400);
 
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[5][0], 210, 355);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[5][0], 240, 355);
-    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[5][0], 270, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[5][0], 40, 415);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[5][0], 120, 415);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[5][0], 220, 415);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[5], 400, 415);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes.length, 10, 430);
 
 
 
@@ -300,8 +308,8 @@ function DisplayHelper()
 
   DisplayHelper.prototype.initialize = function()
   {
-    this.canvas.width = 310;
-    this.canvas.height = 500;
+    this.canvas.width = 500;
+    this.canvas.height = 800;
     this.tomato = "tomatoooos";
     this.graphics = this.canvas.getContext("2d");
     this.graphics.fillStyle = "LightGray";
@@ -436,26 +444,34 @@ function LanguageHelper()
 this.languageHelperDemoVar = "apple";
 this.foreignCharacters = [
   ['<%= @game_input[0] %>', 0],
-  ['你' , 1],
-  ['很' , 2],
-  ['好' , 3],
-  ['不' , 4],
+  ['<%= @game_input[4] %>' , 1],
+  ['<%= @game_input[8] %>' , 2],
+  ['<%= @game_input[12] %>' , 3],
+  ['<%= @game_input[16] %>' , 4],
   ['愛', 5]
 ];
 this.foreignPhonetic = [
-  ['wǒ', 0],
-  ['nǐ' , 1],
-  ['hěn' , 2],
-  ['hǎo' , 3],
-  ['bù' , 4],
+  ['<%= @game_input[1] %>', 0],
+  ['<%= @game_input[5] %>' , 1],
+  ['<%= @game_input[9] %>' , 2],
+  ['<%= @game_input[13] %>' , 3],
+  ['<%= @game_input[17] %>' , 4],
   ['ài', 5]
 ];
 this.foreignTranslations = [
-  ['I', 0],
-  ['you' , 1],
-  ['very' , 2],
-  ['good' , 3],
-  ['not', 4],
+  ['<%= @game_input[2] %>', 0],
+  ['<%= @game_input[6] %>' , 1],
+  ['<%= @game_input[10] %>' , 2],
+  ['<%= @game_input[14] %>' , 3],
+  ['<%= @game_input[18] %>', 4],
+  ['love', 5]
+];
+this.knowledgeKeyes = [
+  ['<%= @game_input[3] %>', 0],
+  ['<%= @game_input[7] %>' , 1],
+  ['<%= @game_input[11] %>' , 2],
+  ['<%= @game_input[15] %>' , 3],
+  ['<%= @game_input[19] %>', 4],
   ['love', 5]
 ];
 this.question = [];
