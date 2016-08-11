@@ -219,9 +219,9 @@ function DisplayHelper()
     //this.graphics.fillText("checkAnswerTouchCounter: " + Globals.Instance.checkAnswerTouchCounter, 10, 505);
 
     this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 520);
-    //this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 535);
-    //this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 550);
-    //this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 565);
+    this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 535);
+    this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 550);
+    this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 565);
 
 
     this.graphics.font = 'Bold 20px Calibri';
@@ -264,6 +264,7 @@ function DisplayHelper()
     this.graphics.fillText("languageHelper demo: " + Globals.Instance.languageHelper.languageHelperDemoVar, 10, 445);
     this.graphics.fillText("questionArray: " + Globals.Instance.languageHelper.questionArray, 10, 460);
     this.graphics.fillText("knowledgeAjaxKey:  " + Globals.Instance.languageHelper.knowledgeAjaxKey, 10, 475);
+    this.graphics.fillText("ajaxInput: " + Globals.Instance.languageHelper.ajaxInput, 10, 490);
 
     //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.height, 10, 380);
     //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.frameIndex, 10, 370)
@@ -443,6 +444,7 @@ function LanguageHelper()
 {
 this.languageHelperDemoVar = "apple";
 this.knowledgeAjaxKey = 0;
+this.ajaxInput = "tomato";
 this.foreignCharacters = [
   ['<%= @game_input[0] %>', 0],
   ['<%= @game_input[4] %>' , 1],
@@ -475,6 +477,8 @@ this.knowledgeKeyes = [
   ['<%= @game_input[19] %>', 4],
   ['love', 5]
 ];
+//this.ajaxInput = this.knowledgeKeyes[0][1];
+
 this.question = [];
 this.answer0 = [];
 this.answer1 = [];
@@ -664,6 +668,15 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
 
   InputHelper.prototype.OnClick = function()
   {
+
+      //$.ajax({
+      //method: "POST",
+      //url: "/save_game_data",
+      //data-remote:  "TRUE",
+      //data: { id: 1, attempt: 1 }
+      //})
+
+
     if(Globals.Instance.gameState == "playing")
     {
       this.buttonPressed = true;
@@ -727,6 +740,15 @@ this.arrayTracker = []; //array of all cells of same color traced between mdown 
       this.mYcd <= 150 &&
       Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
     ) {
+
+      Globals.Instance.languageHelper.ajaxInput = Globals.Instance.languageHelper.knowledgeKeyes[Globals.Instance.languageHelper.knowledgeAjaxKey][0];
+      //$.ajax({
+      //method: "POST",
+      //url: "/save_game_data",
+      //data-remote:  "TRUE",
+      //data: { id: Globals.Instance.languageHelper.knowledgeKeyes[knowledgeAjaxKey][0], attempt: 1 }
+      //})
+
       Globals.Instance.languageHelper.question.splice(0,1);
       Globals.Instance.languageHelper.answer0.splice(0,1);
       Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -820,6 +842,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
       this.touchY <= 150 &&
       Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
     ) {
+
+
       Globals.Instance.languageHelper.question.splice(0,1);
       Globals.Instance.languageHelper.answer0.splice(0,1);
       Globals.Instance.languageHelper.answer1.splice(0,1);
