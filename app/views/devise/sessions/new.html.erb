@@ -840,7 +840,7 @@ this.touchActive = false;
       Globals.Instance.displayHelper.drawInput.push([]); // added elephant
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
-      this.offsetLanguageArrayCdTouch = this.touchY - Globals.Instance.languageHelper.languageArrayXCd;
+      this.offsetLanguageArrayCdTouch = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
       this.offsetFromLanguageArray = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
       if(this.touchY > 0) {
         e.preventDefault();
