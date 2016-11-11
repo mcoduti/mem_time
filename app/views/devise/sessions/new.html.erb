@@ -327,6 +327,8 @@ function DisplayHelper()
     this.graphics.fillStyle = "Black";
     this.graphics.font = '14px Calibri';
 
+    this.graphics.fillText("touchActive: " + Globals.Instance.inputHelper.touchActive, 130, 320);
+
     this.graphics.fillText("p1: " + Globals.Instance.displayHelper.p1, 310, 20);
     this.graphics.fillText("p2: " + Globals.Instance.displayHelper.p2, 310, 35);
     this.graphics.fillText("p3: " + Globals.Instance.displayHelper.p3, 310, 50);
@@ -643,10 +645,12 @@ this.languageArray3 = "";
 this.languageArrayXCd = -10;
 for (i=0; i<this.characterInput.length; i++)
   {
-  this.languageArray = this.languageArray + "    " + this.characterInput[i][0] + " " + this.phoneticInput[i][0] + " "; //+ this.translationInput[i][0] + " ";
+  this.languageArray = this.languageArray + "    " + this.characterInput[i][0] + " " + this.phoneticInput[i][0] + " " + this.foreignTranslations[i][0]; //+ this.translationInput[i][0] + " ";
   //this.masterLangArray.push(this.phoneticInput[i]);
   //this.masterLangArray.push(this.translationInput[i]);
   }
+
+/*
 for (i=0; i<this.characterInput.length; i++)
   {
   this.languageArray = this.languageArray + "    " + this.characterInput[i][0] + " " + this.phoneticInput[i][0] + " "; //+ this.translationInput[i][0] + " ";
@@ -698,6 +702,7 @@ for (i=0; i<this.characterInput.length; i++)
   //this.masterLangArray.push(this.phoneticInput[i]);
   //this.masterLangArray.push(this.translationInput[i]);
   }
+*/
 
 this.question = [];
 this.answer0 = [];
@@ -798,6 +803,7 @@ this.offsetLanguageArrayCd = 0;
 this.offsetLanguageArrayCdTouch = 0;
 this.testDrawResult = "apples";
 this.arrayCharacteristic = [];
+this.touchActive = false;
 
 }
 {
@@ -813,7 +819,7 @@ this.arrayCharacteristic = [];
     document.getElementById("game").addEventListener("mousemove", this.MouseMove.bind(this), true);
 
     document.addEventListener('touchmove', function(e) {
-      e.preventDefault();
+      //e.preventDefault();
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
 
@@ -828,17 +834,19 @@ this.arrayCharacteristic = [];
     );
 
     document.addEventListener('touchstart', function(e){
+      document.getElementById("user_email").blur();
+      document.getElementById("user_password").blur();
+      this.touchActive = true;
       Globals.Instance.displayHelper.drawInput.push([]); // added elephant
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
-      this.offsetLanguageArrayCdTouch = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
-      this.offsetFromLanguageArray = this.mXcd - Globals.Instance.languageHelper.languageArrayXCd;
-
-      if(this.touchY >= 0) {
-        document.getElementById("firstName").blur();
-      } else {
-        //e.preventDefault();
+      this.offsetLanguageArrayCdTouch = this.touchY - Globals.Instance.languageHelper.languageArrayXCd;
+      this.offsetFromLanguageArray = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
+      if(this.touchY > 0) {
+        e.preventDefault();
       }
+
+
       //e.changedTouches[0].pageY + " y";
 
       if(Globals.Instance.gameState == "playing")
@@ -861,13 +869,13 @@ this.arrayCharacteristic = [];
     );
 
     document.addEventListener('touchend', function(e){
-      e.preventDefault();
+      //e.preventDefault();
       if(Globals.Instance.displayHelper.drawInput[Globals.Instance.displayHelper.drawInput.length - 1] == false) {
         //Globals.Instance.displayHelper.drawInput[Globals.Instance.displayHelper.drawInput.length - 1] = ["apple"];
         Globals.Instance.displayHelper.drawInput.splice(Globals.Instance.displayHelper.drawInput.length - 1);
       }
-      this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
-      this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
+      this.touchX = e.changedTouches[0].pageX;
+      this.touchY = e.changedTouches[0].pageY;
 
       if(Globals.Instance.gameState == "playing")
       {
@@ -902,6 +910,7 @@ this.arrayCharacteristic = [];
   InputHelper.prototype.OnClick = function()
   {
     Globals.Instance.displayHelper.drawInput.push([]);
+    this.touchAcitve = false;
     this.offsetLanguageArrayCd = this.mXcd - Globals.Instance.languageHelper.languageArrayXCd;
     this.offsetFromLanguageArray = this.mXcd - Globals.Instance.languageHelper.languageArrayXCd;
     //this.checkDrawing();
@@ -987,15 +996,17 @@ this.arrayCharacteristic = [];
 
   InputHelper.prototype.DifferenceFromOrigin = function()
   {
-    if(this.mXcd != null && this.mYcd >= 330)
+    if(this.touchActive == false && this.mYcd >= 330)
     {
       Globals.Instance.languageHelper.languageArrayXCd = this.mXcd - this.offsetLanguageArrayCd;
     }
-    if(this.mXcd == null && this.touchY >= 300)
+    if(this.touchActive == true && this.touchY >= 330)
     {
       Globals.Instance.languageHelper.languageArrayXCd = this.touchX - this.offsetLanguageArrayCdTouch;
     }
   }
+
+
 
   InputHelper.prototype.activateQuestionOn = function(array)  // 2/16 9:41
   {
