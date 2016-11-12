@@ -1700,6 +1700,7 @@ function DisplayHelper()
    // this.graphics.fillText("drawTarget: " + typeof Globals.Instance.languageHelper.drawTarget, 200, 395);
     this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 200, 410);
     this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 200, 425);
+    this.graphics.fillText("ruby: " + '<%= @sampleRuby %>', 200, 440);
 
     this.graphics.fillText("testDrawResult: " + Globals.Instance.inputHelper.testDrawResult, 10, 380);
     this.graphics.fillText("testDrawResult: " + typeof Globals.Instance.inputHelper.testDrawResult, 10, 395);
@@ -1912,13 +1913,13 @@ this.matchIdentifier = "default";
 
 this.foreignCharacters = [];  //foreignCharacters is the array the game sources information from
 this.characterInput = [ //characterInput is a scalable array used for receiving a variable number of items, ["character", "id #"], from SQL
-  ['一', 0],   // 1
-  ['你' , 1],    // 7
-  ['不' , 2],  //4
-  ['我' , 3],   //7
-  ['好' , 4],  //6
-  ['很' , 5],   //9
-  ['嗎' , 6]   // 13
+  ['<%= @game_input_character[0] %>', 0],   // 1
+  ['<%= @game_input_character[1] %>', 1],    // 7
+  ['<%= @game_input_character[2] %>' , 2],  //4
+  ['<%= @game_input_character[3] %>' , 3],   //7
+  ['<%= @game_input_character[4] %>', 4]   //6
+  //['<%= @game_input_character[0] %>', 5],   //9
+  //['<%= @game_input_character[0] %>', 6]   // 13
 ];
 for (i =0; i < this.characterInput.length; i++)
   {
@@ -1926,13 +1927,13 @@ for (i =0; i < this.characterInput.length; i++)
   }
 this.foreignPhonetic = [];
 this.phoneticInput = [
-  ['yī', 0],
-  ['nǐ' , 1],
-  ['bù' , 2],
-  ['wǒ' , 3],
-  ['hǎo', 4],
-  ['hěn', 5],
-  ['ma', 6]
+  ['<%= @game_input_phonetic[0] %>', 0],
+  ['<%= @game_input_phonetic[1] %>', 1],
+  ['<%= @game_input_phonetic[2] %>', 2],
+  ['<%= @game_input_phonetic[3] %>', 3],
+  ['<%= @game_input_phonetic[4] %>', 4]
+  //['<%= @game_input_phonetic[0] %>', 5],
+  //['<%= @game_input_phonetic[0] %>', 6]
 ];
 for (i =0; i < this.phoneticInput.length; i++)
   {
@@ -1940,18 +1941,29 @@ for (i =0; i < this.phoneticInput.length; i++)
   }
 this.foreignTranslations = [];
 this.translationInput = [
-  ['one', 0],
-  ['you' , 1],
-  ['not' , 2],
-  ['I' , 3],
-  ['good' , 4],
-  ['very' , 5],
-  ['?' , 6]
+  ['<%= @game_input_translation[0] %>', 0],
+  ['<%= @game_input_translation[1] %>', 1],
+  ['<%= @game_input_translation[2] %>', 2],
+  ['<%= @game_input_translation[3] %>', 3],
+  ['<%= @game_input_translation[4] %>' , 4]
+  //['<%= @game_input_translation[0] %>', 5],
+  //['<%= @game_input_translation[0] %>', 6]
 ];
 for (i =0; i < this.translationInput.length; i++)
   {
   this.foreignTranslations.push(this.translationInput[i]);
   }
+
+this.knowledgeAjaxKey = 0;
+this.ajaxInput = "tomato";
+
+this.knowledgeKeyes = [
+  ['<%= @game_input_char_id[0] %>', 0],
+  ['<%= @game_input_char_id[1] %>', 1],
+  ['<%= @game_input_char_id[2] %>', 2],
+  ['<%= @game_input_char_id[3] %>', 3],
+  ['<%= @game_input_char_id[4] %>', 4]
+];
 
 this.languageArray = "";
 this.languageArray2 = "";
@@ -2069,10 +2081,13 @@ this.drawTarget = "drawTarget";
   if(questionArray[3] == "0")
   {
     this.question.push(this.foreignCharacters[questionArray[5]])
+    this.knowledgeAjaxKey = questionArray[5];
   } else if (questionArray[3] == "1") {
     this.question.push(this.foreignPhonetic[questionArray[5]])
+    this.knowledgeAjaxKey = questionArray[5];
   } else if (questionArray[3] == "2") {
     this.question.push(this.foreignTranslations[questionArray[5]])
+    this.knowledgeAjaxKey = questionArray[5];
   }
 
   this.drawTarget = this.foreignCharacters[questionArray[5]][0];
@@ -2118,6 +2133,7 @@ this.offsetLanguageArrayCdTouch = 0;
 this.testDrawResult = "apples";
 this.arrayCharacteristic = [];
 this.touchActive = false;
+this.dbAnswer = "test";
 
 }
 {
@@ -2365,6 +2381,7 @@ this.touchActive = false;
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+            Globals.Instance.inputHelper.dbAnswer = 1;
           }
         }
       } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 6) {
@@ -2376,6 +2393,7 @@ this.touchActive = false;
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+            Globals.Instance.inputHelper.dbAnswer = 1;
           }
         }
       } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 13) {
@@ -2387,6 +2405,7 @@ this.touchActive = false;
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+            Globals.Instance.inputHelper.dbAnswer = 1;
           }
         }
       }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 9) {
@@ -2398,6 +2417,7 @@ this.touchActive = false;
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+            Globals.Instance.inputHelper.dbAnswer = 1;
           }
         }
       }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
@@ -2410,12 +2430,14 @@ this.touchActive = false;
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+            Globals.Instance.inputHelper.dbAnswer = 1;
           }
         } else {
           this.testDrawResult = '你';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+            Globals.Instance.inputHelper.dbAnswer = 1;
           }
           }
       }  /*else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
@@ -2449,8 +2471,27 @@ this.touchActive = false;
         ){
           this.testDrawResult =  '一';     //Globals.Instance.languageHelper.question[0][0];
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          } else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
         }
 
@@ -2462,8 +2503,27 @@ this.touchActive = false;
         ){
           this.testDrawResult = '不';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }  else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
         }
       } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 6) {
@@ -2473,8 +2533,27 @@ this.touchActive = false;
         ){
           this.testDrawResult = '好';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }  else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
         }
       } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 13) {
@@ -2484,8 +2563,27 @@ this.touchActive = false;
         ){
           this.testDrawResult = '嗎';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }  else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
         }
       }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 9) {
@@ -2495,8 +2593,27 @@ this.touchActive = false;
         ){
           this.testDrawResult = '很';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }  else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
         }
       }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
@@ -2507,14 +2624,52 @@ this.touchActive = false;
         ){
           this.testDrawResult = '我';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }  else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
         } else {
           this.testDrawResult = '你';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            $.ajax({
+            method: "POST",
+            url: "/save_game_data",
+            //data-remote:  "TRUE",
+            data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 1
+            }
+            })
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          } else if (this.testDrawResult != Globals.Instance.languageHelper.drawTarget) {
+              $.ajax({
+              method: "POST",
+              url: "/save_game_data",
+              //data-remote:  "TRUE",
+              data: {
+              id: Globals.Instance.languageHelper.ajaxInput,
+              attempt: 0
+              }
+              })
           }
           }
       }  /*else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
@@ -2536,6 +2691,7 @@ this.touchActive = false;
 
   InputHelper.prototype.checkAnswer = function()  // 2/16 9:41
   {
+    Globals.Instance.languageHelper.ajaxInput = Globals.Instance.languageHelper.knowledgeKeyes[Globals.Instance.languageHelper.knowledgeAjaxKey][0];
     if(Globals.Instance.languageHelper.questionArray[4] != 3)
        {
       if //first answer box correct
@@ -2546,6 +2702,16 @@ this.touchActive = false;
         this.mYcd <= 150 &&
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 1;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2560,6 +2726,16 @@ this.touchActive = false;
         this.mYcd <= 150 &&
         Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer0[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 0;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2574,6 +2750,16 @@ this.touchActive = false;
         this.mYcd <= 190 &&
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 1;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2588,6 +2774,16 @@ this.touchActive = false;
         this.mYcd <= 190 &&
         Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer1[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 0;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2602,12 +2798,22 @@ this.touchActive = false;
         this.mYcd <= 220 &&
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
       ) {
-      Globals.Instance.languageHelper.question.splice(0,1);
-      Globals.Instance.languageHelper.answer0.splice(0,1);
-      Globals.Instance.languageHelper.answer1.splice(0,1);
-      Globals.Instance.languageHelper.answer2.splice(0,1);
-      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
-      Globals.Instance.gameState = "playing";
+        Globals.Instance.inputHelper.dbAnswer = 1;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
+        Globals.Instance.languageHelper.question.splice(0,1);
+        Globals.Instance.languageHelper.answer0.splice(0,1);
+        Globals.Instance.languageHelper.answer1.splice(0,1);
+        Globals.Instance.languageHelper.answer2.splice(0,1);
+        Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+        Globals.Instance.gameState = "playing";
       } else if //third answer box wrong
       (
         this.mXcd >= 80 &&
@@ -2616,6 +2822,16 @@ this.touchActive = false;
         this.mYcd <= 220 &&
         Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer2[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 0;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2623,36 +2839,37 @@ this.touchActive = false;
         //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
         Globals.Instance.gameState = "playing";
       }
-
        } else if(Globals.Instance.languageHelper.questionArray[4] == 3)
         {
-      if
-      (
-        this.mYcd >= 290 &&
-        this.mYcd <= 335 &&
-        this.mXcd >= 100 &&
-        this.mXcd <= 220
-      ){
+        if
+        (
+          this.mYcd >= 290 &&
+          this.mYcd <= 335 &&
+          this.mXcd >= 100 &&
+          this.mXcd <= 220
+        ){
 
-        //check to see if drawn character matches question
-        this.checkDrawing();
+          //check to see if drawn character matches question
+          this.checkDrawing();
 
 
-        Globals.Instance.languageHelper.question.splice(0,1);
-        Globals.Instance.languageHelper.answer0.splice(0,1);
-        Globals.Instance.languageHelper.answer1.splice(0,1);
-        Globals.Instance.languageHelper.answer2.splice(0,1);
-        Globals.Instance.gameState = "playing";
 
-        for (i = Globals.Instance.displayHelper.drawInput.length; i > 0 ; i--) {
-          Globals.Instance.displayHelper.drawInput.splice(i-1, 1);
+
+          Globals.Instance.languageHelper.question.splice(0,1);
+          Globals.Instance.languageHelper.answer0.splice(0,1);
+          Globals.Instance.languageHelper.answer1.splice(0,1);
+          Globals.Instance.languageHelper.answer2.splice(0,1);
+          Globals.Instance.gameState = "playing";
+
+          for (i = Globals.Instance.displayHelper.drawInput.length; i > 0 ; i--) {
+            Globals.Instance.displayHelper.drawInput.splice(i-1, 1);
+          }
+
+          for (i = Globals.Instance.languageHelper.questionArray.length; i > 0 ; i--) {
+           Globals.Instance.languageHelper.questionArray.splice(i-1, 1);
+          }
+
         }
-
-        for (i = Globals.Instance.languageHelper.questionArray.length; i > 0 ; i--) {
-          Globals.Instance.languageHelper.questionArray.splice(i-1, 1);
-        }
-
-      }
       }
 
   }
@@ -2666,6 +2883,7 @@ this.touchActive = false;
 
 InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
   {
+    Globals.Instance.languageHelper.ajaxInput = Globals.Instance.languageHelper.knowledgeKeyes[Globals.Instance.languageHelper.knowledgeAjaxKey][0];
     if(Globals.Instance.languageHelper.questionArray[4] != 3)
        {
       if //first answer box correct
@@ -2765,6 +2983,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
 
         //check to see if drawn character matches question
         this.checkDrawingTouch();
+        Globals.Instance.languageHelper.drawTarget = "apple"
+        this.testDrawResult = "hippo";
 
 
         Globals.Instance.languageHelper.question.splice(0,1);
