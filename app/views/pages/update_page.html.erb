@@ -1912,12 +1912,12 @@ this.matchIdentifier = "default";
 
 this.foreignCharacters = [];  //foreignCharacters is the array the game sources information from
 this.characterInput = [ //characterInput is a scalable array used for receiving a variable number of items, ["character", "id #"], from SQL
-  //['一', 0],   // 1
+  ['一', 0],   // 1
   ['你' , 1],    // 7
-  //['不' , 2],  //4
+  ['不' , 2],  //4
   ['我' , 3],   //7
-  //['好' , 4],  //6
-  //['很' , 5],   //9
+  ['好' , 4],  //6
+  ['很' , 5],   //9
   ['嗎' , 6]   // 13
 ];
 for (i =0; i < this.characterInput.length; i++)
@@ -1926,12 +1926,12 @@ for (i =0; i < this.characterInput.length; i++)
   }
 this.foreignPhonetic = [];
 this.phoneticInput = [
-  //['yī', 0],
+  ['yī', 0],
   ['nǐ' , 1],
-  //['bù' , 2],
+  ['bù' , 2],
   ['wǒ' , 3],
-  //['hǎo', 4],
-  //['hěn', 5],
+  ['hǎo', 4],
+  ['hěn', 5],
   ['ma', 6]
 ];
 for (i =0; i < this.phoneticInput.length; i++)
@@ -1940,12 +1940,12 @@ for (i =0; i < this.phoneticInput.length; i++)
   }
 this.foreignTranslations = [];
 this.translationInput = [
- // ['one', 0],
+  ['one', 0],
   ['you' , 1],
-  //['not' , 2],
+  ['not' , 2],
   ['I' , 3],
-  //['good' , 4],
-  //['very' , 5],
+  ['good' , 4],
+  ['very' , 5],
   ['?' , 6]
 ];
 for (i =0; i < this.translationInput.length; i++)
@@ -2455,7 +2455,7 @@ this.touchActive = false;
         }
 
 
-     } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 4) {
+      } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 4) {
 
         if (
         1 == 1
@@ -2477,18 +2477,7 @@ this.touchActive = false;
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
           }
         }
-      }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
-
-        if (
-        1 == 1
-        ){
-          this.testDrawResult = '你';
-          if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
-            Globals.Instance.languageHelper.matchIdentifier = "match";
-            Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
-          }
-        }
-      }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 13) {
+      } else if (Globals.Instance.displayHelper.drawInput.length - 1 == 13) {
 
         if (
         1 == 1
@@ -2510,7 +2499,36 @@ this.touchActive = false;
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
           }
         }
-      }
+      }  else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
+
+        if (
+        Number(Globals.Instance.displayHelper.drawInput[1][1][0]) > Number(Globals.Instance.displayHelper.drawInput[1][1][Globals.Instance.displayHelper.drawInput[1][1].length-1]) - 25 &&
+        Number(Globals.Instance.displayHelper.drawInput[1][1][0]) < Number(Globals.Instance.displayHelper.drawInput[1][1][Globals.Instance.displayHelper.drawInput[1][1].length-1]) + 25
+        ){
+          this.testDrawResult = '我';
+          if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.languageHelper.matchIdentifier = "match";
+            Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }
+        } else {
+          this.testDrawResult = '你';
+          if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.languageHelper.matchIdentifier = "match";
+            Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }
+          }
+      }  /*else if (Globals.Instance.displayHelper.drawInput.length - 1 == 7) {
+
+        if (
+        1 == 1
+        ){
+          this.testDrawResult = '你';
+          if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.languageHelper.matchIdentifier = "match";
+            Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+          }
+        }
+      } */
     }
   }
 
