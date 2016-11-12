@@ -7,17 +7,24 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-#Character.create(language: 'mandarin', translation: 'I', tone: '3rd', english_spelling: 'wǒ', character: '我')
-#Character.create(language: 'mandarin', translation: 'you', tone: '3rd', english_spelling: 'nǐ', character: '你')
+Character.create(language: 'mandarin', translation: 'I', tone: '3rd', english_spelling: 'wǒ', character: '我')
+Character.create(language: 'mandarin', translation: 'you', tone: '3rd', english_spelling: 'nǐ', character: '你')
+Character.create(language: 'mandarin', translation: 'good', tone: '3rd', english_spelling: 'hǎo', character: '好')
+Character.create(language: 'mandarin', translation: 'one', tone: '1st', english_spelling: 'yī', character: '一')
+Character.create(language: 'mandarin', translation: 'very', tone: '3rd', english_spelling: 'hěn', character: '很')
+Character.create(language: 'mandarin', translation: 'no/not', tone: '4rth', english_spelling: 'bù', character: '不')
+Character.create(language: 'mandarin', translation: '?', tone: '5th', english_spelling: 'ma', character: '嗎')
+
+
 #Character.create(language: 'mandarin', translation: 'am/are/is', tone: '4th', english_spelling: 'shì', character: '是')
 #Character.create(language: 'mandarin', translation: 'I + de = mine', tone: '5th', english_spelling: 'de', character: '的')
 #Character.create(language: 'mandarin', translation: 'little', tone: '3rd', english_spelling: 'xiǎo', character: '小')
 
-Character.create(language: 'mandarin', translation: 'planted', tone: '3rd 4rth', english_spelling: 'zhǒngxià', character: '种下')
-Character.create(language: 'mandarin', translation: 'one', tone: '4rth', english_spelling: 'yì', character: '一')
-Character.create(language: 'mandarin', translation: 'measure word for seed', tone: '4th', english_spelling: 'kē', character: '颗')
-Character.create(language: 'mandarin', translation: 'seed', tone: '3rd 5th', english_spelling: 'zhǒngzi', character: '种子')
-Character.create(language: 'mandarin', translation: 'finally', tone: '1st 4th', english_spelling: 'zhōngyú', character: '终于')
+#Character.create(language: 'mandarin', translation: 'planted', tone: '3rd 4rth', english_spelling: 'zhǒngxià', character: '种下')
+
+#Character.create(language: 'mandarin', translation: 'measure word for seed', tone: '4th', english_spelling: 'kē', character: '颗')
+#Character.create(language: 'mandarin', translation: 'seed', tone: '3rd 5th', english_spelling: 'zhǒngzi', character: '种子')
+#Character.create(language: 'mandarin', translation: 'finally', tone: '1st 4th', english_spelling: 'zhōngyú', character: '终于')
 
 #Character.create(language: 'mandarin', translation: 'past tense particle', tone: '5th', english_spelling: 'le', character: '了')
 #Character.create(language: 'mandarin', translation: 'fruit', tone: '3rd 2nd', english_spelling: 'guǒshí', character: '果实')
