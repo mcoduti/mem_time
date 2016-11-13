@@ -76,19 +76,19 @@ def update_page
     attempt.save
     @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
 
-    #attempt = Attempt.new
-    #attempt.correct = false
-    #attempt.user_id = current_user.id
-    #attempt.character_id = Character.take(@characters_known + 1).last.id
-    #attempt.save
-    #@characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
+    attempt = Attempt.new
+    attempt.correct = false
+    attempt.user_id = current_user.id
+    attempt.character_id = Character.take(@characters_known + 1).last.id
+    attempt.save
+    @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
 
-    #attempt = Attempt.new
-    #attempt.correct = false
-    #attempt.user_id = current_user.id
-    #attempt.character_id = Character.take(@characters_known + 1).last.id
-    #attempt.save
-    #@characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
+    attempt = Attempt.new
+    attempt.correct = false
+    attempt.user_id = current_user.id
+    attempt.character_id = Character.take(@characters_known + 1).last.id
+    attempt.save
+    @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
   end
 
   @easy = []
