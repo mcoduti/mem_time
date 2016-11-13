@@ -1,0 +1,1446 @@
+<script>
+/*
+var imageObjects2 = [];
+
+
+for (i = 0; i < 52; i++){
+  imageObjects2.push(new Image());
+}
+
+function notify_complete()
+{
+    alert('The image has been loaded into the browser cache.');
+}
+
+
+function load_image() {
+  for (i = 0; i < 52; i ++) {
+    imageObjects2[i].onload = notify_complete();
+  }
+}
+
+load_image();
+
+
+
+var my_image = new Image();
+
+// we will call this function when the image has finished loading
+function notify_complete()
+{
+    alert('The image has been loaded into the browser cache.');
+}
+
+function load_image()
+{
+    // call the notify_complete function when the image has loaded
+    my_image.onload = notify_complete;
+
+    // load the image
+    my_image.src = 'untitled.bmp';
+  GoGoGame();
+}
+
+load_image();
+
+
+var imageObjects = [];
+var startKey = false;
+
+function loadImages(images) {
+
+    var loaded = 0;
+    //startKey = true;
+    for (var i = 0; i < images.length; i++) {
+        var img = new Image();
+        img.onload = function() {
+  loaded = loaded + 1;
+  alert(loaded);
+  if(loaded == 52) {
+    alert(loaded);
+    startKey = true;
+    alert(startKey);
+    GoGoGame();
+  };
+  }
+        //img.addEventListener("load", onLoad);
+        img.src = images[i];
+        imageObjects.push(img);
+
+
+    }
+
+}
+
+
+loadImages([  "2d.svg", '2c.svg', '2s.svg', '2h.svg',
+    '3d.svg', '3c.svg', '3s.svg', '3h.svg',
+    '4d.svg', '4c.svg', '4s.svg', '4h.svg',
+    '5d.svg', '5c.svg', '5s.svg', '5h.svg',
+    '6d.svg', '6c.svg', '6s.svg', '6h.svg',
+    '7d.svg', '7c.svg', '7s.svg', '7h.svg',
+    '8d.svg', '8c.svg', '8s.svg', '8h.svg',
+    '9d.svg', '9c.svg', '9s.svg', '9h.svg',
+    '10d.svg', '10c.svg', '10s.svg', '10h.svg',
+    'jackD1.svg', 'jackC1.svg', 'jackS1.svg', 'jackH1.svg',
+    'queenD1.svg', 'queenC1.svg', 'queenS1.svg', 'queenH1.svg',
+    'kingD1.svg', 'kingC1.svg', 'kingS1.svg', 'kingH1.svg',
+     'aceD.svg',  'aceC.svg', 'aceS.svg', 'aceH.svg'
+  ]);
+
+*/
+
+var imgLoadCounter = 0;
+var imgLoadCounter2 = 0;
+
+function loadTracker() {
+  imgLoadCounter2 = imgLoadCounter2 + 1;
+  if(imgLoadCounter2 == 52) {
+    //alert("reached 52!");
+    NewGame();
+  }
+}
+
+function notify_complete() {
+  //alert('the img has been loaded');
+  imgLoadCounter = imgLoadCounter + 1;
+  //alert(imgLoadCounter);
+  if(imgLoadCounter == 52) {
+    //NewGame();
+  }
+}
+
+function load_image(variable, source){
+  variable.onload = notify_complete;
+  variable.src = source;
+}
+
+var d2 = new Image();
+d2.onload = loadTracker;
+d2.src =  "../2d.svg";
+
+var c2 = new Image();
+c2.onload = loadTracker;
+c2.src =  '../2c.svg';
+
+var s2 = new Image();
+s2.onload = loadTracker;
+s2.src =  '../2s.svg';
+
+var h2 = new Image();
+h2.onload = loadTracker;
+h2.src =  '../2h.svg';
+
+var d3 = new Image();
+d3.onload = loadTracker;
+d3.src =   '../3d.svg';
+
+var c3 = new Image();
+c3.onload = loadTracker;
+c3.src =  '../3c.svg';
+
+var s3 = new Image();
+s3.onload = loadTracker;
+s3.src =  '../3s.svg';
+
+var h3 = new Image();
+h3.onload = loadTracker;
+h3.src =  '../3h.svg';
+
+var d4 = new Image();
+d4.onload = loadTracker;
+d4.src =  '../4d.svg';
+
+var c4 = new Image();
+c4.onload = loadTracker;
+c4.src =  '../4c.svg';
+
+var s4 = new Image();
+s4.onload = loadTracker;
+s4.src =  '../4s.svg';
+
+var h4 = new Image();
+h4.onload = loadTracker;
+h4.src =  '../4h.svg';
+
+var d5 = new Image();
+d5.onload = loadTracker;
+d5.src =  '../5d.svg';
+
+var c5 = new Image();
+c5.onload = loadTracker;
+c5.src =  '../5c.svg';
+
+var s5 = new Image();
+s5.onload = loadTracker;
+s5.src =  '../5s.svg';
+
+var h5 = new Image();
+h5.onload = loadTracker;
+h5.src =  '../5h.svg';
+
+var d6 = new Image();
+d6.onload = loadTracker;
+d6.src =  '../6d.svg';
+
+var c6 = new Image();
+c6.onload = loadTracker;
+c6.src =  '../6c.svg';
+
+var s6 = new Image();
+s6.onload = loadTracker;
+s6.src =  '../6s.svg';
+
+var h6 = new Image();
+h6.onload = loadTracker;
+h6.src =  '../6h.svg';
+
+var d7 = new Image();
+d7.onload = loadTracker;
+d7.src =  '../7d.svg';
+
+var c7 = new Image();
+c7.onload = loadTracker;
+c7.src =  '../7c.svg';
+
+var s7 = new Image();
+s7.onload = loadTracker;
+s7.src =  '../7s.svg';
+
+var h7 = new Image();
+h7.onload = loadTracker;
+h7.src =  '../7h.svg';
+
+var d8 = new Image();
+d8.onload = loadTracker;
+d8.src =  '../8d.svg';
+
+var c8 = new Image();
+c8.onload = loadTracker;
+c8.src =  '../8c.svg';
+
+var s8 = new Image();
+s8.onload = loadTracker;
+s8.src =  '../8s.svg';
+
+var h8 = new Image();
+h8.onload = loadTracker;
+h8.src =  '../8h.svg';
+
+var d9 = new Image();
+d9.onload = loadTracker;
+d9.src =  '../9d.svg';
+
+var c9 = new Image();
+c9.onload = loadTracker;
+c9.src =  '../9c.svg';
+
+var s9 = new Image();
+s9.onload = loadTracker;
+s9.src =  '../9s.svg';
+
+var h9 = new Image();
+h9.onload = loadTracker;
+h9.src =  '../9h.svg';
+
+var d10 = new Image();
+d10.onload = loadTracker;
+d10.src =  '../10d.svg';
+
+var c10 = new Image();
+c10.onload = loadTracker;
+c10.src =  '../10c.svg';
+
+var s10 = new Image();
+s10.onload = loadTracker;
+s10.src =  '../10s.svg';
+
+var h10 = new Image();
+h10.onload = loadTracker;
+h10.src =  '../10h.svg';
+
+var jackD1 = new Image();
+jackD1.onload = loadTracker;
+jackD1.src =  '../jackD1.svg';
+
+var jackC1 = new Image();
+jackC1.onload = loadTracker;
+jackC1.src =  '../jackC1.svg';
+
+var jackS1 = new Image();
+jackS1.onload = loadTracker;
+jackS1.src =  '../jackS1.svg';
+
+var jackH1 = new Image();
+jackH1.onload = loadTracker;
+jackH1.src =  '../jackH1.svg';
+
+var queenD1 = new Image();
+queenD1.onload = loadTracker;
+queenD1.src =  '../queenD1.svg';
+
+var queenC1 = new Image();
+queenC1.onload = loadTracker;
+queenC1.src =  '../queenC1.svg';
+
+var queenS1 = new Image();
+queenS1.onload = loadTracker;
+queenS1.src =  '../queenS1.svg';
+
+var queenH1 = new Image();
+queenH1.onload = loadTracker;
+queenH1.src =  '../queenH1.svg';
+
+var kingD1 = new Image();
+kingD1.onload = loadTracker;
+kingD1.src =  '../kingD1.svg';
+
+var kingC1 = new Image();
+kingC1.onload = loadTracker;
+kingC1.src =  '../kingC1.svg';
+
+var kingS1 = new Image();
+kingS1.onload = loadTracker;
+kingS1.src =  '../kingS1.svg';
+
+var kingH1 = new Image();
+kingH1.onload = loadTracker;
+kingH1.src =  '../kingH1.svg';
+
+var aceD = new Image();
+aceD.onload = loadTracker;
+aceD.src =  '../aceD.svg';
+
+var aceC = new Image();
+aceC.onload = loadTracker;
+aceC.src =  '../aceC.svg';
+
+var aceS = new Image();
+aceS.onload = loadTracker;
+aceS.src =  '../aceS.svg';
+
+var aceH = new Image();
+aceH.onload = loadTracker;
+aceH.src =  '../aceH.svg';
+
+
+var result = "default";
+charArray =[["あ","a",0,0],["い","i",0,0],["う","u",0,0],["え","e",0,0],["お","o",0,0],["か","ka",0,0],["き","ki",0,0],["く","ku",0,0],["け","ke",0,0],["こ","ko",0,0]];
+
+function CreateQ(array) {
+  var orderArray = [];
+  var answerArray = [];
+  var question = [];
+  var jAnswers = [];
+  var jAnswerValues = [];
+  for(i = 0; i < array.length; i++) {
+    orderArray.push(i);
+  }
+  for(i = 0; i<3; i++){
+    val1 = Math.floor((Math.random() * orderArray.length));
+    answerArray.push(orderArray[val1]);
+    orderArray.splice(val1,1);
+  }
+  question.push(array[answerArray[0]]);
+  var orderArray2 = [];
+  for(i = 0; i < answerArray.length; i++) {
+    orderArray2.push(i);
+  }
+  for(i = 0; i<answerArray.length; i++){
+    val1 = Math.floor((Math.random() * orderArray2.length));
+    jAnswers.push(orderArray2[val1]);
+    orderArray2.splice(val1,1);
+  }
+  jAnswerValues.push(array[answerArray[jAnswers[0]]]);
+  jAnswerValues.push(array[answerArray[jAnswers[1]]]);
+  jAnswerValues.push(array[answerArray[jAnswers[2]]]);
+  return [question, jAnswerValues];
+}
+
+var orderArray = [0,1];
+orderArray = RandArr(orderArray);
+demo2 = orderArray[0];
+var gameOver = false;
+
+demo = CreateQ(charArray);
+//demo2 = demo[1][2][1];
+var question = demo[0][0];
+
+//var question = demo[0][0][0];
+var a1 = demo[1][0]
+var a1Display = a1[1];
+var a2 = demo[1][1];
+var a2Display = a2[1];
+var a3 = demo[1][2]
+var a3Display = a3[1];
+var response = "";
+var textResponse = "";
+var textResponse2 = "";
+var bonusPoints= 0;
+
+var a1Color = "#D2D2D2";
+var a2Color = "#D2D2D2";
+var a3Color = "#D2D2D2";
+
+var lowBoxColor = "#D2D2D2";
+var highBoxColor = "#D2D2D2";
+
+
+
+if (a1 == question) {
+  check = "bingo";
+}
+
+var demo;
+var Width = 225;  //800
+
+
+ var Height = 450;
+
+var canvas = document.getElementById("game");
+
+canvas.width = Width;
+
+canvas.height = Height;
+
+canvas.setAttribute('tabindex', 1);
+
+var ctx = canvas.getContext("2d");
+
+var FPS = 1000 / 60;
+
+var gameTimeStart;
+var cardArray = [];
+var mYcd;  //mouseYcoord
+var mXcd;  //mouseXcoord
+var counter = 0;
+greenBoxX = 20;
+greenBoxY = 20;
+greenBoxOn = false;
+RectX = 50;
+RectY = 50;
+var keyIn;
+var dragok = false;
+
+
+var deck =  [[1,"h", aceH],[2,"h", h2],[3,"h", h3],[4,"h", h4],[5,"h", h5],[6,"h, h6"],[7,"h", h7],[8,"h", h8],[9,"h", h9],[10,"h", h10],[11,"h", jackH1],[12,"h", queenH1],[13,"h", kingH1],
+
+    [1,"c", aceC],[2,"c", c2],[3,"c", c3],[4,"c", c4],[5,"c", c5],[6,"c", c6],[7,"c", c7],[8,"c", c8],[9,"c", c9],[10,"c", c10],[11,"c", jackC1],[12,"c", queenC1],[13,"c", kingC1],
+
+    [1,"d", aceD],[2,"d", d2],[3,"d", d3],[4,"d", d4],[5,"d", d5],[6,"d", d6],[7,"d", d7],[8,"d", d8],[9,"d", d9],[10,"d", d10],[11,"d", jackD1],[12,"d", queenD1],[13,"d",kingD1],
+
+    [1,"s", aceS],[2,"s", s2],[3,"s", s3],[4,"s", s4],[5,"s", s5],[6,"s", s6],[7,"s", s7],[8,"s", s8],[9,"s", s9],[10,"s", s10],[11,"s", jackS1],[12,"s", queenS1],[13,"s", kingS1]];
+
+/*
+  [
+  [1,"h", imageObjects[51]],
+  [2,"h", imageObjects[3]],
+  [3,"h", imageObjects[7]],
+  [4,"h", imageObjects[11]],
+  [5,"h", imageObjects[15]],
+  [6,"h", imageObjects[19]],
+  [7,"h", imageObjects[23]],
+  [8,"h", imageObjects[27]],
+  [9,"h", imageObjects[31]],
+  [10,"h", imageObjects[35]],
+  [11,"h", imageObjects[39]],
+  [12,"h", imageObjects[43]],
+  [13,"h", imageObjects[47]],
+
+  [1,"c", imageObjects[49]],
+  [2,"c", imageObjects[1]],
+  [3,"c", imageObjects[5]],
+  [4,"c", imageObjects[9]],
+  [5,"c", imageObjects[13]],
+  [6,"c", imageObjects[17]],
+  [7,"c", imageObjects[21]],
+  [8,"c", imageObjects[25]],
+  [9,"c", imageObjects[29]],
+  [10,"c", imageObjects[33]],
+  [11,"c", imageObjects[37]],
+  [12,"c", imageObjects[41]],
+  [13,"c", imageObjects[45]],
+
+  [1,"d", imageObjects[48]],
+  [2,"d", imageObjects[0]],
+  [3,"d", imageObjects[4]],
+  [4,"d", imageObjects[8]],
+  [5,"d", imageObjects[12]],
+  [6,"d", imageObjects[16]],
+  [7,"d", imageObjects[20]],
+  [8,"d", imageObjects[24]],
+  [9,"d", imageObjects[28]],
+  [10,"d", imageObjects[32]],
+  [11,"d", imageObjects[36]],
+  [12,"d", imageObjects[40]],
+  [13,"d",imageObjects[44]],
+
+  [1,"s", imageObjects[50]],
+  [2,"s", imageObjects[2]],
+  [3,"s", imageObjects[6]],
+  [4,"s", imageObjects[10]],
+  [5,"s", imageObjects[14]],
+  [6,"s", imageObjects[18]],
+  [7,"s", imageObjects[22]],
+  [8,"s", imageObjects[26]],
+  [9,"s", imageObjects[30]],
+  [10,"s", imageObjects[34]],
+  [11,"s", imageObjects[38]],
+  [12,"s", imageObjects[42]],
+  [13,"s", imageObjects[46]]
+];
+*/
+
+/*  [[1,"h", aceH],[2,"h", h2],[3,"h", h3],[4,"h", h4],[5,"h", h5],[6,"h, h6"],[7,"h", h7],[8,"h", h8],[9,"h", h9],[10,"h", h10],[11,"h", jackH1],[12,"h", queenH1],[13,"h", kingH1],
+
+    [1,"c", aceC],[2,"c", c2],[3,"c", c3],[4,"c", c4],[5,"c", c5],[6,"c", c6],[7,"c", c7],[8,"c", c8],[9,"c", c9],[10,"c", c10],[11,"c", jackC1],[12,"c", queenC1],[13,"c", kingC1],
+
+    [1,"d", aceD],[2,"d", d2],[3,"d", d3],[4,"d", d4],[5,"d", d5],[6,"d", d6],[7,"d", d7],[8,"d", d8],[9,"d", d9],[10,"d", d10],[11,"d", jackD1],[12,"d", queenD1],[13,"d",kingD1],
+
+    [1,"s", aceS],[2,"s", s2],[3,"s", s3],[4,"s", s4],[5,"s", s5],[6,"s", s6],[7,"s", s7],[8,"s", s8],[9,"s", s9],[10,"s", s10],[11,"s", jackS1],[12,"s", queenS1],[13,"s", kingS1]];*/
+
+var questionPool = [["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"]]
+
+var discard = [];
+var drawnCard;
+var dealerCard = "";
+var bet;
+var highLow = "";
+var outcome = "";// = "blank";
+var chips = 1000;
+var multiplier = 1;
+var gameState = "blank";  //could be resolve pt 1, resolve pt 2, etc
+var check;
+var gameHistory = [];
+var a1State = "off";
+var a2State = "off";
+var a3State = "off";
+var power = 100;
+var adjusted = "";
+var dealerCardX = 200;
+var highLowX = 100;
+var answerScreen = true;
+var answerState;// = false;
+var questionFilter = true;
+var questionState;// = true;
+var splitMasterA = [];
+var easyArray =  [["<%= @game_input[0] %>","<%= @game_input[1] %>",0,0,"<%= @game_input[2] %>","<%= @game_input[3] %>"],
+                ["<%= @game_input[4] %>","<%= @game_input[5] %>",0,0,"<%= @game_input[6] %>","<%= @game_input[7] %>"],
+                ["<%= @game_input[8] %>","<%= @game_input[9] %>",0,0,"<%= @game_input[10] %>","<%= @game_input[11] %>"],
+                ["<%= @game_input[12] %>","<%= @game_input[13] %>",0,0,"<%= @game_input[14] %>","<%= @game_input[15] %>"],
+                ["<%= @game_input[16] %>","<%= @game_input[17] %>",0,0,"<%= @game_input[18] %>","<%= @game_input[19] %>"],
+                ];
+
+/*[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];*/
+
+var medArray = []//[["呀","ya",0,0,"(cute)"],["苹果","píngguǒ",0,0,"apple"],["怎么","zěnme",0,0,"how"],["爱","ài",0,0,"love"],["都","dōu",0,0,"all"]];
+var hardArray = [];
+var gameMessage = "";
+
+var displayIndex = [0,1,4];
+displayIndex = RandArr(displayIndex);
+
+var dataCharacter = "data Character";
+var dataCorrect = "0";
+
+var testArray1 = [];
+
+splitMasterA.push(easyArray);  //occurs when game starts
+splitMasterA.push(medArray);  //occurs when game starts
+splitMasterA.push(hardArray); //occurs when game starts
+
+
+var SplitMasterARand; //runs each time
+SplitMasterARand = GenRN(splitMasterA.length);  // random 0 - 2, runs each time
+
+var possValues = [0,1,2];
+possValues = RandArr(possValues);
+var tempHH;
+var newQuestion = [];
+
+  if(medArray.length == 0 && hardArray.length >0 && easyArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [0,2];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (hardArray.length == 0  && medArray.length >0 && easyArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [0,1];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length == 0  && medArray.length >0 && hardArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [1,2];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length == 0  && medArray.length == 0 && hardArray.length >0) {
+    SplitMasterARand = 2;
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length > 0  && medArray.length == 0 && hardArray.length == 0) {
+    SplitMasterARand = 0;
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length == 0  && medArray.length > 0 && hardArray.length == 0) {
+    SplitMasterARand = 1;
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length > 0  && medArray.length >0 && hardArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [0,1,2];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  }
+
+
+var concMasterA = [];
+for (i = 0; i < splitMasterA.length; i++) {
+  for (j = 0; j < splitMasterA[i].length; j++) {
+    concMasterA.push(splitMasterA[i][j]);
+  }
+}
+
+var masterAIndex;
+for(i = 0; i < concMasterA.length; i++) {
+  if(newQuestion[0][0] == concMasterA[i][0]) {
+    masterAIndex = i;
+  }
+}
+var newAnswerBank = [];
+newAnswerBank.push(concMasterA[masterAIndex]);
+concMasterA.splice(masterAIndex,1);
+
+var concMasterARand;  //create var to store temp var values
+
+concMasterARand = GenRN(concMasterA.length);
+newAnswerBank.push(concMasterA[concMasterARand]);
+concMasterA.splice(concMasterARand,1);
+
+concMasterARand = GenRN(concMasterA.length);
+newAnswerBank.push(concMasterA[concMasterARand]);
+concMasterA.splice(concMasterARand,1);
+
+newAnswerBank = RandArr(newAnswerBank);
+
+
+
+function UpdateQues() {
+  displayIndex = RandArr(displayIndex);
+  newQuestion.splice(0,1);
+  for(i = splitMasterA.length; i>0; i--){
+    splitMasterA.splice(i-1,1);
+  }
+  for(i = concMasterA.length; i>0; i--){
+    concMasterA.splice(i-1,1);
+  }
+  for(i = newAnswerBank.length; i>0; i--){
+    newAnswerBank.splice(i-1,1);
+  }
+  concMasterARand = "default";
+  SplitMasterARand = "default";
+  masterAIndex = "default";
+
+  splitMasterA.push(easyArray);
+  splitMasterA.push(medArray);
+  splitMasterA.push(hardArray);
+
+  possValues = [0,1,2];
+  possValues = RandArr(possValues);
+  SplitMasterARand = possValues[0];
+
+  if(medArray.length == 0 && hardArray.length >0 && easyArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [0,2];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (hardArray.length == 0  && medArray.length >0 && easyArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [0,1];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length == 0  && medArray.length >0 && hardArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [1,2];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length == 0  && medArray.length == 0 && hardArray.length >0) {
+    SplitMasterARand = 2;
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length > 0  && medArray.length == 0 && hardArray.length ==0) {
+    SplitMasterARand = 0;
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length == 0  && medArray.length > 0 && hardArray.length == 0) {
+    SplitMasterARand = 1;
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  } else if (easyArray.length > 0  && medArray.length >0 && hardArray.length >0) {
+    for(i = possValues.length; i >0; i--) {
+      possValues.splice(i-1,1);
+    }
+    possValues = [0,1,2];
+    possValues = RandArr(possValues);
+    SplitMasterARand = possValues[0];
+    newQuestion.push(splitMasterA[SplitMasterARand][GenRN(splitMasterA[SplitMasterARand].length)]);
+    dataCharacter = newQuestion[0];
+  }
+
+  for (i = 0; i < splitMasterA.length; i++) {
+    for (j = 0; j < splitMasterA[i].length; j++) {
+      concMasterA.push(splitMasterA[i][j]);
+    }
+  }
+
+  for(s = 0; s < concMasterA.length; s++) {
+    if(newQuestion[0][0] == concMasterA[s][0]) {
+      masterAIndex = s;
+    }
+  }
+
+  newAnswerBank.push(concMasterA[masterAIndex]);
+  concMasterA.splice(masterAIndex,1);
+  var concMasterARand;  //create var to store temp var values
+
+  concMasterARand = GenRN(concMasterA.length);
+  newAnswerBank.push(concMasterA[concMasterARand]);
+  concMasterA.splice(concMasterARand,1);
+
+  concMasterARand = GenRN(concMasterA.length);
+  newAnswerBank.push(concMasterA[concMasterARand]);
+  concMasterA.splice(concMasterARand,1);
+
+  newAnswerBank = RandArr(newAnswerBank);
+}
+
+var BG = {
+
+  Color: '#FFFFFF',
+
+  Paint: function(){
+
+    ctx.fillStyle = this.Color;
+
+    ctx.fillRect(0, 0, Width, Height);
+
+  }
+
+};
+
+
+function GenRN(limit) {  //returns (limit - 1) values
+  return Math.floor(Math.random() * limit);
+}
+function RandArr(array) {
+  jumbArray = [];
+  while(array.length >0) {
+    randNum = GenRN(array.length);
+    jumbArray.push(array[randNum]);
+    array.splice(randNum,1);
+  }
+  return jumbArray;
+}
+function compVal(a, b) {
+  if(a > b && highLow == "high") {
+    gameHistory.push("loss");
+    dealerCardX = 333;
+    textResponse = "Wrong  -"
+    textResponse2= "It was ";
+    answerState = false;
+    return (-1);
+  } else if(a > b && highLow == "low") {
+    gameHistory.push("win");
+    textResponse = "Correct +"
+    textResponse2= "It was ";
+    answerState = true;
+    dealerCardX = 333;
+    return 1;
+  } else if(a < b && highLow == "low") {
+    gameHistory.push("loss");
+    textResponse = "Wrong  -"
+    textResponse2= "It was ";
+    dealerCardX = 333;
+    answerState = false;
+    return (-1);
+  } else if(a < b && highLow == "high") {
+    gameHistory.push("win");
+    textResponse = "Correct +"
+    textResponse2= "It was ";
+    answerState = true;
+    dealerCardX = 333;
+    return 1;
+  } else if(a == b && highLow == "low") {
+    gameHistory.push("loss");
+    textResponse = "Wrong  -"
+    textResponse2= "It was ";
+    answerState = false;
+    dealerCardX = 333;
+    return (-1);
+  } else if(a == b && highLow == "high") {
+    gameHistory.push("win");
+    textResponse = "Correct +"
+    textResponse2= "It was ";
+    answerState = true;
+    dealerCardX = 333;
+    return 1;
+  } else if(highLow == "") {
+    return (-1);
+  }
+}
+
+function DrawCard(array) {
+  //drawnCard = array[array.length -1];
+  var card = [];
+  card.push(array[array.length - 1])
+  array.splice(array.length -1);
+  return card;
+}
+function Discard(array1, array2) {
+  array2.push(array1[array1.length-1]);
+  array1.splice(array1.length-1,1);
+}
+function RebalanceArrays() {
+  for(i = hardArray.length; i > 0; i --) {      //first check for hardArray to easyArray
+    if(hardArray[i-1][3]/hardArray[i-1][2] == 1) {
+      easyArray.push(hardArray[i-1].slice(0,6));
+      hardArray.splice(i-1,1);
+    }
+  }
+  for(i = hardArray.length; i > 0; i --) {      //2nd check for hardArray to medArray
+    if(hardArray[i-1][3]/hardArray[i-1][2] > .5 && hardArray[i-1][2] > 8) {
+      medArray.push(hardArray[i-1].slice(0,6));
+      hardArray.splice(i-1,1);
+    }
+  }
+  for(i = medArray.length; i > 0; i --) {     //1st check for medArray to easyArray
+    if(medArray[i-1][3]/medArray[i-1][2] > .75 && medArray[i-1][2] > 8) {
+      easyArray.push(medArray[i-1].slice(0,6));
+      medArray.splice(i-1,1);
+    }
+  }
+  for(i = medArray.length; i > 0; i --) {     //2nd check for medArray to hardArray
+    if(medArray[i-1][3]/medArray[i-1][2] < .5 && medArray[i-1][2] > 0) {
+      hardArray.push(medArray[i-1].slice(0,6));
+      medArray.splice(i-1,1);
+    }
+  }
+  for(i = easyArray.length; i > 0; i --) {      //1st check for easyArray to medArray
+    if(easyArray[i-1][3]/easyArray[i-1][2] < .75 && easyArray[i-1][2] > 0) {
+      medArray.push(easyArray[i-1].slice(0,6));
+      easyArray.splice(i-1,1);
+    }
+  }
+  //if(hardArray.length == 0) {
+  //  grabRandArrVal(1, hirigana, hardArray)
+  //}
+}
+function ResolvePt1(){
+  if(mYcd > 345 && mYcd < 380 && mXcd > 60 && mXcd < 155 && (a1State == "on" || a2State == "on" || a3State == "on") && (lowBoxColor == "#939393" || highBoxColor == "#939393")){
+    dealerCard = DrawCard(deck);
+
+    chips = chips + Math.round(keyIn * (power * compVal(drawnCard[0][0], dealerCard[0][0]))/100);
+    adjusted =  Math.round(keyIn * (power * compVal(drawnCard[0][0], dealerCard[0][0]))/100);
+
+    if(newAnswerBank[0][1] == newQuestion[0][1] && a1State == "on") {
+      CountAsked2(newQuestion[0][0], easyArray);
+      CountAsked2(newQuestion[0][0], medArray);
+      CountAsked2(newQuestion[0][0], hardArray);
+      CountCorrect2(newQuestion[0][0], easyArray);
+      CountCorrect2(newQuestion[0][0], medArray);
+      CountCorrect2(newQuestion[0][0], hardArray);
+      //RebalanceArrays();
+      CountCorrect(question[0]);
+      response = "correct";
+      questionState = true;
+      power = Math.round(power * 1.1);
+    }
+    if(newAnswerBank[1][1] == newQuestion[0][1] && a2State == "on") {
+      CountCorrect(question[0]);
+      CountAsked2(newQuestion[0][0], easyArray);
+      CountAsked2(newQuestion[0][0], medArray);
+      CountAsked2(newQuestion[0][0], hardArray);
+      CountCorrect2(newQuestion[0][0], easyArray);
+      CountCorrect2(newQuestion[0][0], medArray);
+      CountCorrect2(newQuestion[0][0], hardArray);
+      //RebalanceArrays();
+      response = "correct";
+      questionState = true;
+      power = Math.round(power * 1.1);
+    }
+    if(newAnswerBank[2][1] == newQuestion[0][1] && a3State == "on") {
+      //CountAsked(question[0]);
+      CountCorrect(question[0]);
+      CountAsked2(newQuestion[0][0], easyArray);
+      CountAsked2(newQuestion[0][0], medArray);
+      CountAsked2(newQuestion[0][0], hardArray);
+      CountCorrect2(newQuestion[0][0], easyArray);
+      CountCorrect2(newQuestion[0][0], medArray);
+      CountCorrect2(newQuestion[0][0], hardArray);
+      //RebalanceArrays();
+      response = "correct";
+      questionState = true;
+      power = Math.round(power * 1.1);
+    }
+    if(newQuestion[0][1] != newAnswerBank[0][1] && a1State == "on") {
+      CountAsked2(newQuestion[0][0], easyArray);
+      CountAsked2(newQuestion[0][0], medArray);
+      CountAsked2(newQuestion[0][0], hardArray);
+      //RebalanceArrays();
+      response = "wrong";
+      questionState = false;
+      power = 100;
+      greenBoxOn = true;
+      if(newAnswerBank[1][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 262;
+      }
+      if(newAnswerBank[2][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 302;
+      }
+    }
+    if(newQuestion[0][1] != newAnswerBank[1][1] && a2State == "on") {
+      CountAsked2(newQuestion[0][0], easyArray);
+      CountAsked2(newQuestion[0][0], medArray);
+      CountAsked2(newQuestion[0][0], hardArray);
+      //RebalanceArrays();
+      response = "wrong";
+      questionState = false;
+      power = 100;
+      greenBoxOn = true;
+      if(newAnswerBank[0][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 222;
+      }
+      if(newAnswerBank[2][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 302;
+      }
+    }
+    if(newQuestion[0][1] != newAnswerBank[2][1] && a3State == "on") {
+      CountAsked2(newQuestion[0][0], easyArray);
+      CountAsked2(newQuestion[0][0], medArray);
+      CountAsked2(newQuestion[0][0], hardArray);
+      //RebalanceArrays();
+      response = "wrong";
+      questionState = false;
+      power = 100;
+      greenBoxOn = true;
+      if(newAnswerBank[0][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 222;
+      }
+      if(newAnswerBank[1][1] == newQuestion[0][1]) {
+        greenBoxX = 57;
+        greenBoxY = 262;
+      }
+    }
+  gameMessage = "";
+    gameState = 2;
+  } else if (mYcd > 345 && mYcd < 380 && mXcd > 60 && mXcd < 155){
+    gameMessage = "First bet and answer!"
+  }
+
+}
+function ResolvePt2(){
+
+greenBoxOn = false;
+
+
+$.ajax({
+  method: "POST",
+  url: "/save_game_data",
+  //data-remote:  "TRUE",
+  data: { id: newQuestion[0][5], attempt: dataCorrect }
+})
+
+
+/*$.ajax({
+  method: "POST",
+  url: "some.php",
+  data: { name: "John", location: "Boston" }
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });*/
+
+/* $.ajax({
+    // The URL for the request
+    url: "post.php",
+    // The data to send (will be converted to a query string)
+    data: {
+        id: 123
+    },
+    // Whether this is a POST or GET request
+    type: "GET",
+    // The type of data we expect back
+    dataType : "json",
+    // Code to run if the request succeeds;
+    // the response is passed to the function
+    success: function( json ) {
+        //$( "<h1>" ).text( json.title ).appendTo( "body" );
+        //$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+    },
+    // Code to run if the request fails; the raw request and
+    // status codes are passed to the function
+    error: function( xhr, status, errorThrown ) {
+        alert( "Sorry, there was a problem!" );
+        //console.log( "Error: " + errorThrown );
+        //console.log( "Status: " + status );
+        //console.dir( xhr );
+    },
+    // Code to run regardless of success or failure
+    complete: function( xhr, status ) {
+        alert( "The request is complete!" );
+    }
+}); */
+
+  answerState = undefined;
+  questionState = undefined;
+  highLow = "";
+  highLowX = 100;
+  dealerCardX = 325;
+  textResponse = "";
+  textResponse2 = "";
+  bonusPoints = "";
+  lowBoxColor = "#D2D2D2";
+  highBoxColor = "#D2D2D2";
+  a1Color = "#D2D2D2";
+  a2Color = "#D2D2D2";
+  a3Color = "#D2D2D2";
+
+  discard.push(drawnCard.slice(0,1));
+  drawnCard.splice(0,1);
+  discard.push(dealerCard.slice(0,1));
+  dealerCard.splice(0,1);
+
+  drawnCard = DrawCard(deck);
+  gameState = 1;
+  keyIn = 100;
+  a1State = "off";
+  response = "";
+  for (i = 0; i < demo.length; i++) {
+    demo.splice(0,1);
+  }
+  demo = CreateQ(charArray);
+  demo2 = demo[1][2][1];
+  question = demo[0][0];
+
+  a1State = "off";
+  a2State = "off";
+  a3State = "off";
+
+  a1 = demo[1][0];
+  a1Display = a1[1];
+  a2 = demo[1][1];
+  a2Display = a2[1];
+  a3 = demo[1][2];
+  a3Display = a3[1];
+  UpdateQues();
+  dataCorrect = 0;
+  adjusted = "";
+}
+function HiOrLow(MX, MY) {
+  if(MX < 90 && MX >40 && MY < 180 && MY > 130) {
+    highLow = "low"
+    lowBoxColor = "#939393";
+    highBoxColor = "#D2D2D2";
+    highLowX = 100;
+  } else if(MX < 190 && MX > 140 && MY < 180 && MY > 130) {
+    highLow = "high"
+    highBoxColor = "#939393";
+    lowBoxColor = "#D2D2D2";
+    highLowX = 100;
+  }
+}
+
+
+function CountAsked(question) {
+  for(i = 0; i < charArray.length; i++) {
+    if (charArray[i][0] == question) {
+      charArray[i][2]++;
+    }
+  }
+}
+function CountAsked2(question, array) {
+  for(i = 0; i < array.length; i++) {
+    if (array[i][0] == question) {
+      array[i][2]++;
+    }
+  }
+}
+function CountCorrect(question) {
+  for(i = 0; i < charArray.length; i++) {
+    if (charArray[i][0] == question) {
+      charArray[i][3]++;
+    }
+  }
+}
+function CountCorrect2(question, array) {
+  for(i = 0; i < array.length; i++) {
+    if (array[i][0] == question) {
+      array[i][3]++;
+      dataCorrect = 1;
+    }
+  }
+}
+
+//RebalanceArrays();
+
+function drawLabels(){
+if(gameOver == false) {
+
+  ctx.rect(40,35,40,70);
+  ctx.rect(140,35,40,70);
+  ctx.stroke();
+
+  ctx.fillStyle = "#200";
+  ctx.font = "16px Arial";
+
+    if(greenBoxOn) {
+  ctx.fillStyle = "#00FF00";
+  ctx.fillRect(greenBoxX, greenBoxY, 101, 41);
+  }
+
+  ctx.fillStyle = "#999";  //alt color is "#939393"
+
+  ctx.fillStyle = a1Color;
+  ctx.fillRect(60, 225, 95, 35);
+
+  ctx.fillStyle = a2Color;
+  ctx.fillRect(60, 265, 95, 35);
+
+  ctx.fillStyle = a3Color;
+  ctx.fillRect(60, 305, 95, 35);
+
+  ctx.fillStyle = lowBoxColor;
+  ctx.fillRect(40, 130, 50, 50);  // checkbox for low
+
+  ctx.fillStyle = highBoxColor
+  ctx.fillRect(140, 130, 50, 50);  // checkbox for high
+
+  ctx.fillStyle = "#D2D2D2";
+  ctx.fillRect(60, 345, 95,35);// continue button
+
+  ctx.fillStyle = "#200";
+
+  /*
+  for(i = 0; i<deck.length; i++) {
+    j = 0;
+    if(i > 12) {
+      j = 1;
+    }
+    if(i > 25) {
+      j = 2;
+    }
+    if(i > 38) {
+      j = 3;
+    }
+    ctx.fillText(deck[i],10+ 50*j,20+20*i - 260*j)
+  }
+  for(i = 0; i<discard.length; i++) {
+    j = 0;
+    if(i > 12) {
+      j = 1;
+    }
+    if(i > 25) {
+      j = 2;
+    }
+    if(i > 38) {
+      j = 3;
+    }
+    ctx.fillText(discard[i],600+ 50*j,70+20*i - 260*j)
+  }*/
+/*
+  ctx.fillText("concMasterARand:  " + concMasterARand, 300, 200);
+  ctx.fillText("SplitMasterARand: " + SplitMasterARand, 300, 210);
+  ctx.fillText("masterAIndex: " + masterAIndex, 300, 220);
+  for(i=0; i < possValues.length; i++) {
+    ctx.fillText("possValues: " + possValues[i], 300, 230 + 7*i)
+  }
+  for(i=0; i < newQuestion.length; i++) {
+    ctx.fillText("newQuestion: " + newQuestion[i], 300, 255 + 7*i)
+  }
+  ctx.fillText("newAnwserBank: " + newAnswerBank[0], 300, 270)
+  ctx.fillText("newAnwserBank: " + newAnswerBank[1], 300, 285)
+  ctx.fillText("newAnwserBank: " + newAnswerBank[2], 300, 300)
+  for(i=0; i < displayIndex.length; i++) {
+    ctx.fillText("displayIndex: " + displayIndex[i], 300, 315 + 15*i)
+  }
+
+  for(i=0; i < newAnswerBank.length; i++) {
+    ctx.fillText("newAnwserBank: " + newAnswerBank[i], 500, 200 + 15*i)
+  }
+
+
+  ctx.fillText("dataCharacter: " + dataCharacter, 300, 50);
+  ctx.fillText("dataCorrect : " + dataCorrect, 300, 65);
+
+  ctx.fillText("easyArray", 450, 13);
+  for(i = 0; i < easyArray.length; i ++) {
+    ctx.fillText(easyArray[i][0] + " " + easyArray[i][1] + " " + easyArray[i][2] + " " + easyArray[i][3] + " " + easyArray[i][4], 450, 26 + 13 *i)
+  }
+  ctx.fillText("medArray", 580, 13);
+  for(i = 0; i < medArray.length; i ++) {
+    ctx.fillText(medArray[i][0] + " " + medArray[i][1] + " " + medArray[i][2] + " " + medArray[i][3] + " " + medArray[i][4], 580, 26 + 13 *i)
+  }
+  ctx.fillText("hardArray", 700, 13);
+  for(i = 0; i < hardArray.length; i ++) {
+    ctx.fillText(hardArray[i][0] + " " + hardArray[i][1] + " " + hardArray[i][2] + " " + hardArray[i][3] + " " + hardArray[i][4], 700, 26 + 13 *i)
+  }*/
+
+  ctx.fillText("High-Low: 小苹果", 110, 20);
+  ctx.fillText(gameMessage, 110, 430);
+  //ctx.fillText(drawnCard, 62, 70);
+
+  ctx.drawImage(drawnCard[0][2], 30, 30, 55, 80);
+  //ctx.fillText(dealerCard, 162, 70);
+  if(dealerCard.length>0) {
+    //ctx.fillText(dealerCard, 150, 70);
+    ctx.drawImage(dealerCard[0][2], 130, 30, 55, 80);
+  }
+
+  ctx.fillText("Bet", 63, 150);
+  ctx.fillText("low", 63, 165);
+  ctx.fillText("Bet", 163, 150);
+  ctx.fillText("high", 163, 165);
+
+  ctx.fillText(textResponse, 80 ,124);
+  //ctx.fillText(textResponse2, 60, 160);
+  if (adjusted != "") {
+    ctx.fillText(Math.abs(adjusted) + " pts!", 140, 124);
+  }
+
+  ctx.fillText("Question: "+ newQuestion[0][displayIndex[0]], 110, 200);
+  ctx.fillText(response, 110, 215);
+
+  ctx.textAlign = "center"
+  ctx.fillText(newAnswerBank[0][displayIndex[1]], 110, 248);
+  ctx.fillText(newAnswerBank[1][displayIndex[1]], 110, 287);
+  ctx.fillText(newAnswerBank[2][displayIndex[1]], 110 , 327);
+
+  //ctx.fillText(a1State, 250, 220);
+  //ctx.fillText(a2State, 250, 245);
+  //ctx.fillText(a3State, 250, 270);
+
+  ctx.fillText("score: " + chips, 110, 395);
+  ctx.fillText("Power: " + power, 110, 410);
+
+  ctx.fillText("continue", 110, 367);
+
+  //ctx.fillRect(270, 285, 20,20);
+
+
+  //ctx.fillText("question: " + question[0], 10, 420);
+  //ctx.fillText("charArray[0]:" + charArray[0], 10, 390);
+  //ctx.fillText(highLow + ":to be removed", 225, 180);
+
+} else {
+  ctx.fillStyle = "#200";
+  ctx.font = "700 13px Arial";
+  ctx.textAlign = "center"
+  ctx.fillText("Congratulations!!!", 110, 160);
+  ctx.fillText(chips+ " points", 110, 180)
+  ctx.fillText("added to your profile!", 110, 200);
+}
+
+}
+function Clicked(x, y, l, w) {
+  if(mXcd > x &&
+  mXcd < x + w &&
+  mYcd > y &&
+  mYcd < y + l) {
+    counter += 100
+    return true;
+  }
+}
+
+function MouseMove(e){
+  e = e || window.event;
+  var target = e.target || e.srcElement;
+  var rect = target.getBoundingClientRect();
+  mXcd = e.clientX - rect.left;
+  mYcd = e.clientY - rect.top;
+}
+function OnClick(e){
+
+  if(gameOver == false) {
+    //check = typeof keyIn;
+    if(Clicked(60, 225, 35, 95) && a1State == "off") {
+      a1State = "on";
+      a1Color = "#939393";
+      a2State = "off";
+      a2Color = "#D2D2D2";
+      a3State = "off";
+      a3Color = "#D2D2D2";
+    } else {
+      if(Clicked(60, 225, 35, 95) && a1State == "on") {
+        a1State = "off";
+        a1Color = "#D2D2D2";
+      }
+    }
+    if(Clicked(60, 265, 35, 95) && a2State == "off") {
+      a2State = "on";
+      a2Color = "#939393";
+      a1State = "off";
+      a1Color = "#D2D2D2";
+      a3State = "off";
+      a3Color = "#D2D2D2";
+    } else {
+      if(Clicked(60, 265, 35, 95) && a2State == "on") {
+        a2State = "off";
+        a2Color = "#D2D2D2";
+      }
+    }
+    if(Clicked(60, 305, 35, 95) && a3State == "off") {
+      a3State = "on";
+      a3Color = "#939393";
+      a1State = "off";
+      a1Color = "#D2D2D2";
+      a2State = "off";
+      a2Color = "#D2D2D2";
+    } else {
+      if(Clicked(60, 305, 35, 95) && a3State == "on") {
+        a3State = "off";
+        a3Color = "#D2D2D2";
+      }
+    }
+    //Clicked(300, 250, 30, 30)
+    HiOrLow(mXcd, mYcd)
+    counter++;
+    if(gameState == 1) {
+      ResolvePt1();
+    } else if (gameState ==2) {
+      ResolvePt2();
+    }
+  }
+
+}
+function KeyIsPressed(e){
+  var keyPressed = String.fromCharCode(event.keyCode);
+  if(keyIn == undefined) {
+    keyIn = keyPressed
+    //keyIn = 0;
+  } else {
+    keyIn +=keyPressed;
+  }
+  check = typeof(bet);
+}
+function KeyDownDown(e){
+  var keyDown = event.keyCode;
+  if(keyDown == 8) {
+    keyIn = keyIn.slice(0,keyIn.length-1);
+  }
+}
+
+canvas.addEventListener("mousemove", MouseMove, true);
+window.addEventListener("mousedown", OnClick, true);
+window.addEventListener("keypress", KeyIsPressed, true);
+window.addEventListener("keydown", KeyDownDown, true);
+
+window.requestAnimFrame = (function(){
+
+  return window.requestAnimationFrame
+
+  || window.webkitRequestAnimationFrame
+
+  || window.mozRequestAnimationFrame
+
+  || window.oRequestAnimationFrame
+
+  || window.msRequestAnimationFrame
+
+  || function( callback ){ return window.setTimeout(callback, FPS);
+  };
+}
+
+)();
+
+
+window.cancelRequestAnimFrame = (function() {
+
+  return window.cancelAnimationFrame
+
+    || window.webkitCancelRequestAnimationFrame
+    || window.mozCancelRequestAnimationFrame
+
+    || window.oCancelRequestAnimationFrame
+
+    || window.msCancelRequestAnimationFrame
+      || clearTimeout }
+
+)();
+
+function Paint(){
+
+  BG.Paint();
+
+}
+
+function Loop(){
+
+  if (deck.length == 0) {
+    deck= RandArr(discard);
+    $.ajax({
+     method: "POST",
+      url: "/save_points",
+      data: { chipswon: chips}
+      })
+    gameOver = true;
+  }
+  init = requestAnimFrame(Loop);
+
+  now = Date.now();
+  difference = now - then;
+  then = Date.now();
+  Paint();
+  drawLabels();
+};
+function NewGame(){
+
+  deck = RandArr(deck);
+  gameState =1;
+  drawnCard = DrawCard(deck);
+  keyIn = 100;
+  gameTimeStart = Date.now();
+  then = Date.now();
+  Loop();
+
+}
+
+if (newQuestion[0][1] == newAnswerBank[0][1]) {
+  result = "yes!"
+}
+
+
+/*<body onload = "NewGame()">*/
+
+</script>
