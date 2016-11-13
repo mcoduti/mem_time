@@ -56,6 +56,7 @@ function Loop()
     {
       Globals.Instance.inputHelper.ReturnCell();
       Globals.Instance.inputHelper.DifferenceFromOrigin();
+      Globals.Instance.imageHelper.coin.x  =  Globals.Instance.languageHelper.languageArrayXCd;
     }
     Globals.Instance.gameTimer.updateTimeElapsed();
     if(Globals.Instance.timeRemaining > 0 /*&& Globals.Instance.gameState == "playing"*/)
@@ -87,6 +88,11 @@ function Loop()
       //img, sx, sy, sw, sh, dx, dy, dw, dh
     Globals.Instance.imageHelper.coin.update();
     Globals.Instance.imageHelper.coin.render();
+
+    Globals.Instance.imageHelper.wo.update();
+    Globals.Instance.imageHelper.wo.render();
+
+
 }
 
 function TileColor(color)
@@ -519,10 +525,11 @@ function Globals()
     this.inputHelper.initialize();
     this.enemy = new Enemy(1000);
     this.user = new User();
-    this.imageHelper = new ImageHelper();
+
     this.gameState = "playing";       // options:  playing, questionOn, endGame
     this.languageHelper = new LanguageHelper();
     this.displayHelper = new DisplayHelper();
+    this.imageHelper = new ImageHelper();
     this.displayHelper.initialize();
     this.gameTimer = new Timer();
     this.mapHeight =6;
@@ -540,8 +547,14 @@ function ImageHelper()
   this.bomb = new Image();
   this.bomb.src = "../2d.svg";
 
+
+
   this.coinImage = new Image();
   this.coinImage.src = "../yi.png";
+
+  this.woImage = new Image();
+  this.woImage.src = "../wo.png";
+
   this.canvas = document.getElementById("game");
   ImageHelper.prototype.sprite = function(options)
   {
@@ -553,6 +566,9 @@ function ImageHelper()
     that.context = options.context;
     that.width = options.width;
     that.height = options.height;
+    that.x = options.x;
+    that.y = options.y;
+    that.spriteSheetLength = options.spriteSheetLength;
     that.image = options.image;
 
     //that.loop = options.loop;
@@ -578,10 +594,12 @@ function ImageHelper()
         0,
         that.width / numberOfFrames,
         that.height,
-        10,   //x
-        370,   //y
-        200 / numberOfFrames,
-        100);
+        that.x,   //x
+        that.y,   //y
+        40,  //width
+        40) //height
+        //that.spriteSheetLength / numberOfFrames,
+        //100);
     };
     return that;
   }
@@ -589,8 +607,25 @@ function ImageHelper()
     context:  this.canvas.getContext("2d"),
     width:  200,
     height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 10,
+    y: 365,
+    spriteSheetLength: 200,
     image:  this.coinImage,
     numberOfFrames: 2,
+    ticksPerFrame: 20
+  });
+
+
+
+  this.wo = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width: 700,
+    height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 55,
+    y: 365,
+    spriteSheetLength: 700,
+    image:  this.woImage,
+    numberOfFrames: 7,
     ticksPerFrame: 20
   });
 
@@ -931,6 +966,8 @@ this.sendFailRecord = 0;
 
   InputHelper.prototype.OnClick = function()
   {
+
+
     Globals.Instance.displayHelper.drawInput.push([]);
     this.touchAcitve = false;
     this.offsetLanguageArrayCd = this.mXcd - Globals.Instance.languageHelper.languageArrayXCd;
