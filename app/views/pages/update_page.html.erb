@@ -1813,7 +1813,7 @@ function DisplayHelper()
   }
   DisplayHelper.prototype.initialize = function()
   {
-    this.canvas.width = 400;
+    this.canvas.width = 310;
     this.canvas.height = 800;
     this.tomato = "tomatoooos";
     this.graphics = this.canvas.getContext("2d");
@@ -2898,6 +2898,16 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         this.touchY <= 150 &&
         Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer0[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 0;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2936,6 +2946,16 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         this.touchY <= 190 &&
         Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer1[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 0;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
@@ -2974,6 +2994,16 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         this.touchY <= 220 &&
         Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer2[0][1]
       ) {
+        Globals.Instance.inputHelper.dbAnswer = 0;
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: Globals.Instance.inputHelper.dbAnswer
+        }
+        })
         Globals.Instance.languageHelper.question.splice(0,1);
         Globals.Instance.languageHelper.answer0.splice(0,1);
         Globals.Instance.languageHelper.answer1.splice(0,1);
