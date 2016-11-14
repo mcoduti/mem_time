@@ -56,7 +56,12 @@ function Loop()
     {
       Globals.Instance.inputHelper.ReturnCell();
       Globals.Instance.inputHelper.DifferenceFromOrigin();
-      Globals.Instance.imageHelper.coin.x  =  Globals.Instance.languageHelper.languageArrayXCd;
+      Globals.Instance.imageHelper.coin.x  =  Globals.Instance.languageHelper.languageArrayXCd + 50;
+      Globals.Instance.imageHelper.wo.x  =  Globals.Instance.languageHelper.languageArrayXCd + 95;
+      Globals.Instance.imageHelper.ni.x  =  Globals.Instance.languageHelper.languageArrayXCd + 140;
+      Globals.Instance.imageHelper.hao.x  =  Globals.Instance.languageHelper.languageArrayXCd + 185;
+      Globals.Instance.imageHelper.hen.x  =  Globals.Instance.languageHelper.languageArrayXCd + 230;
+
     }
     Globals.Instance.gameTimer.updateTimeElapsed();
     if(Globals.Instance.timeRemaining > 0 /*&& Globals.Instance.gameState == "playing"*/)
@@ -88,9 +93,14 @@ function Loop()
       //img, sx, sy, sw, sh, dx, dy, dw, dh
     Globals.Instance.imageHelper.coin.update();
     Globals.Instance.imageHelper.coin.render();
-
     Globals.Instance.imageHelper.wo.update();
     Globals.Instance.imageHelper.wo.render();
+    Globals.Instance.imageHelper.ni.update();
+    Globals.Instance.imageHelper.ni.render();
+    Globals.Instance.imageHelper.hao.update();
+    Globals.Instance.imageHelper.hao.render();
+    Globals.Instance.imageHelper.hen.update();
+    Globals.Instance.imageHelper.hen.render();
 
 
 }
@@ -555,6 +565,15 @@ function ImageHelper()
   this.woImage = new Image();
   this.woImage.src = "../wo.png";
 
+  this.niImage = new Image();
+  this.niImage.src = "../ni.png";
+
+  this.haoImage = new Image();
+  this.haoImage.src = "../hao.png";
+
+  this.henImage = new Image();
+  this.henImage.src = "../hen.png";
+
   this.canvas = document.getElementById("game");
   ImageHelper.prototype.sprite = function(options)
   {
@@ -615,8 +634,6 @@ function ImageHelper()
     ticksPerFrame: 20
   });
 
-
-
   this.wo = this.sprite({
     context:  this.canvas.getContext("2d"),
     width: 700,
@@ -628,6 +645,44 @@ function ImageHelper()
     numberOfFrames: 7,
     ticksPerFrame: 20
   });
+
+  this.ni = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width: 700,
+    height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 140,
+    y: 365,
+    spriteSheetLength: 700,
+    image:  this.niImage,
+    numberOfFrames: 7,
+    ticksPerFrame: 20
+  });
+
+
+  this.hao = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width: 600,
+    height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 185,
+    y: 365,
+    spriteSheetLength: 600,
+    image:  this.haoImage,
+    numberOfFrames: 6,
+    ticksPerFrame: 20
+  });
+
+  this.hen = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width: 900,
+    height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 230,
+    y: 365,
+    spriteSheetLength: 900,
+    image:  this.henImage,
+    numberOfFrames: 9,
+    ticksPerFrame: 20
+  });
+
 
 }
 
