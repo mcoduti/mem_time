@@ -997,8 +997,7 @@ this.checkingCSS = "tomato";
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
       this.offsetLanguageArrayCdTouch = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
       this.offsetFromLanguageArray = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
-      if(//document.getElementById("bs-example-navbar-collapse-1").getAttribute("aria-expanded")== null ||
-        document.getElementById("bs-example-navbar-collapse-1").getAttribute("aria-expanded")== false) {
+      if(document.getElementById("bs-example-navbar-collapse-1").getAttribute("aria-expanded")== null) {
         if((this.touchX < 300 && this.touchX > 10 && this.touchY > 0 && this.touchY < 400) ) {
           e.preventDefault();
         }
