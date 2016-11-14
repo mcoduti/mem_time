@@ -1,28 +1,1343 @@
-<head>
-<!--
-<style>
-h1 {text-align:center;}
-p {text-align:center;}
-a {text-align:center;}
-</style>
+ <canvas id="game"></canvas>
+    <script>
 
-<br>
-<p>
-<a href="/">Back to home</a><br><a href="/game_page">Restart game</a><br><a href="/attempts">Knowledge unlocked</a>
-</p>
--->
+//Dev notes
 
-<canvas id="game"></canvas>
+//2/16:  game receives question, processes answer.  If correct, arms bomb, if not, leaves bomb gray.  Need to add a timer
+//    countdown to keep from retrying bomb right away if answered in error to avoid spam clicking.  Need to add graphics,
+//    possibly animations for cells.  Need to identify what variables will be stored in game database.
 
-<!--
-    <style>
-      *{ margin: 0px; padding: 0px; }
-      canvas{ display: block; margin: 0px auto; border: 1px solid #000;}
-    </style>
--->
+//2/15 9:30:  question screen displays after activating a bomb.  Gamestate changed from "playing" to "questionOn"
+//    next change mouseclick states from "playing" to "questionOn", detect which area is selected for answer, then
+//    clear all related languageHelper variables prior to procking next question.
 
 
-<script>
+
+/*
+
+function main()
+{
+  //instantiate tiles
+  //instantiate map
+  //width = 5;
+  width2 = 2;
+  rand =  ColorGen();  //Math.floor(Math.random() * 3);
+
+  window.requestAnimFrame = (function(){
+
+  return window.requestAnimationFrame
+
+  || window.webkitRequestAnimationFrame
+
+  || window.mozRequestAnimationFrame
+
+  || window.oRequestAnimationFrame
+
+  || window.msRequestAnimationFrame
+
+  || function( callback ){ return window.setTimeout(callback, FPS);
+  };
+  }
+
+  )();
+
+
+  Globals.Instance.initialize
+  (
+    1000
+  );
+}
+
+function Loop()
+{
+  init = requestAnimFrame(Loop);
+
+    if(Globals.Instance.inputHelper.buttonPressed == true)
+    {
+      Globals.Instance.inputHelper.ReturnCell();
+    }
+    Globals.Instance.gameTimer.updateTimeElapsed();
+    if(Globals.Instance.timeRemaining > 0 && Globals.Instance.gameState == "playing")
+    {
+      Globals.Instance.timeRemaining = Globals.Instance.roundTime - Math.floor(Globals.Instance.gameTimer.timeElapsed/1000);
+    }
+    if(Globals.Instance.timeRemaining <= 0)
+    {
+      Globals.Instance.gameState = "endGame";
+      Globals.Instance.displayHelper.endGameMessage = "You Lose!";
+    }
+    if(Globals.Instance.enemy.hp <= 0)
+    {
+      Globals.Instance.gameState = "endGame";
+      Globals.Instance.displayHelper.endGameMessage = "You Win!";
+    }
+    Globals.Instance.displayHelper.clear();
+    //Globals.Instance.displayHelper.drawInLoop();  //KEEP FOR REFERENCE
+    Globals.Instance.displayHelper.writeText();
+    Globals.Instance.displayHelper.drawCells();
+    Globals.Instance.displayHelper.endGame();
+    Globals.Instance.displayHelper.DisplayQuestion();
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.bomb, 10,330,21,21);
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 10,330,400,100);
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 0,0,44, 40, 0, 400, 40, 40 ); //img, sx, sy, sw, sh, dx, dy, dw, dh
+    //Globals.Instance.imageHelper.coin.update();
+    //Globals.Instance.imageHelper.coin.render();
+}
+
+function TileColor(color)
+{
+  this.color = color;
+}
+
+function DisplayHelper()
+{
+  this.width = 30;
+  this.width2 = 30;
+  this.canvas = document.getElementById("game");
+  this.endGameMessage = "You Lose!";
+}
+{
+  DisplayHelper.prototype.clear = function()
+  {
+    this.graphics.fillStyle = "White";
+    this.graphics.fillRect
+    (
+      0, 0, 600, 600
+    )
+  }
+
+  DisplayHelper.prototype.drawOnInterval = function()
+  {
+    Globals.Instance.displayHelper.clear();
+    this.graphics.fillStyle = "LightGray";
+    this.width = this.width + 1;
+    this.graphics.fillRect
+    (
+      30,85, this.width ,30
+    )
+
+  }
+
+  DisplayHelper.prototype.drawInLoop = function()
+  {
+    this.graphics.fillStyle = "LightGray";
+    this.graphics.fillRect
+    (
+      30, 30, this.width2, 30
+    )
+    this.width2 = this.width2 + 1;
+  }
+
+  DisplayHelper.prototype.endGame = function()
+  {
+    if (Globals.Instance.gameState == "endGame")
+    {
+      this.graphics.globalAlpha = .95;
+      this.graphics.fillStyle = "White";
+      this.graphics.fillRect
+      (
+        55, 80, 200, 100
+      )
+      this.graphics.globalAlpha = 1;
+      this.graphics.fillStyle = "Red";
+      this.graphics.font  = 'Bold 30px Calibri';
+      this.graphics.fillText(this.endGameMessage, 100, 130);
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '14 px Calibri';
+    }
+
+  }
+
+  DisplayHelper.prototype.DisplayQuestion = function()
+  {
+    if (Globals.Instance.gameState == "questionOn")
+    {
+      this.graphics.globalAlpha = .95;
+      this.graphics.fillStyle = "White";
+      this.graphics.fillRect
+      (
+        55, 55, 200, 200
+      )
+      this.graphics.fillStyle = "#D8D8D8";
+      this.graphics.fillRect
+      (
+        80, 115, 150, 35
+      )
+      this.graphics.fillRect
+      (
+        80, 155, 150, 35
+      )
+      this.graphics.fillRect
+      (
+        80, 195, 150, 35
+      )
+      this.graphics.globalAlpha = 1;
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '22px Calibri';
+      this.graphics.textAlign = "center";
+      this.graphics.fillText(Globals.Instance.languageHelper.question[0][0], 155, 93);
+      this.graphics.fillText(Globals.Instance.languageHelper.answer0[0][0], 155, 141);
+      this.graphics.fillText(Globals.Instance.languageHelper.answer1[0][0], 155, 181);
+      this.graphics.fillText(Globals.Instance.languageHelper.answer2[0][0], 155, 221);
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '14 px Calibri';
+      this.graphics.textAlign = "left";
+    }
+  }
+
+  DisplayHelper.prototype.writeText = function()
+  {
+    this.graphics.fillStyle = "Black";
+    this.graphics.font = '14px Calibri';
+    //this.graphics.fillText("Globals.Instance.gameTimer.startTime: " + Globals.Instance.gameTimer.timeElapsed, 10, 320);
+    //this.graphics.fillText("Globals.Instance.enemy.hp: " + Globals.Instance.enemy.hp, 10, 335);
+
+    //this.graphics.fillText("foreignCharacters: " + Globals.Instance.languageHelper.foreignCharacters, 10, 365);
+    //this.graphics.fillText("foreignPhonetic: " + Globals.Instance.languageHelper.foreignPhonetic, 10, 380);
+    //this.graphics.fillText("foreignTranslations: " + Globals.Instance.languageHelper.foreignTranslations, 10, 395);
+    //this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 410);
+    //this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 425);
+    //this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 440);
+    //this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 455);
+    //this.graphics.fillText("languageArray: " + Globals.Instance.languageHelper.languageArray, 10, 470);
+    //this.graphics.fillText("gameState: " + Globals.Instance.gameState, 315, 15);
+
+    //this.graphics.fillText("mXcd: " + Globals.Instance.inputHelper.mXcd, 10, 370);
+    //this.graphics.fillText("mYcd: " + Globals.Instance.inputHelper.mYcd, 10, 385);
+    //this.graphics.fillText("arrayTracker: " + Globals.Instance.inputHelper.arrayTracker, 10, 370);
+    //this.graphics.fillText("targetArray: " + Globals.Instance.inputHelper.targetArray, 10, 385);
+    //this.graphics.fillText("timeRemaining: " + Globals.Instance.timeRemaining, 10, 400);
+
+    //this.graphics.fillText("touchTester: " + Globals.Instance.touchTester, 10, 430);
+    //this.graphics.fillText("mouseTester: " + Globals.Instance.mouseTester, 10, 445);
+    //this.graphics.fillText("canvas.clientLeft: " + Globals.Instance.displayHelper.canvas.offsetLeft, 10, 430);
+    //this.graphics.fillText("canvas.clientTop: " + Globals.Instance.displayHelper.canvas.offsetTop, 10, 445);
+    //this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 100, 370);
+    //this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 100, 385);
+
+
+
+    //this.graphics.fillText('<%= @character.first.english_spelling %>', 0, 445);
+    //this.graphics.fillText("buttonPressed: " + Globals.Instance.inputHelper.buttonPressed, 10, 490);
+    //this.graphics.fillText("checkAnswerTouchCounter: " + Globals.Instance.checkAnswerTouchCounter, 10, 505);
+
+    this.graphics.fillText("question: " + Globals.Instance.languageHelper.question, 10, 520);
+    this.graphics.fillText("answer0: " + Globals.Instance.languageHelper.answer0, 10, 535);
+    this.graphics.fillText("answer1: " + Globals.Instance.languageHelper.answer1, 10, 550);
+    this.graphics.fillText("answer2: " + Globals.Instance.languageHelper.answer2, 10, 565);
+
+
+    this.graphics.font = 'Bold 20px Calibri';
+    this.graphics.fillText("Time: " + (Globals.Instance.timeRemaining), 10, 325);
+    this.graphics.fillStyle = "Red";
+    this.graphics.fillText("Enemy HP: " + Globals.Instance.enemy.hp, 165, 325);
+    this.graphics.fillStyle = "Black";
+    this.graphics.font = '14px Calibri';
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[0][0], 40, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[0][0], 120, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[0][0], 220, 340);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[0], 400, 340);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[1][0], 40, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[1][0], 120, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[1][0], 220, 355);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[1], 400, 355);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[2][0], 40, 370);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[2][0], 120, 370);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[2][0], 220, 370);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[2], 400, 370);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[3][0], 40, 385);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[3][0], 120, 385);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[3][0], 220, 385);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[3], 400, 385);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[4][0], 40, 400);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[4][0], 120, 400);
+    this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[4][0], 220, 400);
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[4], 400, 400);
+
+    this.graphics.fillText(Globals.Instance.inputHelper.dbAnswer, 10, 415);
+    //this.graphics.fillText(Globals.Instance.)
+
+    //this.graphics.fillText(Globals.Instance.languageHelper.foreignCharacters[5][0], 40, 415);
+    //this.graphics.fillText(Globals.Instance.languageHelper.foreignPhonetic[5][0], 120, 415);
+    //this.graphics.fillText(Globals.Instance.languageHelper.foreignTranslations[5][0], 220, 415);
+    //this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes[5], 400, 415);
+
+    this.graphics.fillText(Globals.Instance.languageHelper.knowledgeKeyes.length, 10, 430);
+    this.graphics.fillText("languageHelper demo: " + Globals.Instance.languageHelper.languageHelperDemoVar, 10, 445);
+    this.graphics.fillText("questionArray: " + Globals.Instance.languageHelper.questionArray, 10, 460);
+    this.graphics.fillText("knowledgeAjaxKey:  " + Globals.Instance.languageHelper.knowledgeAjaxKey, 10, 475);
+    this.graphics.fillText("ajaxInput: " + Globals.Instance.languageHelper.ajaxInput, 10, 490);
+    this.graphics.fillText("dbAnswer: " + Globals.Instance.inputHelper.dbAnswer, 10, 505);
+
+    //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.height, 10, 380);
+    //this.graphics.fillText("coin: " + Globals.Instance.imageHelper.coin.frameIndex, 10, 370)
+  }
+
+  DisplayHelper.prototype.drawCells = function()
+  {
+
+    for (i = 0; i < Globals.Instance.map.tilesWide; i ++)
+    {
+      for(j = 0; j < Globals.Instance.map.tilesDown; j++)
+      {
+        this.graphics.fillStyle = Globals.Instance.map.backgroundCells[i+Globals.Instance.map.tilesWide*j].color;
+        this.graphics.fillRect
+        (
+          Globals.Instance.map.tilesHorizOffset -4 + i * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tilesVertOffset - 4 + j * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tileWidth + 8 ,
+          Globals.Instance.map.tileHeight + 8
+        )
+        this.counter++;
+      }
+    }
+
+    this.counter = 0;
+    for (i = 0; i < Globals.Instance.map.tilesWide; i ++)
+    {
+      for(j = 0; j < Globals.Instance.map.tilesDown; j++)
+      {
+        this.graphics.fillStyle = Globals.Instance.map.cells[i+Globals.Instance.map.tilesWide*j].color;
+        this.graphics.fillRect
+        (
+          Globals.Instance.map.tilesHorizOffset + i * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tilesVertOffset + j * Globals.Instance.map.tilesSpacing,
+          Globals.Instance.map.tileWidth,
+          Globals.Instance.map.tileHeight
+        )
+        this.counter++;
+      }
+    }
+  }
+
+  DisplayHelper.prototype.initialize = function()
+  {
+    this.canvas.width = 500;
+    this.canvas.height = 800;
+    this.tomato = "tomatoooos";
+    this.graphics = this.canvas.getContext("2d");
+    this.graphics.fillStyle = "LightGray";
+  }
+
+}
+
+function Globals()
+{}
+{
+  Globals.Instance = new Globals();
+
+  Globals.prototype.initialize = function
+  (
+    millisecondsPerTimerTick
+  )
+  {
+    this.inputHelper = new InputHelper();
+    this.inputHelper.initialize();
+    this.testCounter = 0;
+    this.enemy = new Enemy(240);
+    this.imageHelper = new ImageHelper();
+    this.gameState = "playing";  // playing, questionOn, endGame
+    this.touchTester = 0;
+    this.mouseTester = "overwrite me!";
+
+    this.languageHelper = new LanguageHelper();
+
+    this.displayHelper = new DisplayHelper();
+    this.displayHelper.initialize();
+    this.gameTimer = new Timer();
+    this.mapHeight =6;
+    this.mapWidth = 6;
+
+    this.map = new Map(this.mapWidth,this.mapHeight,39,39);
+    this.timeRemaining = 120;
+    this.roundTime = 120;
+
+    this.checkAnswerTouchCounter = 0;
+
+    //this.myVar = setInterval
+    //(
+    //  this.handleEventTimerTick.bind(this),
+    //  millisecondsPerTimerTick
+    //);
+
+    Loop();
+
+  }
+
+}
+
+function ImageHelper()
+{
+  this.bomb = new Image();
+  this.bomb.src = 'bomb.png';
+  this.coinImage = new Image();
+  this.coinImage.src = "coin-sprite-animation-v2.png";
+  this.canvas = document.getElementById("game");
+
+  ImageHelper.prototype.sprite = function(options)
+  {
+    var that = {},
+      frameIndex = 0,
+      tickCount = 0,
+      ticksPerFrame = options.ticksPerFrame || 0,
+      numberOfFrames = options.numberOfFrames || 1;
+
+
+    that.context = options.context;
+    that.width = options.width;
+    that.height = options.height;
+    that.image = options.image;
+
+    //that.loop = options.loop;
+
+    that.update = function() {
+      tickCount +=1;
+
+      if (tickCount > ticksPerFrame)
+      {
+        tickCount = 0;
+        if (frameIndex < numberOfFrames -1) {
+
+          frameIndex += 1;
+        } else {
+          frameIndex = 0;
+        }
+      }
+    };
+
+
+    that.render = function () {
+      that.context.drawImage(
+        that.image,
+        frameIndex * that.width / numberOfFrames,
+        0,
+        that.width / numberOfFrames,
+        that.height,
+        0,
+        0,
+        that.width / numberOfFrames,
+        that.height);
+    };
+
+    return that;
+  }
+
+  this.coin = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width:  1000,
+    height:  100,
+    image:  this.coinImage,
+    numberOfFrames: 10,
+    ticksPerFrame: 4
+  });
+
+}
+
+function LanguageHelper()
+{
+this.languageHelperDemoVar = "apple";  //holds array of question and answers
+                                      //0-2, questions,3 question type, 4 answer type, 5 question db key
+this.knowledgeAjaxKey = 0;
+this.ajaxInput = "tomato";
+this.foreignCharacters = [
+  ['<%= @game_input[0] %>', 0],
+  ['<%= @game_input[4] %>' , 1],
+  ['<%= @game_input[8] %>' , 2],
+  ['<%= @game_input[12] %>' , 3],
+  ['<%= @game_input[16] %>' , 4]
+];
+this.foreignPhonetic = [
+  ['<%= @game_input[1] %>', 0],
+  ['<%= @game_input[5] %>' , 1],
+  ['<%= @game_input[9] %>' , 2],
+  ['<%= @game_input[13] %>' , 3],
+  ['<%= @game_input[17] %>' , 4]
+];
+this.foreignTranslations = [
+  ['<%= @game_input[2] %>', 0],
+  ['<%= @game_input[6] %>' , 1],
+  ['<%= @game_input[10] %>' , 2],
+  ['<%= @game_input[14] %>' , 3],
+  ['<%= @game_input[18] %>', 4]
+];
+this.knowledgeKeyes = [
+  ['<%= @game_input[3] %>', 0],
+  ['<%= @game_input[7] %>' , 1],
+  ['<%= @game_input[11] %>' , 2],
+  ['<%= @game_input[15] %>' , 3],
+  ['<%= @game_input[19] %>', 4]
+];
+//this.ajaxInput = this.knowledgeKeyes[0][1];
+
+this.question = [];
+this.answer0 = [];
+this.answer1 = [];
+this.answer2 = [];
+this.languageArray = [];
+}
+{
+  LanguageHelper.prototype.returnQuestion= function()
+  {
+  var arrayOptions = [0, 1, 2, 3, 4
+      ];
+  var questionArray = [];
+  var indexValueHolder = [];
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions.length);
+  questionArray.push(arrayOptions[indexValueHolder]);
+  arrayOptions.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions.length);
+  questionArray.push(arrayOptions[indexValueHolder]);
+  arrayOptions.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions.length);
+  questionArray.push(arrayOptions[indexValueHolder]);
+  arrayOptions.splice(indexValueHolder, 1);
+
+  var arrayOptions2 = [0, 1, 2];
+  //var arrayOptions2 = [0, 1];
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions2.length);
+  questionArray.push(arrayOptions2[indexValueHolder]);
+  arrayOptions2.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * arrayOptions2.length);
+  questionArray.push(arrayOptions2[indexValueHolder]);
+  arrayOptions2.splice(indexValueHolder, 1);
+
+  indexValueHolder = Math.floor(Math.random() * 3);
+  questionArray.push(questionArray[indexValueHolder]);
+  arrayOptions2.splice(indexValueHolder, 1);
+
+  if(questionArray[3] == "0")
+  {
+    this.question.push(this.foreignCharacters[questionArray[5]]);
+    this.knowledgeAjaxKey = questionArray[5];
+  } else if (questionArray[3] == "1") {
+    this.question.push(this.foreignPhonetic[questionArray[5]]);
+    this.knowledgeAjaxKey = questionArray[5];
+  } else if (questionArray[3] == "2") {
+    this.question.push(this.foreignTranslations[questionArray[5]]);
+    this.knowledgeAjaxKey = questionArray[5];
+  }
+
+  if(questionArray[4] == "0")
+  {
+    this.answer0.push(this.foreignCharacters[questionArray[0]]);
+    this.answer1.push(this.foreignCharacters[questionArray[1]]);
+    this.answer2.push(this.foreignCharacters[questionArray[2]])
+  } else if (questionArray[4] == "1" ) {
+    this.answer0.push(this.foreignPhonetic[questionArray[0]]);
+    this.answer1.push(this.foreignPhonetic[questionArray[1]]);
+    this.answer2.push(this.foreignPhonetic[questionArray[2]])
+  } else if (questionArray[4] == "2" ) {
+    this.answer0.push(this.foreignTranslations[questionArray[0]]);
+    this.answer1.push(this.foreignTranslations[questionArray[1]]);
+    this.answer2.push(this.foreignTranslations[questionArray[2]])
+  }
+
+  //this.languageHelperDemoVar = Globals.Instance.inputHelper.targetArray;
+  this.languageHelperDemoVar = questionArray;
+
+  //question array first three items:  options for answers from array of all options
+  //4th item, type of question (chinese, translation, or phonetic spelling)
+  //5th item, type of answer (chinese, translation, or phonetic spelling)
+  //6th item, key given to each language item imported from db to identify same-same among chinese, phonetic, and translation arrays
+  //return questionArray
+  }
+}
+
+
+function InputHelper()
+{
+this.buttonPressed = false;
+this.testValue = false;
+this.blackProcessTest = false;
+this.checkingCounter = 9;
+this.checkingCounter2 = 0;
+this.countOfNonBlackCells = 0;
+this.arithmeticChecker = "celery";
+this.tileRemoverOn = false;
+this.offset = "hello";
+this.targetArray = [];  //2 item array:  # of items, cell # of last cell in array
+this.jCounter = 0;
+this.arrayTracker = []; //array of all cells of same color traced between mdown and mup
+this.dbAnswer = "test";
+}
+{
+  InputHelper.prototype.initialize = function()
+  {
+    this.mXcd = 0;
+    this.mYcd = 0;
+
+    this.touchX = 0;
+    this.touchY = 0;
+
+    window.addEventListener("mousedown", this.OnClick.bind(this), true);
+    window.addEventListener("mouseup", this.OnRelease.bind(this), true);
+    document.getElementById("game").addEventListener("mousemove", this.MouseMove.bind(this), true);
+
+    document.addEventListener('touchmove', function(e) {
+      //e.preventDefault();
+      //Globals.Instance.touchTester = "kaplow";
+      this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
+      this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
+      //Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
+      //e.changedTouches[0].pageY + " y";
+      }.bind(this), false
+    );
+
+    document.addEventListener('touchstart', function(e){
+      //e.preventDefault();
+      //document.getElementById("user_email").blur();
+      //document.getElementById("user_password").blur();
+      this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
+      this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
+      if(this.touchY > 0) {
+        e.preventDefault();
+      }
+
+      Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
+      e.changedTouches[0].pageY + " y";
+
+    if(Globals.Instance.gameState == "playing")
+    {
+      this.buttonPressed = true;
+      this.countOfNonBlackCells = 0;
+      clearInterval(Globals.Instance.inputHelper.myVar2);
+      this.tileRemoverOn = false;
+    }
+    if (Globals.Instance.gameState == "questionOn")  //  2/16  9:21
+    {
+      this.checkAnswerTouch();
+    }
+
+      //alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
+       }.bind(this), false
+    );
+
+    document.addEventListener('touchend', function(e){
+      //e.preventDefault();
+      this.touchX = e.changedTouches[0].pageX;
+      this.touchY = e.changedTouches[0].pageY;
+      //Globals.Instance.inputHelper.buttonPressed = true;
+      Globals.Instance.touchTester = e.changedTouches[0].pageX + " x; " +
+      e.changedTouches[0].pageY + " y";
+
+      if(Globals.Instance.gameState == "playing")
+      {
+        this.buttonPressed = false;
+        this.ResetBorder(this.arrayTracker);
+        this.SetCellBlack(this.arrayTracker);
+        this.targetArray = this.CountArray(this.arrayTracker);
+        this.activateQuestionOn(this.targetArray);
+        this.DestroyEffect(this.targetArray);
+        this.CheckColor(this.targetArray);
+
+        this.ClearArray(this.arrayTracker);
+        this.ProcessEmpties();
+
+        if(this.tileRemoverOn == false)
+        {
+          this.myVar2 = setInterval
+          (
+            this.timerFunction.bind(this),
+            100
+          )
+        }
+      }
+
+      //alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
+       }.bind(this), false
+    );
+
+  }
+
+
+
+
+  InputHelper.prototype.OnClick = function()
+  {
+
+      //$.ajax({
+      //method: "POST",
+      //url: "/save_game_data",
+      //data-remote:  "TRUE",
+      //data: { id: 1, attempt: 1 }
+      //})
+
+
+    if(Globals.Instance.gameState == "playing")
+    {
+      this.buttonPressed = true;
+      this.countOfNonBlackCells = 0;
+      clearInterval(Globals.Instance.inputHelper.myVar2);
+      this.tileRemoverOn = false;
+    }
+    if (Globals.Instance.gameState == "questionOn")  //  2/16  9:21
+    {
+      this.checkAnswer();
+    }
+
+  }
+
+  InputHelper.prototype.OnRelease = function()
+  {
+    if(Globals.Instance.gameState == "playing")
+    {
+      this.buttonPressed = false;
+      this.ResetBorder(this.arrayTracker);
+      this.SetCellBlack(this.arrayTracker);
+      this.targetArray = this.CountArray(this.arrayTracker);
+      this.activateQuestionOn(this.targetArray);
+      this.DestroyEffect(this.targetArray);
+      this.CheckColor(this.targetArray);
+
+      this.ClearArray(this.arrayTracker);
+      this.ProcessEmpties();
+
+      if(this.tileRemoverOn == false)
+      {
+        this.myVar2 = setInterval
+        (
+          this.timerFunction.bind(this),
+          100
+        )
+      }
+    }
+  }
+
+  InputHelper.prototype.activateQuestionOn = function(array)  // 2/16 9:41
+  {
+    if(Globals.Instance.gameState == "playing")
+    {
+      if (array[0] == 1 && Globals.Instance.map.cells[array[1]].color == "Gray")
+      {
+        Globals.Instance.languageHelper.returnQuestion();
+        Globals.Instance.gameState = "questionOn";
+      }
+    }
+  }
+
+  InputHelper.prototype.checkAnswer = function()  // 2/16 9:41
+  {
+    Globals.Instance.languageHelper.ajaxInput = Globals.Instance.languageHelper.knowledgeKeyes[Globals.Instance.languageHelper.knowledgeAjaxKey][0];
+    if //first answer box correct
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 115 &&
+      this.mYcd <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.inputHelper.dbAnswer = 1;
+
+  //  $.ajax({
+  //    method: "POST",
+  //    url: "/save_game_data",
+  //data-remote:  "TRUE",
+  //    data: {
+  //      id: Globals.Instance.languageHelper.ajaxInput,
+  //      attempt: Globals.Instance.inputHelper.dbAnswer
+  //    }
+  //  })
+
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //first answer box wrong
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 115 &&
+      this.mYcd <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.inputHelper.dbAnswer = 0;
+  //  $.ajax({
+  //    method: "POST",
+  //    url: "/save_game_data",
+  //data-remote:  "TRUE",
+   //   data: {
+   //     id: Globals.Instance.languageHelper.ajaxInput,
+   //     attempt: Globals.Instance.inputHelper.dbAnswer
+   //   }
+   // })
+
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box correct
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 155 &&
+      this.mYcd <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+           Globals.Instance.inputHelper.dbAnswer = 1;
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box wrong
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 155 &&
+      this.mYcd <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+           Globals.Instance.inputHelper.dbAnswer = 0;
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box correct
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 195 &&
+      this.mYcd <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+           Globals.Instance.inputHelper.dbAnswer = 1;
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box wrong
+    (
+      this.mXcd >= 80 &&
+      this.mXcd <= 230 &&
+      this.mYcd >= 195 &&
+      this.mYcd <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+           Globals.Instance.inputHelper.dbAnswer = 0;
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    }
+    $.ajax({
+      method: "POST",
+      url: "/save_game_data",
+  //data-remote:  "TRUE",
+      data: {
+        id: Globals.Instance.languageHelper.ajaxInput,
+        attempt: Globals.Instance.inputHelper.dbAnswer
+      }
+    })
+    ///////////////////////////
+  }
+
+InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
+  {
+
+
+    if //first answer box correct
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 115 &&
+      this.touchY <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+
+
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //first answer box wrong
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 115 &&
+      this.touchY <= 150 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer0[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box correct
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 155 &&
+      this.touchY <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //second answer box wrong
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 155 &&
+      this.touchY <= 190 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer1[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box correct
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 195 &&
+      this.touchY <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    } else if //third answer box wrong
+    (
+      this.touchX >= 80 &&
+      this.touchX <= 230 &&
+      this.touchY >= 195 &&
+      this.touchY <= 220 &&
+      Globals.Instance.languageHelper.question[0][1] != Globals.Instance.languageHelper.answer2[0][1]
+    ) {
+      Globals.Instance.languageHelper.question.splice(0,1);
+      Globals.Instance.languageHelper.answer0.splice(0,1);
+      Globals.Instance.languageHelper.answer1.splice(0,1);
+      Globals.Instance.languageHelper.answer2.splice(0,1);
+      //Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
+      Globals.Instance.gameState = "playing";
+    }
+
+    Globals.Instance.checkAnswerTouchCounter += 1;
+    ///////////////////////////
+  }
+
+  InputHelper.prototype.CheckColor = function(array)
+  {
+    if (array[0] == 1 && Globals.Instance.map.cells[array[1]].color == "Red")
+    {
+      //Globals.Instance.languageHelper.returnQuestion();     // 2/15 9:29
+
+      //Globals.Instance.gameState = "questionOn";      // 2/15 9:29
+
+
+
+      if    // RIGHT WALL
+      (
+        (array[1]+1) % Globals.Instance.mapWidth == 0 &&
+        array[1] > Globals.Instance.mapWidth -1 &&
+        array[1] < Globals.Instance.mapWidth * Globals.Instance.mapHeight -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //LEFT WALL
+      (
+        (array[1]+1) % Globals.Instance.mapWidth == 1 &&
+        array[1] > Globals.Instance.mapWidth -1 &&
+        array[1] < Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1)
+      )
+      {
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //TOP WALL
+      (
+        //(array[1]+1) % Globals.Instance.mapWidth == 1 &&
+        array[1] > 0 &&
+        array[1] < Globals.Instance.mapWidth - 1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        //Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        //Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //BOTTOM WALL
+      (
+        //(array[1]+1) % Globals.Instance.mapWidth == 1 &&
+        array[1] > Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1) &&
+        array[1] < Globals.Instance.mapWidth * (Globals.Instance.mapHeight) -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 6;
+      } else if     //MIDDLE
+      (
+        (array[1]+1) % Globals.Instance.mapWidth != 1 &&
+        (array[1]+1) % Globals.Instance.mapWidth != 0 &&
+        array[1] > Globals.Instance.mapWidth &&
+        array[1] < Globals.Instance.mapWidth * ((Globals.Instance.mapHeight) -1)
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 9;
+      } else if     //TOP LEFT CORNER
+      (
+        array[1] == 0
+      )
+      {
+
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      } else if     //TOP RIGHT CORNER
+      (
+        array[1] == Globals.Instance.map.tilesWide -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      } else if     //BOTTOM LEFT CORNER
+      (
+        array[1] == Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1)
+      )
+      {
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1]+1].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      } else if     //BOTTOM RIGHT CORNER
+      (
+        array[1] == Globals.Instance.mapWidth * (Globals.Instance.mapHeight) -1
+      )
+      {
+        Globals.Instance.map.cells[array[1]-1].color = "Black";
+        Globals.Instance.map.cells[array[1]].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
+        Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
+        Globals.Instance.enemy.hp -= 4;
+      }
+      this.arithmeticChecker = (array[1]+1) % Globals.Instance.map.tilesWide; // right wall, returns 0
+      this.arithmeticChecker = (array[1]+1) % Globals.Instance.map.tilesWide; // left wall, returns 1
+    }
+  }
+
+  InputHelper.prototype.DestroyEffect = function(array)
+  {
+    if (array[0] >= 5)
+    {
+      Globals.Instance.map.cells[array[1]].color = "Gray";
+    }
+  }
+
+  InputHelper.prototype.CountArray = function(array)  //returns length of array and value of last index
+  {
+    if (Globals.Instance.gameState == "playing")
+    {
+      return [array.length, array[array.length-1]]
+    }
+  }
+
+  InputHelper.prototype.ClearArray = function(array)
+  {
+    for (i = array.length; i > 0; i--)
+    {
+      array.splice(0,1);
+    }
+  }
+
+  InputHelper.prototype.ResetBorder = function(array)
+  {
+    for (i = 0; i < this.arrayTracker.length; i++)
+    {
+      Globals.Instance.map.backgroundCells[array[i]].color = "Black";
+    }
+  }
+
+  InputHelper.prototype.SetCellBlack = function(array)
+  {
+    if(this.arrayTracker.length > 2)
+    {
+      for (i = 0; i < this.arrayTracker.length; i++)
+      {
+        Globals.Instance.map.cells[array[i]].color = "Black";
+        Globals.Instance.enemy.hp--;
+      }
+    }
+  }
+
+  InputHelper.prototype.ReturnCell = function()
+  {
+//beginning pt 1
+    for (k = 0; k < Globals.Instance.mapWidth; k++)
+    {
+      for (l = 0; l < Globals.Instance.mapHeight; l ++)
+      {
+        if
+        (
+          this.mXcd > Globals.Instance.map.tilesHorizOffset + k * Globals.Instance.map.tilesSpacing &&
+          this.mXcd < Globals.Instance.map.tilesHorizOffset + Globals.Instance.map.tileWidth + k * Globals.Instance.map.tilesSpacing &&
+          this.mYcd > Globals.Instance.map.tilesVertOffset + l * Globals.Instance.map.tilesSpacing &&
+          this.mYcd < Globals.Instance.map.tilesVertOffset + Globals.Instance.map.tileHeight + l * Globals.Instance.map.tilesSpacing
+        )
+        {
+        this.testValue = Globals.Instance.mapWidth*l + k;  //possible error
+        //Globals.Instance.map.cells[this.testValue].color = "Black";
+        //Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        if
+        (
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          this.arrayTracker.length == 0
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        } else if
+        (
+          this.arrayTracker.length != 0 &&
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color ==
+          Globals.Instance.map.cells[this.testValue].color &&
+          (
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide +1
+          )
+          //Globals.Instance.map.cells[0].color == Globals.Instance.map.cells[1].color
+
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+          //this.arrayTracker = Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color;
+        }
+        }
+      }
+    }
+//beginning pt 2
+    for (k = 0; k < Globals.Instance.mapWidth; k++)
+    {
+      for (l = 0; l < Globals.Instance.mapHeight; l ++)
+      {
+        if
+        (
+          this.touchX > Globals.Instance.map.tilesHorizOffset + k * Globals.Instance.map.tilesSpacing &&
+          this.touchX < Globals.Instance.map.tilesHorizOffset + Globals.Instance.map.tileWidth + k * Globals.Instance.map.tilesSpacing &&
+          this.touchY > Globals.Instance.map.tilesVertOffset + l * Globals.Instance.map.tilesSpacing &&
+          this.touchY < Globals.Instance.map.tilesVertOffset + Globals.Instance.map.tileHeight + l * Globals.Instance.map.tilesSpacing
+        )
+        {
+        this.testValue = Globals.Instance.mapWidth*l + k;
+        //Globals.Instance.map.cells[this.testValue].color = "Black";
+        //Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        if
+        (
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          this.arrayTracker.length == 0
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+        } else if
+        (
+          this.arrayTracker.length != 0 &&
+          this.arrayTracker[this.arrayTracker.length - 1] != this.testValue &&
+          Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color ==
+          Globals.Instance.map.cells[this.testValue].color &&
+          (
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] - Globals.Instance.map.tilesWide + 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide - 1 ||
+          this.testValue == this.arrayTracker[this.arrayTracker.length - 1] + Globals.Instance.map.tilesWide +1
+          )
+          //Globals.Instance.map.cells[0].color == Globals.Instance.map.cells[1].color
+
+        )
+        {
+          this.arrayTracker.push(this.testValue);
+          Globals.Instance.map.backgroundCells[this.testValue].color = "Red";
+          //this.arrayTracker = Globals.Instance.map.cells[this.arrayTracker[this.arrayTracker.length-1]].color;
+        }
+        }
+      }
+    }
+  }
+
+  InputHelper.prototype.MouseMove = function(e){
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    var rect = target.getBoundingClientRect();
+    this.mXcd = e.clientX - rect.left;
+    this.mYcd = e.clientY - rect.top;
+  }
+
+  InputHelper.prototype.timerFunction = function()
+  {
+    this.tileRemoverOn = true;
+    this.ProcessEmpties();
+  }
+
+  InputHelper.prototype.ProcessEmpties = function()
+  {
+    this.blackProcessTest = true;
+    MoveCells();
+
+    function MoveCells()
+    {
+      //Globals.Instance.map.cells[32].color = "Black";
+      for (i = 0; i < Globals.Instance.mapWidth * Globals.Instance.mapHeight; i ++)
+      {
+        if(Globals.Instance.map.cells[i].color == "Black")
+        {
+          for(j = 0; j <  1; j ++)
+          {
+            if(i-(j+1)*Globals.Instance.mapWidth < 0) {
+            Globals.Instance.map.cells[i-j*Globals.Instance.mapWidth].color = ColorGen();
+            }
+            else {
+            Globals.Instance.inputHelper.jCounter++;
+            Globals.Instance.map.cells[i-j*Globals.Instance.mapWidth].color = Globals.Instance.map.cells[i-(j+1)*Globals.Instance.mapWidth].color;
+            Globals.Instance.map.cells[i-(j+1)*Globals.Instance.mapWidth].color = "Black";
+            }
+          }
+        }
+
+
+      }
+      //clearInterval(Globals.Instance.inputHelper.myVar2);   //KEEP FOR REF 12 21 2015
+    }
+  }
+
+}
+
+function Timer()
+{
+  this.startTime = Date.now();
+  this.timeElapsed = 0;
+
+  Timer.prototype.updateTimeElapsed = function()
+  {
+    this.timeElapsed = Date.now() - this.startTime;
+  }
+}
+
+function Map(tilesWide, tilesDown, tileWidth, tileHeight)
+{
+  this.tilesWide = tilesWide;
+  this.tilesDown = tilesDown;
+  this.tileWidth = tileWidth;
+  this.tileHeight = tileHeight;
+
+  this.tilesVertOffset = 10;
+  this.tilesHorizOffset = 10;
+  this.tilesSpacing = 50;  // spacing from left most point
+
+  this.cells = [];
+  this.backgroundCells = [];
+
+  var numberOfCells = tilesWide * tilesDown;
+
+  for (var i = 0; i < numberOfCells; i ++)
+  {
+    this.cells.push(new Tile(ColorGen()));
+  }
+  for (var i = 0; i < numberOfCells; i ++)
+  {
+    this.backgroundCells.push(new Tile("Black"));
+  }
+}
+
+function Tile(color)
+{
+  this.color = color;
+}
+
+function ColorGen()
+{
+  colors = ["Aqua", "Pink", "Yellow", "Orange"];
+  index = Math.floor((Math.random() * colors.length));
+  return(colors[index]);
+}
+
+function Enemy(hp)
+{
+  this.hp = hp;
+}
+
+main();
+
+*/
+
 
 function main()
 {
@@ -56,14 +1371,6 @@ function Loop()
     {
       Globals.Instance.inputHelper.ReturnCell();
       Globals.Instance.inputHelper.DifferenceFromOrigin();
-      Globals.Instance.imageHelper.coin.x  =  Globals.Instance.languageHelper.languageArrayXCd + 50;
-      Globals.Instance.imageHelper.wo.x  =  Globals.Instance.languageHelper.languageArrayXCd + 95;
-      Globals.Instance.imageHelper.ni.x  =  Globals.Instance.languageHelper.languageArrayXCd + 140;
-      Globals.Instance.imageHelper.hao.x  =  Globals.Instance.languageHelper.languageArrayXCd + 185;
-      Globals.Instance.imageHelper.hen.x  =  Globals.Instance.languageHelper.languageArrayXCd + 230;
-      Globals.Instance.imageHelper.bu.x  =  Globals.Instance.languageHelper.languageArrayXCd + 275;
-      Globals.Instance.imageHelper.ma.x  =  Globals.Instance.languageHelper.languageArrayXCd + 320;
-
     }
     Globals.Instance.gameTimer.updateTimeElapsed();
     if(Globals.Instance.timeRemaining > 0 /*&& Globals.Instance.gameState == "playing"*/)
@@ -89,28 +1396,12 @@ function Loop()
     //Globals.Instance.displayHelper.drawCharacter();
     Globals.Instance.displayHelper.drawLineArray();
 
-    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.bomb, 10,330,50,50);
+    //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.bomb, 10,330,21,21);
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 10,330,400,100);
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 0,0,44, 40, 0, 400, 40, 40 );
       //img, sx, sy, sw, sh, dx, dy, dw, dh
-    if(Globals.Instance.timeRemaining > 60) {
-      Globals.Instance.imageHelper.coin.update();
-      Globals.Instance.imageHelper.coin.render();
-      Globals.Instance.imageHelper.wo.update();
-      Globals.Instance.imageHelper.wo.render();
-      Globals.Instance.imageHelper.ni.update();
-      Globals.Instance.imageHelper.ni.render();
-      Globals.Instance.imageHelper.hao.update();
-      Globals.Instance.imageHelper.hao.render();
-      Globals.Instance.imageHelper.hen.update();
-      Globals.Instance.imageHelper.hen.render();
-      Globals.Instance.imageHelper.bu.update();
-      Globals.Instance.imageHelper.bu.render();
-      Globals.Instance.imageHelper.ma.update();
-      Globals.Instance.imageHelper.ma.render();
-    }
-
-
+    //Globals.Instance.imageHelper.coin.update();
+    //Globals.Instance.imageHelper.coin.render();
 }
 
 function TileColor(color)
@@ -396,29 +1687,26 @@ function DisplayHelper()
     //this.graphics.fillText("lanXCd: " + Globals.Instance.languageHelper.languageArrayXCd, 10, 460);
 
     this.graphics.font = '22px Calibri';
-    if(Globals.Instance.timeRemaining > 60)
-    {
-      this.graphics.fillText(Globals.Instance.languageHelper.languageArray, Globals.Instance.languageHelper.languageArrayXCd, 360);
+    this.graphics.fillText(Globals.Instance.languageHelper.languageArray, Globals.Instance.languageHelper.languageArrayXCd, 360);
     //this.graphics.fillText(Globals.Instance.languageHelper.languageArray, Globals.Instance.languageHelper.languageArrayXCd + 500, 380);
     //this.graphics.fillText(Globals.Instance.languageHelper.languageArray, Globals.Instance.languageHelper.languageArrayXCd + 1000, 405);
-    }
     this.graphics.font = '14px Calibri';
 
     //this.graphics.fillText("questionArray: " + Globals.Instance.languageHelper.questionArray, 10, 380);
 
     //this.graphics.fillText("arrayCharacteristic: " + Globals.Instance.inputHelper.arrayCharacteristic.length, 10, 440);
 
-    //this.graphics.fillText("drawTarget: " + Globals.Instance.languageHelper.drawTarget, 200, 380);
+    this.graphics.fillText("drawTarget: " + Globals.Instance.languageHelper.drawTarget, 200, 380);
    // this.graphics.fillText("drawTarget: " + typeof Globals.Instance.languageHelper.drawTarget, 200, 395);
-    //this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 200, 410);
-    //this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 200, 425);
-    //this.graphics.fillText("ruby: " + '<%= @sampleRuby %>', 200, 440);
+    this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 200, 410);
+    this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 200, 425);
+    this.graphics.fillText("ruby: " + '<%= @sampleRuby %>', 200, 440);
 
-   // this.graphics.fillText("testDrawResult: " + Globals.Instance.inputHelper.testDrawResult, 10, 380);
-    //this.graphics.fillText("testDrawResult: " + typeof Globals.Instance.inputHelper.testDrawResult, 10, 395);
-//
-   // this.graphics.fillText("matchIdentifier: " + Globals.Instance.languageHelper.matchIdentifier,   10, 455);
-    //this.graphics.fillText("sendFailRecord: " + Globals.Instance.inputHelper.sendFailRecord, 10, 470);
+    this.graphics.fillText("testDrawResult: " + Globals.Instance.inputHelper.testDrawResult, 10, 380);
+    this.graphics.fillText("testDrawResult: " + typeof Globals.Instance.inputHelper.testDrawResult, 10, 395);
+
+    this.graphics.fillText("matchIdentifier: " + Globals.Instance.languageHelper.matchIdentifier,   10, 455);
+    this.graphics.fillText("sendFailRecord: " + Globals.Instance.inputHelper.sendFailRecord, 10, 470);
 
 
     if(Globals.Instance.languageHelper.question[0]) {
@@ -457,7 +1745,7 @@ function DisplayHelper()
 
 */
 
-    //this.graphics.fillText("drawInput.length: " + Globals.Instance.displayHelper.drawInput.length, 10, 425);
+    this.graphics.fillText("drawInput.length: " + Globals.Instance.displayHelper.drawInput.length, 10, 425);
 
   //  if(Globals.Instance.displayHelper.drawInput[0]){
   //    if(Globals.Instance.displayHelper.drawInput[0][0]){
@@ -546,11 +1834,10 @@ function Globals()
     this.inputHelper.initialize();
     this.enemy = new Enemy(1000);
     this.user = new User();
-
+    //this.imageHelper = new ImageHelper();
     this.gameState = "playing";       // options:  playing, questionOn, endGame
     this.languageHelper = new LanguageHelper();
     this.displayHelper = new DisplayHelper();
-    this.imageHelper = new ImageHelper();
     this.displayHelper.initialize();
     this.gameTimer = new Timer();
     this.mapHeight =6;
@@ -562,35 +1849,13 @@ function Globals()
     Loop();
   }
 }
-
+/*
 function ImageHelper()
 {
   this.bomb = new Image();
-  this.bomb.src = "../2d.svg";
-
-
-
+  this.bomb.src = 'bomb.png';
   this.coinImage = new Image();
-  this.coinImage.src = "../yi.png";
-
-  this.woImage = new Image();
-  this.woImage.src = "../wo.png";
-
-  this.niImage = new Image();
-  this.niImage.src = "../ni.png";
-
-  this.haoImage = new Image();
-  this.haoImage.src = "../hao.png";
-
-  this.henImage = new Image();
-  this.henImage.src = "../hen.png";
-
-  this.buImage = new Image();
-  this.buImage.src = "../bu.png";
-
-  this.maImage = new Image();
-  this.maImage.src = "../ma.png";
-
+  this.coinImage.src = "coin-sprite-animation-v2.png";
   this.canvas = document.getElementById("game");
   ImageHelper.prototype.sprite = function(options)
   {
@@ -602,9 +1867,6 @@ function ImageHelper()
     that.context = options.context;
     that.width = options.width;
     that.height = options.height;
-    that.x = options.x;
-    that.y = options.y;
-    that.spriteSheetLength = options.spriteSheetLength;
     that.image = options.image;
 
     //that.loop = options.loop;
@@ -630,102 +1892,23 @@ function ImageHelper()
         0,
         that.width / numberOfFrames,
         that.height,
-        that.x,   //x
-        that.y,   //y
-        40,  //width
-        40) //height
-        //that.spriteSheetLength / numberOfFrames,
-        //100);
+        0,
+        0,
+        that.width / numberOfFrames,
+        that.height);
     };
     return that;
   }
   this.coin = this.sprite({
     context:  this.canvas.getContext("2d"),
-    width:  200,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 50,
-    y: 365,
-    spriteSheetLength: 200,
+    width:  1000,
+    height:  100,
     image:  this.coinImage,
-    numberOfFrames: 2,
-    ticksPerFrame: 20
+    numberOfFrames: 10,
+    ticksPerFrame: 4
   });
-
-  this.wo = this.sprite({
-    context:  this.canvas.getContext("2d"),
-    width: 700,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 95,
-    y: 365,
-    spriteSheetLength: 700,
-    image:  this.woImage,
-    numberOfFrames: 7,
-    ticksPerFrame: 20
-  });
-
-  this.ni = this.sprite({
-    context:  this.canvas.getContext("2d"),
-    width: 700,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 140,
-    y: 365,
-    spriteSheetLength: 700,
-    image:  this.niImage,
-    numberOfFrames: 7,
-    ticksPerFrame: 20
-  });
-
-
-  this.hao = this.sprite({
-    context:  this.canvas.getContext("2d"),
-    width: 600,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 185,
-    y: 365,
-    spriteSheetLength: 600,
-    image:  this.haoImage,
-    numberOfFrames: 6,
-    ticksPerFrame: 20
-  });
-
-  this.hen = this.sprite({
-    context:  this.canvas.getContext("2d"),
-    width: 900,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 230,
-    y: 365,
-    spriteSheetLength: 900,
-    image:  this.henImage,
-    numberOfFrames: 9,
-    ticksPerFrame: 20
-  });
-
-  this.bu = this.sprite({
-    context:  this.canvas.getContext("2d"),
-    width: 400,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 275,
-    y: 365,
-    spriteSheetLength: 400,
-    image:  this.buImage,
-    numberOfFrames: 4,
-    ticksPerFrame: 20
-  });
-
-  this.ma = this.sprite({
-    context:  this.canvas.getContext("2d"),
-    width: 1300,
-    height:  101,
-    x: Globals.Instance.languageHelper.languageArrayXCd + 320,
-    y: 365,
-    spriteSheetLength: 1300,
-    image:  this.maImage,
-    numberOfFrames: 13,
-    ticksPerFrame: 20
-  });
-
 }
-
+*/
 function LanguageHelper()
 {
 this.matchIdentifier = "default";
@@ -1061,8 +2244,6 @@ this.sendFailRecord = 0;
 
   InputHelper.prototype.OnClick = function()
   {
-
-
     Globals.Instance.displayHelper.drawInput.push([]);
     this.touchAcitve = false;
     this.offsetLanguageArrayCd = this.mXcd - Globals.Instance.languageHelper.languageArrayXCd;
@@ -1655,9 +2836,9 @@ this.sendFailRecord = 0;
         ){
 
           //check to see if drawn character matches question
-          this.checkDrawingTouch();
-          Globals.Instance.languageHelper.drawTarget = "apple";
-          this.testDrawResult = "hippo";
+          this.checkDrawing();
+
+
 
 
           Globals.Instance.languageHelper.question.splice(0,1);
@@ -2257,9 +3438,24 @@ main();
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
-</head>
-
-
-
-</body>
+    <a href="bejeweledHiragana.html">refresh</a>
