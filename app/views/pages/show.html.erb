@@ -404,6 +404,8 @@ function DisplayHelper()
     }
     this.graphics.font = '14px Calibri';
 
+    this.graphics.fillText("checkingCSS: " + Globals.Instance.inputHelper.checkingCSS, 10, 450);
+
     //this.graphics.fillText("questionArray: " + Globals.Instance.languageHelper.questionArray, 10, 380);
 
     //this.graphics.fillText("arrayCharacteristic: " + Globals.Instance.inputHelper.arrayCharacteristic.length, 10, 440);
@@ -954,6 +956,7 @@ this.arrayCharacteristic = [];
 this.touchActive = false;
 this.dbAnswer = "test";
 this.sendFailRecord = 0;
+this.checkingCSS = "tomato";
 
 }
 {
@@ -994,7 +997,7 @@ this.sendFailRecord = 0;
       this.touchY = e.changedTouches[0].pageY - Globals.Instance.displayHelper.canvas.offsetTop;
       this.offsetLanguageArrayCdTouch = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
       this.offsetFromLanguageArray = this.touchX - Globals.Instance.languageHelper.languageArrayXCd;
-      if((this.touchX < 300 && this.touchX > 10 && this.touchY > 0 && this.touchY < 400) ) {
+      if((this.touchX < 300 && this.touchX > 10 && this.touchY > 0 && this.touchY < 400 && document.getElementById("bs-example-navbar-collapse-1").getAttribute("aria-expanded")!= true) ) {
         e.preventDefault();
       }
 
@@ -1061,7 +1064,19 @@ this.sendFailRecord = 0;
 
   InputHelper.prototype.OnClick = function()
   {
+    //this.checkingCSS = document.getElementById("bs-example-navbar-collapse-1");
 
+    //document.getElementById("bs-example-navbar-collapse-1").setAttribute("aria-expanded", true);
+    //style = window.getComputedStyle(this.checkingCSS);
+    //aria =style.getPropertyValue("aria-expanded");
+
+    this.checkingCSS = document.getElementById("bs-example-navbar-collapse-1").getAttribute("aria-expanded")
+    //alert(this.checkingCSS.style.aria-expanded)
+   // alert(window.getComputedStyle(this.checkingCSS,null).getPropertyValue("aria-expanded"));
+
+//window.getComputedStyle(elem,null).getPropertyValue("height");
+
+    //document.getElementById("output").innerHTML = theCSSprop
 
     Globals.Instance.displayHelper.drawInput.push([]);
     this.touchAcitve = false;
