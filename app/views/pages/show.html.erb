@@ -61,6 +61,8 @@ function Loop()
       Globals.Instance.imageHelper.ni.x  =  Globals.Instance.languageHelper.languageArrayXCd + 140;
       Globals.Instance.imageHelper.hao.x  =  Globals.Instance.languageHelper.languageArrayXCd + 185;
       Globals.Instance.imageHelper.hen.x  =  Globals.Instance.languageHelper.languageArrayXCd + 230;
+      Globals.Instance.imageHelper.bu.x  =  Globals.Instance.languageHelper.languageArrayXCd + 275;
+      Globals.Instance.imageHelper.ma.x  =  Globals.Instance.languageHelper.languageArrayXCd + 320;
 
     }
     Globals.Instance.gameTimer.updateTimeElapsed();
@@ -101,6 +103,10 @@ function Loop()
     Globals.Instance.imageHelper.hao.render();
     Globals.Instance.imageHelper.hen.update();
     Globals.Instance.imageHelper.hen.render();
+    Globals.Instance.imageHelper.bu.update();
+    Globals.Instance.imageHelper.bu.render();
+    Globals.Instance.imageHelper.ma.update();
+    Globals.Instance.imageHelper.ma.render();
 
 
 }
@@ -574,6 +580,12 @@ function ImageHelper()
   this.henImage = new Image();
   this.henImage.src = "../hen.png";
 
+  this.buImage = new Image();
+  this.buImage.src = "../bu.png";
+
+  this.maImage = new Image();
+  this.maImage.src = "../ma.png";
+
   this.canvas = document.getElementById("game");
   ImageHelper.prototype.sprite = function(options)
   {
@@ -683,6 +695,29 @@ function ImageHelper()
     ticksPerFrame: 20
   });
 
+  this.bu = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width: 400,
+    height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 275,
+    y: 365,
+    spriteSheetLength: 400,
+    image:  this.buImage,
+    numberOfFrames: 4,
+    ticksPerFrame: 20
+  });
+
+  this.ma = this.sprite({
+    context:  this.canvas.getContext("2d"),
+    width: 1300,
+    height:  101,
+    x: Globals.Instance.languageHelper.languageArrayXCd + 320,
+    y: 365,
+    spriteSheetLength: 1300,
+    image:  this.maImage,
+    numberOfFrames: 13,
+    ticksPerFrame: 20
+  });
 
 }
 
