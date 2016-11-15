@@ -93,7 +93,7 @@ function Loop()
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 10,330,400,100);
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 0,0,44, 40, 0, 400, 40, 40 );
       //img, sx, sy, sw, sh, dx, dy, dw, dh
-    if(Globals.Instance.timeRemaining > 15) {
+    if(Globals.Instance.timeRemaining > 30) {
       Globals.Instance.imageHelper.coin.update();
       Globals.Instance.imageHelper.coin.render();
       Globals.Instance.imageHelper.wo.update();
@@ -560,8 +560,8 @@ function Globals()
     this.mapHeight =6;
     this.mapWidth = 6;
     this.map = new Map(this.mapWidth,this.mapHeight,39,39);
-    this.timeRemaining = 120;
-    this.roundTime = 120;
+    this.timeRemaining = 300;
+    this.roundTime = 300;
     this.checkAnswerTouchCounter = 0;
     Loop();
   }
