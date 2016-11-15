@@ -244,7 +244,7 @@ def show
     end
   end
 
-  if @hard.length < 4
+  if @hard.length < 4 && Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count < 7
     attempt = Attempt.new
     attempt.correct = false
     attempt.user_id = current_user.id
