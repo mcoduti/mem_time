@@ -244,7 +244,7 @@ def show
     end
   end
 
-  if @hard.length < 4 && Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count < 7
+  if @hard.length < 4 && Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count < 6
     attempt = Attempt.new
     attempt.correct = false
     attempt.user_id = current_user.id
@@ -283,7 +283,33 @@ def show
   if @easy.length > 0
     @rand = rand(@easy.length)
     @question_char_id.push(@easy[@rand])
+    @easy.slice!(@rand)
   end
+
+  if @easy.length > 0
+    @rand = rand(@easy.length)
+    @question_char_id.push(@easy[@rand])
+    @easy.slice!(@rand)
+  end
+
+  if @easy.length > 0
+    @rand = rand(@easy.length)
+    @question_char_id.push(@easy[@rand])
+    @easy.slice!(@rand)
+  end
+
+  if @easy.length > 0
+    @rand = rand(@easy.length)
+    @question_char_id.push(@easy[@rand])
+    @easy.slice!(@rand)
+  end
+
+  if @easy.length > 0
+    @rand = rand(@easy.length)
+    @question_char_id.push(@easy[@rand])
+    @easy.slice!(@rand)
+  end
+
 
   #@sampleRuby = @question_char_id.count
 
