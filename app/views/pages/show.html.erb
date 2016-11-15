@@ -73,12 +73,12 @@ function Loop()
     if(Globals.Instance.timeRemaining <= 0)
     {
       Globals.Instance.gameState = "endGame";
-      Globals.Instance.displayHelper.endGameMessage = "You Lose!";
+      Globals.Instance.displayHelper.endGameMessage = "You Lose! Refresh to restart";
     }
     if(Globals.Instance.enemy.hp <= 0)
     {
       Globals.Instance.gameState = "endGame";
-      Globals.Instance.displayHelper.endGameMessage = "You Win!";
+      Globals.Instance.displayHelper.endGameMessage = "You Win! Refresh to restart";
     }
     Globals.Instance.displayHelper.clear();
     Globals.Instance.displayHelper.writeText();
@@ -209,8 +209,10 @@ function DisplayHelper()
       )
       this.graphics.globalAlpha = 1;
       this.graphics.fillStyle = "Red";
-      this.graphics.font  = 'Bold 30px Calibri';
-      this.graphics.fillText(this.endGameMessage, 100, 130);
+      this.graphics.font  = 'Bold 16px Calibri';
+      this.graphics.textAlign = 'center';
+      this.graphics.fillText(this.endGameMessage, 155, 130);
+      this.graphics.textAlign = 'left';
       this.graphics.fillStyle = "Black";
       this.graphics.font  = '14 px Calibri';
     }
