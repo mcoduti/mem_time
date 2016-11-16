@@ -416,7 +416,9 @@ function DisplayHelper()
    // this.graphics.fillText("drawTarget: " + typeof Globals.Instance.languageHelper.drawTarget, 200, 395);
     //this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 200, 410);
     //this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 200, 425);
-    //this.graphics.fillText("ruby: " + '<%= @sampleRuby %>', 200, 440);
+
+    this.graphics.fillText("ruby: " + '<%= @sampleRuby2 %>', 10, 440);
+    this.graphics.fillText("testRuby: " + Globals.Instance.languageHelper.testRuby, 10, 455);
 
    // this.graphics.fillText("testDrawResult: " + Globals.Instance.inputHelper.testDrawResult, 10, 380);
     //this.graphics.fillText("testDrawResult: " + typeof Globals.Instance.inputHelper.testDrawResult, 10, 395);
@@ -733,8 +735,18 @@ function ImageHelper()
 function LanguageHelper()
 {
 this.matchIdentifier = "default";
+this.testRuby = ["start"];
+
+if('<%= @sampleRuby2[0] %>') {
+  this.testRuby.push('<%= @sampleRuby2[0] %>');
+}
+
+//this.testRuby = '<%= @sampleRuby2 %>';
+
+//'<%= raw @sampleRuby2.to_json.gsub("a", "b") %>';
 
 this.foreignCharacters = [];  //foreignCharacters is the array the game sources information from
+/*
 this.characterInput = [ //characterInput is a scalable array used for receiving a variable number of items, ["character", "id #"], from SQL
   ['<%= @game_input_character[0] %>', 0],   // 1
   ['<%= @game_input_character[1] %>', 1],    // 7
@@ -744,12 +756,20 @@ this.characterInput = [ //characterInput is a scalable array used for receiving 
   //['<%= @game_input_character[0] %>', 5],   //9
   //['<%= @game_input_character[0] %>', 6]   // 13
 ];
+*/
+this.characterInput = [];
+if('<%= @hackChar0[0] %>') {this.characterInput.push(['<%= @hackChar0[0] %>', 0]);}
+if('<%= @hackChar1[0] %>') {this.characterInput.push(['<%= @hackChar1[0] %>', 1]);}
+if('<%= @hackChar2[0] %>') {this.characterInput.push(['<%= @hackChar2[0] %>', 2]);}
+if('<%= @hackChar3[0] %>') {this.characterInput.push(['<%= @hackChar3[0] %>', 3]);}
+if('<%= @hackChar4[0] %>') {this.characterInput.push(['<%= @hackChar4[0] %>', 4]);}
 for (i =0; i < this.characterInput.length; i++)
   {
   this.foreignCharacters.push(this.characterInput[i]);
   }
+
 this.foreignPhonetic = [];
-this.phoneticInput = [
+/*this.phoneticInput = [
   ['<%= @game_input_phonetic[0] %>', 0],
   ['<%= @game_input_phonetic[1] %>', 1],
   ['<%= @game_input_phonetic[2] %>', 2],
@@ -757,13 +777,21 @@ this.phoneticInput = [
   ['<%= @game_input_phonetic[4] %>', 4]
   //['<%= @game_input_phonetic[0] %>', 5],
   //['<%= @game_input_phonetic[0] %>', 6]
-];
+];*/
+
+this.phoneticInput = [];
+if('<%= @hackPhon0[0] %>') {this.phoneticInput.push(['<%= @hackPhon0[0] %>', 0]);}
+if('<%= @hackPhon1[0] %>') {this.phoneticInput.push(['<%= @hackPhon1[0] %>', 1]);}
+if('<%= @hackPhon2[0] %>') {this.phoneticInput.push(['<%= @hackPhon2[0] %>', 2]);}
+if('<%= @hackPhon3[0] %>') {this.phoneticInput.push(['<%= @hackPhon3[0] %>', 3]);}
+if('<%= @hackPhon4[0] %>') {this.phoneticInput.push(['<%= @hackPhon4[0] %>', 4]);}
+
 for (i =0; i < this.phoneticInput.length; i++)
   {
   this.foreignPhonetic.push(this.phoneticInput[i]);
   }
 this.foreignTranslations = [];
-this.translationInput = [
+/*this.translationInput = [
   ['<%= @game_input_translation[0] %>', 0],
   ['<%= @game_input_translation[1] %>', 1],
   ['<%= @game_input_translation[2] %>', 2],
@@ -771,7 +799,15 @@ this.translationInput = [
   ['<%= @game_input_translation[4] %>' , 4]
   //['<%= @game_input_translation[0] %>', 5],
   //['<%= @game_input_translation[0] %>', 6]
-];
+];*/
+
+this.translationInput = [];
+if('<%= @hackTrans0[0] %>') {this.translationInput.push(['<%= @hackTrans0[0] %>', 0]);}
+if('<%= @hackTrans1[0] %>') {this.translationInput.push(['<%= @hackTrans1[0] %>', 1]);}
+if('<%= @hackTrans2[0] %>') {this.translationInput.push(['<%= @hackTrans2[0] %>', 2]);}
+if('<%= @hackTrans3[0] %>') {this.translationInput.push(['<%= @hackTrans3[0] %>', 3]);}
+if('<%= @hackTrans4[0] %>') {this.translationInput.push(['<%= @hackTrans4[0] %>', 4]);}
+
 for (i =0; i < this.translationInput.length; i++)
   {
   this.foreignTranslations.push(this.translationInput[i]);
@@ -779,14 +815,21 @@ for (i =0; i < this.translationInput.length; i++)
 
 this.knowledgeAjaxKey = 0;
 this.ajaxInput = "tomato";
-
+/*
 this.knowledgeKeyes = [
   ['<%= @game_input_char_id[0] %>', 0],
   ['<%= @game_input_char_id[1] %>', 1],
   ['<%= @game_input_char_id[2] %>', 2],
   ['<%= @game_input_char_id[3] %>', 3],
   ['<%= @game_input_char_id[4] %>', 4]
-];
+];*/
+
+this.knowledgeKeyes = [];
+if('<%= @hackCharId0[0] %>') {this.knowledgeKeyes.push(['<%= @hackCharId0[0] %>', 0]);}
+if('<%= @hackCharId1[0] %>') {this.knowledgeKeyes.push(['<%= @hackCharId1[0] %>', 1]);}
+if('<%= @hackCharId2[0] %>') {this.knowledgeKeyes.push(['<%= @hackCharId2[0] %>', 2]);}
+if('<%= @hackCharId3[0] %>') {this.knowledgeKeyes.push(['<%= @hackCharId3[0] %>', 3]);}
+if('<%= @hackCharId4[0] %>') {this.knowledgeKeyes.push(['<%= @hackCharId4[0] %>', 4]);}
 
 this.languageArray = "";
 this.languageArray2 = "";

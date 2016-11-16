@@ -168,7 +168,7 @@ def update_page
     @game_input_char_id.push(@question_char_id[i])
   end
 
-  @sampleRuby = @game_input_character[0]
+  #@sampleRuby = @game_input_character
 
 end
 
@@ -216,19 +216,19 @@ def show
     attempt.save
     @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
 
-    attempt = Attempt.new
-    attempt.correct = false
-    attempt.user_id = current_user.id
-    attempt.character_id = Character.take(@characters_known + 1).last.id
-    attempt.save
-    @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
+    #attempt = Attempt.new
+    #attempt.correct = false
+    #attempt.user_id = current_user.id
+    #attempt.character_id = Character.take(@characters_known + 1).last.id
+    #attempt.save
+    #@characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
 
-    attempt = Attempt.new
-    attempt.correct = false
-    attempt.user_id = current_user.id
-    attempt.character_id = Character.take(@characters_known + 1).last.id
-    attempt.save
-    @characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
+    #attempt = Attempt.new
+    #attempt.correct = false
+    #attempt.user_id = current_user.id
+    #attempt.character_id = Character.take(@characters_known + 1).last.id
+    #attempt.save
+    #@characters_known = Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count
   end
 
   @easy = []
@@ -244,7 +244,7 @@ def show
     end
   end
 
-  if @hard.length < 4 && Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count < 6
+  if @hard.length < 2 && Attempt.where(:user_id => current_user.id).select(:character_id).distinct.count < 6
     attempt = Attempt.new
     attempt.correct = false
     attempt.user_id = current_user.id
@@ -334,7 +334,42 @@ def show
     @game_input_char_id.push(@question_char_id[i])
   end
 
-  @sampleRuby = @game_input_character[0]
+  @hackChar0 = [@game_input_character[0]];
+  @hackChar1 = [@game_input_character[1]];
+  @hackChar2 = [@game_input_character[2]];
+  @hackChar3 = [@game_input_character[3]];
+  @hackChar4 = [@game_input_character[4]];
+  @hackPhon0 = [@game_input_phonetic[0]];
+  @hackPhon1 = [@game_input_phonetic[1]];
+  @hackPhon2 = [@game_input_phonetic[2]];
+  @hackPhon3 = [@game_input_phonetic[3]];
+  @hackPhon4 = [@game_input_phonetic[4]];
+  @hackTrans0 = [@game_input_translation[0]];
+  @hackTrans1 = [@game_input_translation[1]];
+  @hackTrans2 = [@game_input_translation[2]];
+  @hackTrans3 = [@game_input_translation[3]];
+  @hackTrans4 = [@game_input_translation[4]];
+  @hackCharId0 = [@game_input_char_id[0]];
+  @hackCharId1 = [@game_input_char_id[1]];
+  @hackCharId2 = [@game_input_char_id[2]];
+  @hackCharId3 = [@game_input_char_id[3]];
+  @hackCharId4 = [@game_input_char_id[4]];
+
+
+  @sampleRuby = @game_input_phonetic[20]
+  @sampleRuby2 = [@hackChar0]
+  @sampleRuby3 = ["zeroth2"]
+  @sampleRuby4 = ["zeroth3"]
+
+  #@sampleRuby2.push(@game_input_phonetic.to_json)
+  #@sampleRuby2.push('pear')
+
+
+
+
+  #@sampleRuby2.push("apple")
+  #@sampleRuby2.push(@game_input_phonetic[0])
+  #@sampleRuby2.push(@game_input_phonetic[1])
 
 end
 
