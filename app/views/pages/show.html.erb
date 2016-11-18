@@ -268,6 +268,10 @@ function DisplayHelper()
   DisplayHelper.prototype.DisplaySubmitButton = function()
   {
     if(Globals.Instance.languageHelper.questionArray[4] == 3) {
+      this.graphics.textAlign = "center";
+      this.graphics.font = '14px Calibri';
+      this.graphics.fillText("Draw the Chinese Character", 155, 58);
+      this.graphics.textAlign = "left";
       this.graphics.globalAlpha = .9;
       this.graphics.fillStyle = "White";
       this.graphics.fillRect
@@ -288,6 +292,11 @@ function DisplayHelper()
       this.graphics.font = '14px Calibri';
       this.graphics.fillStyle = "Black";
 
+      this.graphics.textAlign = "center";
+      this.graphics.font = '12px Calibri';
+      this.graphics.fillText("Confused?  See homepage for directions", 155, 275);
+      this.graphics.textAlign = "left";
+
     }
   }
 
@@ -304,6 +313,9 @@ function DisplayHelper()
       this.graphics.fillStyle = "#D8D8D8";
 
       if(Globals.Instance.languageHelper.questionArray[4] != 3) {
+
+
+
         this.graphics.fillRect
         (
           80, 115, 150, 35
@@ -325,6 +337,7 @@ function DisplayHelper()
       this.graphics.fillText(Globals.Instance.languageHelper.question[0][0], 155, 93);
 
       if(Globals.Instance.languageHelper.questionArray[4] != 3) {
+
         this.graphics.fillText(Globals.Instance.languageHelper.answer0[0][0], 155, 141);
         this.graphics.fillText(Globals.Instance.languageHelper.answer1[0][0], 155, 181);
         this.graphics.fillText(Globals.Instance.languageHelper.answer2[0][0], 155, 221);
@@ -332,6 +345,10 @@ function DisplayHelper()
 
       this.graphics.fillStyle = "Black";
       this.graphics.font  = '14 px Calibri';
+      this.graphics.textAlign = "left";
+       this.graphics.textAlign = "center";
+      this.graphics.font = '12px Calibri';
+      this.graphics.fillText("Confused?  See homepage for directions", 155, 275);
       this.graphics.textAlign = "left";
     }
   }
@@ -562,8 +579,8 @@ function Globals()
     this.mapHeight =6;
     this.mapWidth = 6;
     this.map = new Map(this.mapWidth,this.mapHeight,39,39);
-    this.timeRemaining = 300;
-    this.roundTime = 300;
+    this.timeRemaining = 600;
+    this.roundTime = 600;
     this.checkAnswerTouchCounter = 0;
     Loop();
   }
@@ -1111,6 +1128,8 @@ this.checkingCSS = "tomato";
 
   InputHelper.prototype.OnClick = function()
   {
+
+    //Globals.Instance.roundTime += 15;
     //this.checkingCSS = document.getElementById("bs-example-navbar-collapse-1");
 
     //document.getElementById("bs-example-navbar-collapse-1").setAttribute("aria-expanded", true);
