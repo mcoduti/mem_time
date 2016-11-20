@@ -1269,6 +1269,7 @@ this.checkingCSS = "tomato";
         ){
           this.testDrawResult =  '一';     //Globals.Instance.languageHelper.question[0][0];
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.roundTime += 15;
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
           }
@@ -1294,6 +1295,7 @@ this.checkingCSS = "tomato";
         ){
           this.testDrawResult = '好';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.roundTime += 15;
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
             Globals.Instance.inputHelper.dbAnswer = 1;
@@ -1306,6 +1308,7 @@ this.checkingCSS = "tomato";
         ){
           this.testDrawResult = '嗎';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.roundTime += 15;
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
             Globals.Instance.inputHelper.dbAnswer = 1;
@@ -1318,6 +1321,7 @@ this.checkingCSS = "tomato";
         ){
           this.testDrawResult = '很';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.roundTime += 15;
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
             Globals.Instance.inputHelper.dbAnswer = 1;
@@ -1331,6 +1335,7 @@ this.checkingCSS = "tomato";
         ){
           this.testDrawResult = '我';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.roundTime += 15;
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
             Globals.Instance.inputHelper.dbAnswer = 1;
@@ -1338,6 +1343,7 @@ this.checkingCSS = "tomato";
         } else {
           this.testDrawResult = '你';
           if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+            Globals.Instance.roundTime += 15;
             Globals.Instance.languageHelper.matchIdentifier = "match";
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red"
             Globals.Instance.inputHelper.dbAnswer = 1;
@@ -1378,6 +1384,7 @@ this.checkingCSS = "tomato";
             }
             })
             Globals.Instance.languageHelper.matchIdentifier = "match";
+            Globals.Instance.roundTime += 15;
             Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
             this.sendFailRecord = 1;
           }
@@ -1405,6 +1412,7 @@ this.checkingCSS = "tomato";
         }
         })
         Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
         Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
         this.sendFailRecord = 1;
         }
@@ -1431,6 +1439,7 @@ this.checkingCSS = "tomato";
           }
           })
           Globals.Instance.languageHelper.matchIdentifier = "match";
+          Globals.Instance.roundTime += 15;
           Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
           this.sendFailRecord = 1;
         }
@@ -1457,6 +1466,7 @@ this.checkingCSS = "tomato";
           }
           })
           Globals.Instance.languageHelper.matchIdentifier = "match";
+          Globals.Instance.roundTime += 15;
           Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
           this.sendFailRecord = 1;
         }
@@ -1485,6 +1495,7 @@ this.checkingCSS = "tomato";
         }
         })
         Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
         Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
         this.sendFailRecord = 1;
         }
@@ -1511,6 +1522,7 @@ this.checkingCSS = "tomato";
         }
         })
         Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
         Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
         this.sendFailRecord = 1;
         }
@@ -1538,6 +1550,7 @@ this.checkingCSS = "tomato";
         }
         })
         Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
         Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
         this.sendFailRecord = 1;
         }
@@ -1589,6 +1602,7 @@ this.checkingCSS = "tomato";
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
       ) {
         Globals.Instance.inputHelper.dbAnswer = 1;
+        Globals.Instance.roundTime += 15;
         $.ajax({
         method: "POST",
         url: "/save_game_data",
@@ -1637,6 +1651,7 @@ this.checkingCSS = "tomato";
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
       ) {
         Globals.Instance.inputHelper.dbAnswer = 1;
+        Globals.Instance.roundTime += 15;
         $.ajax({
         method: "POST",
         url: "/save_game_data",
@@ -1685,6 +1700,7 @@ this.checkingCSS = "tomato";
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
       ) {
         Globals.Instance.inputHelper.dbAnswer = 1;
+        Globals.Instance.roundTime += 15;
         $.ajax({
         method: "POST",
         url: "/save_game_data",
