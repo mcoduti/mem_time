@@ -582,6 +582,12 @@ function Globals()
     this.timeRemaining = 600;
     this.roundTime = 600;
     this.checkAnswerTouchCounter = 0;
+
+    $.ajax({
+     method: "POST",
+      url: "/save_points",
+      data: { chipswon: 1}
+      })
     Loop();
   }
 }
