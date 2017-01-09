@@ -361,6 +361,8 @@ def show
   @sampleRuby3 = ["zeroth2"]
   @sampleRuby4 = ["zeroth3"]
 
+  @importCharacterCount = Attempt.where(:user_id => current_user.id).select(:character_id).distinct
+  @importCharacterCount =   @importCharacterCount.count
   #@sampleRuby2.push(@game_input_phonetic.to_json)
   #@sampleRuby2.push('pear')
 

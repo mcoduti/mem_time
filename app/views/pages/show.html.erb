@@ -72,13 +72,24 @@ function Loop()
     }
     if(Globals.Instance.timeRemaining <= 0)
     {
-      Globals.Instance.gameState = "endGame";
-      Globals.Instance.displayHelper.endGameMessage = "You Lose! Refresh to restart";
+      //Globals.Instance.gameState = "endGame";
+      //Globals.Instance.displayHelper.endGameMessage = "You Lose! Refresh to restart";
+
+      Globals.Instance.gameState = "endGame";   //NEW ADDITION***
+      x = 10 + Math.ceil(Math.pow(Globals.Instance.user.charKnown, 1.1)) + Math.ceil(Math.pow(Globals.Instance.enemy.slain, 1.2));
+      Globals.Instance.displayHelper.endGameMessage = "Game over! +" + x + " xp";
+
     }
     if(Globals.Instance.enemy.hp <= 0)
     {
-      Globals.Instance.gameState = "endGame";
-      Globals.Instance.displayHelper.endGameMessage = "You Win! Refresh to restart";
+
+      Globals.Instance.enemy.currentMobHP = Math.floor(Globals.Instance.enemy.currentMobHP * 1.1);
+      Globals.Instance.enemy.hp = Globals.Instance.enemy.currentMobHP;
+      Globals.Instance.enemy.slain += 1;
+      //Globals.Instance.gameState = "endGame";
+      //Globals.Instance.displayHelper.endGameMessage = "You Win! Refresh to restart";
+      //x = 10 + Math.ceil(Math.pow(Globals.Instance.user.charKnown, 1.1)) + Math.ceil(Math.pow(Globals.Instance.enemy.slain, 1.2));
+      //Globals.Instance.displayHelper.endGameMessage = "Game over! +" + x + " xp";
     }
     Globals.Instance.displayHelper.clear();
     Globals.Instance.displayHelper.writeText();
@@ -88,7 +99,7 @@ function Loop()
     Globals.Instance.displayHelper.DisplaySubmitButton();
     //Globals.Instance.displayHelper.drawCharacter();
     Globals.Instance.displayHelper.drawLineArray();
-
+    Globals.Instance.displayHelper.DisplayStart();
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.bomb, 10,330,50,50);
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 10,330,400,100);
     //Globals.Instance.displayHelper.graphics.drawImage(Globals.Instance.imageHelper.coinImage, 0,0,44, 40, 0, 400, 40, 40 );
@@ -121,7 +132,9 @@ function TileColor(color)
 function DisplayHelper()
 {
   this.canvas = document.getElementById("game");
+
   this.endGameMessage = "You Lose!";
+  this.gameMessage = "Tap grey boxes!";
   this.drawInput = [];
   this.testingArray = [[100, 400], [200, 420], [130, 430]];
   this.p1 = 1;
@@ -235,13 +248,13 @@ function DisplayHelper()
 
         var testLine = line + words[n] + ' ';
 
-        var metrics = this.measureText(testLine);
+        var metrics = this.graphics.measureText(testLine);
 
         var testWidth = metrics.width;
 
         if (testWidth > maxWidth && n > 0) {
 
-          this.fillText(line, x, y);
+          this.graphics.fillText(line, x, y);
 
           line = words[n] + ' ';
 
@@ -256,7 +269,7 @@ function DisplayHelper()
       }
 
 
-      this.fillText(line, x, y);
+      this.graphics.fillText(line, x, y);
 
       y += lineHeight;
 
@@ -297,6 +310,30 @@ function DisplayHelper()
       this.graphics.fillText("Confused?  See homepage for directions", 155, 275);
       this.graphics.textAlign = "left";
 
+    }
+  }
+  DisplayHelper.prototype.DisplayStart = function()
+  {
+    if (Globals.Instance.gameState == "gameStart")
+    {
+      this.graphics.globalAlpha = .95;
+      this.graphics.fillStyle = "White";
+      this.graphics.fillRect
+      (
+        20, 20, 265, 265
+      )
+
+      this.graphics.globalAlpha = 1;
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '12px Calibri';
+      //this.graphics.textAlign = "center";
+
+      this.graphics.fillText(".", 155, 141);
+      this.wrapText("Directions:  Defeat as many enemies as you can.  Fight by connecting 3 or more same- color tiles. Connecting 5 or more spawns a grey bomb for double damage. To activate, click and show your knowledge; the bomb will turn red, click again to detonate. Game ends when time runs out. Extend the time with correct answers.  Use the navigation menu at the top to check your stats and what you learned.  If you don't know an answer, scroll the cheat bar below", 35, 40, 240, 20);
+
+      this.graphics.fillStyle = "Black";
+      this.graphics.font  = '14 px Calibri';
+      this.graphics.textAlign = "left";
     }
   }
 
@@ -434,7 +471,7 @@ function DisplayHelper()
     //this.graphics.fillText("touchX: " + Globals.Instance.inputHelper.touchX, 200, 410);
     //this.graphics.fillText("touchY: " + Globals.Instance.inputHelper.touchY, 200, 425);
 
-   // this.graphics.fillText("ruby: " + '<%= @sampleRuby2 %>', 10, 440);
+    //this.graphics.fillText("ruby: " + '<%= @importCharacterCount %>', 10, 440);
    // this.graphics.fillText("testRuby: " + Globals.Instance.languageHelper.testRuby, 10, 455);
 
    // this.graphics.fillText("testDrawResult: " + Globals.Instance.inputHelper.testDrawResult, 10, 380);
@@ -497,18 +534,29 @@ function DisplayHelper()
 
     this.graphics.beginPath();
 
-
     this.graphics.font = 'Bold 18px Calibri';
     this.graphics.fillStyle = "Blue";
-    this.graphics.fillText("User Power: " + Globals.Instance.user.dmg, 5, 321);
-    this.graphics.fillText("Monster: " + Globals.Instance.enemy.hp, 5, 338);
+    this.graphics.fillText("Dmg: " + Globals.Instance.user.base + "L + " + Globals.Instance.user.charKnownDmg + "K", 5, 321);
+
+    this.graphics.textAlign = "right";
+    this.graphics.fillStyle = "Red";
+    this.graphics.fillText(Globals.Instance.displayHelper.gameMessage, 300, 321);   //"click gray boxes"
+    this.graphics.fillStyle = "Blue";
+    this.graphics.textAlign = "left";
+
+    this.graphics.fillText("Monster HP: " + Globals.Instance.enemy.hp, 5, 338); //NEW ADDITION
+    this.graphics.fillText("Slain: " + Globals.Instance.enemy.slain, 150, 338);   //NEW ADDITION
     if(Globals.Instance.timeRemaining > 10)
     {
       this.graphics.fillStyle = "Blue";
     } else {
       this.graphics.fillStyle = "Red";
     }
-    this.graphics.fillText("T: " + (Globals.Instance.timeRemaining), 245, 321);
+
+    this.graphics.textAlign = "right";
+    this.graphics.fillText("T: " + (Globals.Instance.timeRemaining), 300, 338);
+    this.graphics.textAlign = "left";
+
     this.graphics.font = '14px Calibri';
     this.graphics.fillStyle = "Black";
 
@@ -567,10 +615,10 @@ function Globals()
   {
     this.inputHelper = new InputHelper();
     this.inputHelper.initialize();
-    this.enemy = new Enemy(1000);
+    this.enemy = new Enemy(100);
     this.user = new User();
 
-    this.gameState = "playing";       // options:  playing, questionOn, endGame
+    this.gameState = "gameStart";       // options:  playing, questionOn, endGame, gameStart
     this.languageHelper = new LanguageHelper();
     this.displayHelper = new DisplayHelper();
     this.imageHelper = new ImageHelper();
@@ -1134,7 +1182,9 @@ this.checkingCSS = "tomato";
 
   InputHelper.prototype.OnClick = function()
   {
-
+    if (Globals.Instance.gameState == "gameStart"){     ///NEW ADDITION***
+      Globals.Instance.gameState = "playing";
+    }
     //Globals.Instance.roundTime += 15;
     //this.checkingCSS = document.getElementById("bs-example-navbar-collapse-1");
 
@@ -1987,7 +2037,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
-        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 6 * Globals.Instance.user.dmg * 2;
       } else if     //LEFT WALL
       (
         (array[1]+1) % Globals.Instance.mapWidth == 1 &&
@@ -2001,7 +2052,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
-        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 6 * Globals.Instance.user.dmg * 2;
       } else if     //TOP WALL
       (
         //(array[1]+1) % Globals.Instance.mapWidth == 1 &&
@@ -2017,7 +2069,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
-        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 6 * Globals.Instance.user.dmg * 2;
       } else if     //BOTTOM WALL
       (
         //(array[1]+1) % Globals.Instance.mapWidth == 1 &&
@@ -2034,7 +2087,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
         //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
         //Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
-        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 6 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 6 * Globals.Instance.user.dmg * 2;
       } else if     //MIDDLE
       (
         (array[1]+1) % Globals.Instance.mapWidth != 1 &&
@@ -2053,6 +2107,7 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
         Globals.Instance.enemy.hp -= 9 * Globals.Instance.user.dmg;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 9 * Globals.Instance.user.dmg * 2;
       } else if     //TOP LEFT CORNER
       (
         array[1] == 0
@@ -2063,7 +2118,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1]+1].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth + 1].color = "Black";
-        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 4 * Globals.Instance.user.dmg * 2;
       } else if     //TOP RIGHT CORNER
       (
         array[1] == Globals.Instance.map.tilesWide -1
@@ -2073,7 +2129,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1]].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] + Globals.Instance.mapWidth - 1].color = "Black";
-        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 4 * Globals.Instance.user.dmg * 2;
       } else if     //BOTTOM LEFT CORNER
       (
         array[1] == Globals.Instance.mapWidth * (Globals.Instance.mapHeight - 1)
@@ -2083,7 +2140,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1]+1].color = "Black";
         Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth + 1].color = "Black";
-        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 4 * Globals.Instance.user.dmg * 2;
       } else if     //BOTTOM RIGHT CORNER
       (
         array[1] == Globals.Instance.mapWidth * (Globals.Instance.mapHeight) -1
@@ -2093,7 +2151,8 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.map.cells[array[1]].color = "Black";
         Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth].color = "Black";
         Globals.Instance.map.cells[array[1] - Globals.Instance.mapWidth - 1].color = "Black";
-        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg;
+        Globals.Instance.enemy.hp -= 4 * Globals.Instance.user.dmg * 2;
+        Globals.Instance.displayHelper.gameMessage = "Bomb 2X dmg! +" + 4 * Globals.Instance.user.dmg * 2;
       }
       this.arithmeticChecker = (array[1]+1) % Globals.Instance.map.tilesWide; // right wall, returns 0
       this.arithmeticChecker = (array[1]+1) % Globals.Instance.map.tilesWide; // left wall, returns 1
@@ -2136,6 +2195,7 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
   {
     if(this.arrayTracker.length > 2)
     {
+      Globals.Instance.displayHelper.gameMessage = this.arrayTracker.length * Globals.Instance.user.dmg + " dmg!";
       for (i = 0; i < this.arrayTracker.length; i++)
       {
         Globals.Instance.map.cells[array[i]].color = "Black";
@@ -2338,21 +2398,39 @@ function Tile(color)
 
 function ColorGen()
 {
-  colors = ["Aqua", "Pink", "Yellow", "Orange"];
+  colors = ["Mediumorchid", "Darkturquoise", "Hotpink", "Gold"];
   index = Math.floor((Math.random() * colors.length));
   return(colors[index]);
 }
 
 function Enemy(hp)
 {
-  this.hp = hp;
+  this.currentMobHP = hp;
+  this.hp = this.currentMobHP;
+  this.slain = 0;
 }
 
 function User()
 {
-  this.lvlDmgContr = 2; //contribution from user db
-  this.knowDmgContr = 2; //contribution from user db
-  this.dmg = this.lvlDmgContr + this.knowDmgContr;  //dps in practice would be dps contribution from lvl and knowledge
+  //this.lvlDmgContr = 2; //contribution from user db
+  //this.knowDmgContr = 2; //contribution from user db
+  //this.dmg = this.lvlDmgContr + this.knowDmgContr;  //dps in practice would be dps contribution from lvl and knowledge
+  this.xp = 1;
+  this.base = 0;
+
+  if(this.xp < 56) {this.base = 1};
+  if(this.xp >= 56 && this.xp < 222) {this.base = 2};
+  if(this.xp >= 222 && this.xp < 500) {this.base = 3};
+  if(this.xp >= 500 && this.xp < 889) {this.base = 4};
+  if(this.xp >= 889 && this.xp < 1389) {this.base = 5};
+  if(this.xp >= 1389 && this.xp < 2000) {this.base = 6};
+  if(this.xp >= 2000 && this.xp < 2772) {this.base = 7};
+
+  this.charKnown = '<%= @importCharacterCount %>'; //contribution from user db     //NEW ADDITION***
+  this.charKnownDmg = Math.floor(this.charKnown * Math.pow(1.1, this.charKnown));     //NEW ADDITION***
+
+  this.dmg = this.charKnownDmg + this.base;  //dps in practice would be dps contribution from lvl and knowledge   //NEW ADDITION***
+
 }
 
 main();
