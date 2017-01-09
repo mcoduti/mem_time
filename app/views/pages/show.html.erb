@@ -1107,6 +1107,9 @@ this.checkingCSS = "tomato";
     document.addEventListener('touchstart', function(e){
       //document.getElementById("user_email").blur();
       //document.getElementById("user_password").blur();
+    if (Globals.Instance.gameState == "gameStart"){     ///NEW ADDITION***
+      Globals.Instance.gameState = "playing";
+    }
       this.touchActive = true;
       Globals.Instance.displayHelper.drawInput.push([]); // added elephant
       this.touchX = e.changedTouches[0].pageX - Globals.Instance.displayHelper.canvas.offsetLeft;
