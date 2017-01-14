@@ -1850,6 +1850,7 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer0[0][1]
       ) {
         Globals.Instance.inputHelper.dbAnswer = 1;
+        Globals.Instance.roundTime += 15;
         $.ajax({
         method: "POST",
         url: "/save_game_data",
@@ -1897,6 +1898,7 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         this.touchY <= 190 &&
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer1[0][1]
       ) {
+        Globals.Instance.roundTime += 15;
         Globals.Instance.inputHelper.dbAnswer = 1;
         $.ajax({
         method: "POST",
@@ -1945,6 +1947,7 @@ InputHelper.prototype.checkAnswerTouch = function()  // 2/16 9:41
         this.touchY <= 220 &&
         Globals.Instance.languageHelper.question[0][1] == Globals.Instance.languageHelper.answer2[0][1]
       ) {
+        Globals.Instance.roundTime += 15;
         Globals.Instance.inputHelper.dbAnswer = 1;
         $.ajax({
         method: "POST",
