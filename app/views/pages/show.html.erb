@@ -1141,7 +1141,7 @@ this.checkingCSS = "tomato";
         this.checkAnswerTouch();
         this.buttonPressed = true;
       }
-         }.bind(this), false
+         }.bind(this), /*false*/ { passive: false}
     );
 
     document.addEventListener('touchend', function(e){
