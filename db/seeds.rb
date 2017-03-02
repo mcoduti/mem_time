@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
-Character.create(language: 'mandarin', translation: 'like pt 2/2', tone: '5th', english_spelling: 'huan', character: '歡')
+Character.create(language: 'mandarin', translation: 'like 1/2', tone: '3rd', english_spelling: 'xǐ', character: '喜')
+Character.create(language: 'mandarin', translation: 'like 2/2', tone: '5th', english_spelling: 'huan', character: '歡')
 Character.create(language: 'mandarin', translation: 'I', tone: '3rd', english_spelling: 'wǒ', character: '我')
 Character.create(language: 'mandarin', translation: 'you', tone: '3rd', english_spelling: 'nǐ', character: '你')
 Character.create(language: 'mandarin', translation: 'good', tone: '3rd', english_spelling: 'hǎo', character: '好')
@@ -15,7 +15,7 @@ Character.create(language: 'mandarin', translation: 'one', tone: '1st', english_
 Character.create(language: 'mandarin', translation: 'very', tone: '3rd', english_spelling: 'hěn', character: '很')
 Character.create(language: 'mandarin', translation: 'no/not', tone: '4rth', english_spelling: 'bù', character: '不')
 Character.create(language: 'mandarin', translation: '?', tone: '5th', english_spelling: 'ma', character: '嗎')
-Character.create(language: 'mandarin', translation: 'like pt 2/2', tone: '5th', english_spelling: 'huan', character: '歡')
+#Character.create(language: 'mandarin', translation: 'like pt 2/2', tone: '5th', english_spelling: 'huan', character: '歡')
 
 
 #Character.create(language: 'mandarin', translation: 'am/are/is', tone: '4th', english_spelling: 'shì', character: '是')

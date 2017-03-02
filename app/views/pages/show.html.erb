@@ -1589,6 +1589,34 @@ this.checkingCSS = "tomato";
     }
   }
 
+  this.InputHelper.prototype.checkStrokeTwelve = function()
+  {
+  if (Globals.Instance.displayHelper.drawInput.length - 1 == 12)
+    {
+      if (
+        1==1
+      )
+      {
+        this.testDrawResult = '喜';
+        if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: 1
+        }
+        })
+        Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
+        Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
+        this.sendFailRecord = 1;
+        }
+      }
+    }
+  }
+
   this.InputHelper.prototype.checkStrokeThirteen = function()
   {
   if (Globals.Instance.displayHelper.drawInput.length - 1 == 13)
@@ -1619,7 +1647,7 @@ this.checkingCSS = "tomato";
 
   this.InputHelper.prototype.checkStrokeTwentyOne = function()
   {
-  if (Globals.Instance.displayHelper.drawInput.length - 1 == 21)
+  if (Globals.Instance.displayHelper.drawInput.length - 1 == 22)
     {
       if (
         1==1
@@ -1655,6 +1683,7 @@ this.checkingCSS = "tomato";
       else if (this.checkStrokeSeven()){}
       else if (this.checkStrokeSevenA()){}
       else if (this.checkStrokeNine()){}
+      else if (this.checkStrokeTwelve()){}
       else if (this.checkStrokeThirteen()){}
       else if (this.checkStrokeTwentyOne()){}
     }
