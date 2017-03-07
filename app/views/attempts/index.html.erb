@@ -1,8 +1,10 @@
 <div class="page-header">
   <h1>
-    Knowledge unlocked:
+    Stats:
     <!-- <a href="/attempts/new" class="btn btn-lg btn-success">New Attempt</a> -->
   </h1>
+
+  <p>Most monsters defeated:  <%= User.find_by(current_user.id).xp %> </p>
 </div>
 
 <div class="row">
