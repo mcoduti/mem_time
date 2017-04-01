@@ -6,6 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
+Character.create(language: 'mandarin', translation: 'seven', tone: '1st', english_spelling: 'qī', character: '七')
+
 Character.create(language: 'mandarin', translation: 'like 1/2', tone: '3rd', english_spelling: 'xǐ', character: '喜')
 Character.create(language: 'mandarin', translation: 'like 2/2', tone: '5th', english_spelling: 'huan', character: '歡')
 Character.create(language: 'mandarin', translation: 'I', tone: '3rd', english_spelling: 'wǒ', character: '我')

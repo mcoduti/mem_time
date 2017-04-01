@@ -1451,6 +1451,41 @@ this.checkingCSS = "tomato";
       }
   }
 
+ this.InputHelper.prototype.checkStrokeTwoSeven = function()
+  {
+  if (Globals.Instance.displayHelper.drawInput.length -1 == 2)
+    {
+      if (
+        //1==1
+  Number(Globals.Instance.displayHelper.drawInput[0][0][0]) <
+  Number(Globals.Instance.displayHelper.drawInput[1][0][0]) &&
+  Number(Globals.Instance.displayHelper.drawInput[1][0][Globals.Instance.displayHelper.drawInput[1][0].length-1]) >
+  (Number(Globals.Instance.displayHelper.drawInput[0][0][Globals.Instance.displayHelper.drawInput[0][0].length-1]) - 45) &&
+  Number(Globals.Instance.displayHelper.drawInput[1][0][Globals.Instance.displayHelper.drawInput[1][0].length-1]) <
+  (Number(Globals.Instance.displayHelper.drawInput[0][0][Globals.Instance.displayHelper.drawInput[0][0].length-1]) + 45)
+
+      ){
+        this.testDrawResult =  '七';
+        if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: 1
+        }
+        })
+        Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
+        Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
+        this.sendFailRecord = 1;
+        }
+      }
+    }
+  }
+
+
   this.InputHelper.prototype.checkStrokeFour = function()
   {
   if (Globals.Instance.displayHelper.drawInput.length - 1 == 4)
@@ -1678,6 +1713,7 @@ this.checkingCSS = "tomato";
     if (Globals.Instance.languageHelper.questionArray[4] == 3)
     {
       if(this.checkStrokeOne()){}
+      else if (this.checkStrokeTwoSeven()){}
       else if (this.checkStrokeFour()){}
       else if (this.checkStrokeSix()){}
       else if (this.checkStrokeSeven()){}
