@@ -7,6 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+
+Character.create(language: 'mandarin', translation: 'nine', tone: '1st', english_spelling: 'jiǔ', character: '九')
+Character.create(language: 'mandarin', translation: 'eight', tone: '1st', english_spelling: 'bā', character: '八')
 Character.create(language: 'mandarin', translation: 'seven', tone: '1st', english_spelling: 'qī', character: '七')
 
 Character.create(language: 'mandarin', translation: 'like 1/2', tone: '3rd', english_spelling: 'xǐ', character: '喜')

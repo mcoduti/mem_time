@@ -1485,6 +1485,76 @@ this.checkingCSS = "tomato";
     }
   }
 
+ this.InputHelper.prototype.checkStrokeTwoEight = function()
+  {
+  if (Globals.Instance.displayHelper.drawInput.length -1 == 2)
+    {
+      if (
+        //1==1
+
+  Number(Globals.Instance.displayHelper.drawInput[0][0][0]) >
+  Number(Globals.Instance.displayHelper.drawInput[0][0][Globals.Instance.displayHelper.drawInput[0][0].length-1]) &&
+  Number(Globals.Instance.displayHelper.drawInput[1][0][0]) <
+  Number(Globals.Instance.displayHelper.drawInput[1][0][Globals.Instance.displayHelper.drawInput[1][0].length-1]) &&
+  Number(Globals.Instance.displayHelper.drawInput[0][0][0]) <
+  Number(Globals.Instance.displayHelper.drawInput[1][0][0])
+      ){
+        this.testDrawResult =  '八';
+        if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: 1
+        }
+        })
+        Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
+        Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
+        this.sendFailRecord = 1;
+        }
+      }
+    }
+  }
+
+ this.InputHelper.prototype.checkStrokeTwoNine = function()
+  {
+  if (Globals.Instance.displayHelper.drawInput.length -1 == 2)
+    {
+      if (
+        //1==1
+  Number(Globals.Instance.displayHelper.drawInput[0][0][0]) >
+  Number(Globals.Instance.displayHelper.drawInput[0][0][Globals.Instance.displayHelper.drawInput[0][0].length-1]) &&
+  Number(Globals.Instance.displayHelper.drawInput[1][0][0]) <
+  Number(Globals.Instance.displayHelper.drawInput[1][0][Globals.Instance.displayHelper.drawInput[1][0].length-1]) &&
+  Number(Globals.Instance.displayHelper.drawInput[0][0][0]) >
+  Number(Globals.Instance.displayHelper.drawInput[1][0][0]) &&
+  Number(Globals.Instance.displayHelper.drawInput[0][0][0]) -
+  Number(Globals.Instance.displayHelper.drawInput[0][0][Globals.Instance.displayHelper.drawInput[0][0].length-1]) <
+  Number(Globals.Instance.displayHelper.drawInput[1][0][Globals.Instance.displayHelper.drawInput[1][0].length-1]) -
+  Number(Globals.Instance.displayHelper.drawInput[1][0][0]) - 45
+      ){
+        this.testDrawResult =  '九';
+        if (this.testDrawResult == Globals.Instance.languageHelper.drawTarget) {
+        $.ajax({
+        method: "POST",
+        url: "/save_game_data",
+        //data-remote:  "TRUE",
+        data: {
+          id: Globals.Instance.languageHelper.ajaxInput,
+          attempt: 1
+        }
+        })
+        Globals.Instance.languageHelper.matchIdentifier = "match";
+        Globals.Instance.roundTime += 15;
+        Globals.Instance.map.cells[Globals.Instance.inputHelper.targetArray[1]].color = "Red";
+        this.sendFailRecord = 1;
+        }
+      }
+    }
+  }
 
   this.InputHelper.prototype.checkStrokeFour = function()
   {
@@ -1714,6 +1784,8 @@ this.checkingCSS = "tomato";
     {
       if(this.checkStrokeOne()){}
       else if (this.checkStrokeTwoSeven()){}
+      else if (this.checkStrokeTwoEight()){}
+      else if (this.checkStrokeTwoNine()){}
       else if (this.checkStrokeFour()){}
       else if (this.checkStrokeSix()){}
       else if (this.checkStrokeSeven()){}
